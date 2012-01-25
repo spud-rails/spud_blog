@@ -1,0 +1,29 @@
+<%= content_for :data_controls do %>
+	<%= link_to "New Post", new_spud_admin_post_path, :class => "button", :title => "New Post" %>
+<% end %>
+
+<%=content_for :detail do %>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Published At</th>
+				<th>&nbsp;</th>
+			</tr>			
+		</thead>
+		<tbody>
+			<% @posts.each do |post| %>
+				<tr>
+					<tr>
+						<td><%= post.title %></td>
+						<td><%= post.published_at %></td>
+						<td>
+							<%= link_to 'Edit', edit_spud_admin_post_path(post) %>
+							<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?' %>
+						</td>
+					</tr>
+				</tr>
+			<%end%>
+		</tbody>
+	</table>
+<%end%>

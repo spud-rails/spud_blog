@@ -13,7 +13,7 @@ module Spud
       end
       initializer :associations do
         SpudUser.class_eval do
-          has_many :spud_posts
+          has_many :posts, :class_name => 'SpudPost'
         end
       end
     end
