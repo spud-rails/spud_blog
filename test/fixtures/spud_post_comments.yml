@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  spud_post_id: 
+  author: MyString
+  content: MyText
+  moderated: 
+
+two:
+  spud_post_id: 
+  author: MyString
+  content: MyText
+  moderated: 

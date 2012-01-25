@@ -1,0 +1,13 @@
+class CreateSpudPostComments < ActiveRecord::Migration
+  def change
+    create_table :spud_post_comments do |t|
+      t.integer :spud_post_id
+      t.string :author
+      t.text :content
+      t.boolean :approved
+      t.timestamps
+    end
+    add_index :spud_post_comments, :spud_post_id
+    add_index :spud_post_comments, :approved
+  end
+end
