@@ -9,6 +9,10 @@ class SpudPost < ActiveRecord::Base
 
 	validates_presence_of :title, :content, :published_at
 
+	def self.recent_posts(limit=5)
+		return where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').limit(limit)
+	end
+
 	def display_date
 		return published_at.strftime("%b %d, %Y")
 	end

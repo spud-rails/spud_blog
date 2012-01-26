@@ -12,8 +12,8 @@ Rails.application.routes.draw do
 
   match 'blog', :controller => 'blog', :action => 'index', :page => 1
   match '/blog/page/:page', :controller => 'blog', :action => 'index'
-  resources :blog_blog, :path => 'blog', :controller => 'blog', :only => ['index', 'show'] do
-    post '/', :on => :member, :controller => 'blog', :action => 'create_comment', :as => 'new_comment'
+  resources :blog_posts, :path => 'blog', :controller => 'blog', :only => [:show] do
+    post '/', :on => :member, :controller => 'blog', :action => 'create_comment'
   end
 
 	# match 'news', :controller => 'posts', :action => 'index', :page => 1

@@ -10,15 +10,16 @@ class BlogController < ApplicationController
   end
 
   def show
+    @comment = SpudPostComment.new(:spud_post_id => params[:id])
   	respond_with @post
   end
 
   def create_comment
     return unless params[:comment_validation].empty? # trap spam bots
-    @comment = @post.comments.new(params[:blog_comment])
+    @comment = @post.comments.new(params[:spud_post_comment])
     flash[:notice] = 'Your comment has been posted, however it will not appear until it is approved.' if @comment.save
     respond_with @comment do |format|
-    	format.html { redirect_to spud_post_path(@post, :anchor => 'spud_post_comment_form') }
+    	format.html { redirect_to blog_post_path(@post, :anchor => 'spud_post_comment_form') }
     end
   end 
 

@@ -1,0 +1,17 @@
+<%= form_for @comment, :url => blog_post_path(@post) do |f| %>
+	<div>
+		<%= f.label :author %>
+		<%= f.text_field :author %>
+	</div>
+	<div>
+		<%= f.label :content %>
+		<%= f.text_area :content %>
+	</div>
+	<div style="display:none;">
+		<%= label_tag 'Comment Validation' %>
+		<%= text_field_tag 'comment_validation' %>
+	</div>
+	<div>
+		<%= f.submit 'Post Comment' %>
+	</div>
+<% end %>
