@@ -11,6 +11,9 @@ module Spud
           :order => 1
         }]
       end
+      initializer :assets do
+        Rails.application.config.assets.precompile += ['spud/admin/posts.css']
+      end
       initializer :associations do
         SpudUser.class_eval do
           has_many :posts, :class_name => 'SpudPost'

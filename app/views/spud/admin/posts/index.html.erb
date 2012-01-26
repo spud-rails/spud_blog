@@ -3,27 +3,31 @@
 <% end %>
 
 <%=content_for :detail do %>
-	<table>
+	<table class="admin-table">
 		<thead>
 			<tr>
 				<th>Title</th>
+				<th>Author</th>
 				<th>Published At</th>
+				<th>Comments</th>
 				<th>&nbsp;</th>
 			</tr>			
 		</thead>
 		<tbody>
 			<% @posts.each do |post| %>
 				<tr>
-					<tr>
-						<td><%= post.title %></td>
-						<td><%= post.published_at %></td>
-						<td>
-							<%= link_to 'Edit', edit_spud_admin_post_path(post) %>
-							<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?' %>
-						</td>
-					</tr>
+					<td><%= link_to post.title, edit_spud_admin_post_path(post) %></td>
+					<td><%= post.author.full_name %></td>
+					<td><%= post.published_at.strftime('%m/%d/%Y') %></td>
+					<td><%= post.comments.size %></td>
+					<td align="right">
+						<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?', :class => 'spud_admin_button_delete' %>
+					</td>
 				</tr>
 			<%end%>
 		</tbody>
 	</table>
+	<div class="spud_admin_pagination">
+		<%= will_paginate @posts %>
+	</div>
 <%end%>

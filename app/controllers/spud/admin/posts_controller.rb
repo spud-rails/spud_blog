@@ -8,7 +8,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	belongs_to_spud_app :posts
 
 	def index
-		@posts = SpudPost.all
+		@posts = SpudPost.order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)
 		respond_with @posts
 	end
 
@@ -26,7 +26,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	end
 
 	def new
-		@post = SpudPost.new
+		@post = SpudPost.new(:published_at => Date.today)
 		respond_with @post
 	end
 
