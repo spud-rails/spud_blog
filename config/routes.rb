@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   namespace :spud do
     namespace :admin do
       resources :posts do
@@ -8,4 +9,15 @@ Rails.application.routes.draw do
       resources :post_categories
     end
   end
+
+  match 'blog', :controller => 'blog', :action => 'index', :page => 1
+  match '/blog/page/:page', :controller => 'blog', :action => 'index'
+  resources :blog_blog, :path => 'blog', :controller => 'blog', :only => ['index', 'show'] do
+    post '/', :on => :member, :controller => 'blog', :action => 'create_comment', :as => 'new_comment'
+  end
+
+	# match 'news', :controller => 'posts', :action => 'index', :page => 1
+	# match '/news/page/:page', :controller => 'posts', :action => 'index'
+	# resources :news_posts, :path => 'news', :controller => 'posts', :only => ['index', 'show']
+
 end

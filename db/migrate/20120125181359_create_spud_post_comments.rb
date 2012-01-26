@@ -4,7 +4,7 @@ class CreateSpudPostComments < ActiveRecord::Migration
       t.integer :spud_post_id
       t.string :author
       t.text :content
-      t.boolean :approved
+      t.boolean :approved, :default => 0
       t.timestamps
     end
     add_index :spud_post_comments, :spud_post_id

@@ -1,5 +1,5 @@
 class SpudPost < ActiveRecord::Base
-	
+
 	has_and_belongs_to_many :categories, 
 		:class_name => 'SpudPostCategory',
 		:join_table => 'spud_post_categories_posts', 
@@ -8,4 +8,20 @@ class SpudPost < ActiveRecord::Base
 	has_many :comments, :class_name => 'SpudPostComment'
 
 	validates_presence_of :title, :content, :published_at
+
+	def display_date
+		return published_at.strftime("%b %d, %Y")
+	end
+
+	def to_param
+		return "#{id}-#{title.parameterize}"
+	end
+
+	def is_public?
+		return (published_at < DateTime.now) && visible
+	end
+
+	def is_private?
+		return !is_public?
+	end
 end
