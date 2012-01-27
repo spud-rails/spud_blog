@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
+  match 'blog/categories/:category_id', :controller => 'blog', :action => 'index', :page => 1, :as => 'blog_category'
+  match 'blog/categories/:category_id/page/:page', :controller => 'blog', :action => 'index'
+
   match 'blog', :controller => 'blog', :action => 'index', :page => 1
   match '/blog/page/:page', :controller => 'blog', :action => 'index'
   resources :blog_posts, :path => 'blog', :controller => 'blog', :only => [:show] do

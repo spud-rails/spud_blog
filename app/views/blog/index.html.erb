@@ -1,15 +1,16 @@
-<h1>Blog#index</h1>
-<p>Override me in app/views/blog/index.html.erb</p>
-
 <div id="spud_blog_posts">
-	<% @posts.each do |post| %>
-		<div class="spud_blog_post">
-			<h3><%= link_to post.title, blog_post_path(post) %></h3>
-			<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
-			<div class="spud_blog_post_content">
-				<%= raw post.content %>
+	<% if @posts.any? %>
+		<% @posts.each do |post| %>
+			<div class="spud_blog_post">
+				<h3><%= link_to post.title, blog_post_path(post.url) %></h3>
+				<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
+				<div class="spud_blog_post_content">
+					<%= raw post.content %>
+				</div>
 			</div>
-		</div>
+		<% end %>
+	<% else %>
+		<p>No posts were found in this category</p>
 	<% end %>
 </div>
 

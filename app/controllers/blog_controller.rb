@@ -5,12 +5,19 @@ class BlogController < ApplicationController
 	layout Spud::Blog.default_layout
 
   def index
-  	@posts = SpudPost.where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').includes(:comments, :categories).paginate(:page => params[:page], :per_page => 5)
+    if params[:category_id]
+      posts = SpudPostCategory.find_by_url(params[:category_id]).posts
+    else
+      posts = SpudPost
+    end
+    @posts = posts.where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').includes(:comments, :categories).paginate(:page => params[:page], :per_page => 5)
   	respond_with @posts
   end
 
   def show
-    @comment = SpudPostComment.new(:spud_post_id => params[:id])
+    if @post.comments_enabled
+      @comment = SpudPostComment.new(:spud_post_id => params[:id])
+    end
   	respond_with @post
   end
 
@@ -26,7 +33,7 @@ class BlogController < ApplicationController
   private 
 
   def find_post
-  	@post = SpudPost.find(params[:id])
+  	@post = SpudPost.find_by_url(params[:id])
 		if @post.blank? || @post.is_private?
 			flash[:error] = "Post not found!"
 			redirect_to blog_path and return false

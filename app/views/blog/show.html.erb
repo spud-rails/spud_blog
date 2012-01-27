@@ -1,19 +1,23 @@
-<h1>Blog#show</h1>
-<p>Override me in app/views/blog/show.html.erb</p>
-
 <div class="spud_blog_post">
 	<h3><%= @post.title %></h3>
 	<h4>Posted by <%= @post.author.full_name %> on <%= @post.display_date %></h4>
-	<div class="spud_blog_post_content">
+	<% if @post.categories.any? %>
+	<div id="spud_blog_post_categories">
+		Filed under
+		<%= raw(@post.categories.collect{ |c| link_to c.name, blog_category_path(c.url) }.join(', ')) %>
+	</div>
+	<% end %>
+	<div id="spud_blog_post_content">
 		<%= raw @post.content %>
 	</div>
 </div>
 
-<div class="spud_blog_post_comment">
-	<h5>Post a Comment:</h5>
-	<%= render 'comment_form' %>
-</div>
-
-<ul id="spud_blog_post_comments">
-	<%= render :partial => 'comment', :collection => @post.comments %>
-</ul>
+<% if @post.comments_enabled %>
+	<div class="spud_blog_post_comment">
+		<h5>Post a Comment:</h5>
+		<%= render 'comment_form' %>
+	</div>
+	<ul id="spud_blog_post_comments">
+		<%= render :partial => 'comment', :collection => @post.comments %>
+	</ul>
+<% end %>
