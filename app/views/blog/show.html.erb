@@ -4,7 +4,7 @@
 	<% if @post.categories.any? %>
 	<div id="spud_blog_post_categories">
 		Filed under
-		<%= raw(@post.categories.collect{ |c| link_to c.name, blog_category_path(c.url) }.join(', ')) %>
+		<%= raw(@post.categories.collect{ |c| link_to c.name, blog_category_path(c.url_name) }.join(', ')) %>
 	</div>
 	<% end %>
 	<div id="spud_blog_post_content">

@@ -2,7 +2,7 @@
 	<% if @posts.any? %>
 		<% @posts.each do |post| %>
 			<div class="spud_blog_post">
-				<h3><%= link_to post.title, blog_post_path(post.url) %></h3>
+				<h3><%= link_to post.title, blog_post_path(post.url_name) %></h3>
 				<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
 				<div class="spud_blog_post_content">
 					<%= raw post.content %>

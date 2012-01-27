@@ -7,9 +7,9 @@ class SpudPost < ActiveRecord::Base
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
 
-	validates_presence_of :title, :content, :published_at, :spud_user_id
-
-	before_save :set_url
+	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
+	validates_uniqueness_of :url_name
+	before_validation :set_url_name
 
 	def self.recent_posts(limit=5)
 		return where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').limit(limit)
@@ -29,7 +29,7 @@ class SpudPost < ActiveRecord::Base
 
 	private
 
-	def set_url
-		self.url = "#{self.published_at.strftime('%Y-%m-%d')}-#{self.title.parameterize}"
+	def set_url_name
+		self.url_name = "#{self.published_at.strftime('%Y-%m-%d')}-#{self.title.parameterize}"
 	end
 end

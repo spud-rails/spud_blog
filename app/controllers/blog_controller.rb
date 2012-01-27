@@ -6,7 +6,7 @@ class BlogController < ApplicationController
 
   def index
     if params[:category_id]
-      posts = SpudPostCategory.find_by_url(params[:category_id]).posts
+      posts = SpudPostCategory.find_by_url_name(params[:category_id]).posts
     else
       posts = SpudPost
     end
@@ -33,7 +33,7 @@ class BlogController < ApplicationController
   private 
 
   def find_post
-  	@post = SpudPost.find_by_url(params[:id])
+  	@post = SpudPost.find_by_url_name(params[:id])
 		if @post.blank? || @post.is_private?
 			flash[:error] = "Post not found!"
 			redirect_to blog_path and return false
