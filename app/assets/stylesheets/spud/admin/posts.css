@@ -3,3 +3,47 @@
   They will automatically be included in application.css.
 */
 
+#spud_post_categories_form{
+	list-style-type: none;
+	margin: 15px 0 15px 20px;
+	padding: 0 0 0 20px;
+	height: 200px;
+	width: 400px;
+	background: white;
+	border: 1px solid #ccc;
+	padding: 10px;
+	overflow: scroll;
+}
+#spud_post_categories_form ul{
+	list-style-type: none;
+	margin: 3px 0;
+	padding: 0 0 0 20px;
+}
+#spud_post_categories_form label{
+	float: none;
+	text-align: left;
+}
+#spud_post_new_category_form{
+	background: white;
+	border: 1px solid #ccc;
+	margin: 15px 0 15px 20px;
+	padding: 10px 20px;
+	overflow: hidden;
+	width: 380	px;
+}
+#spud_post_new_category_form h5{
+	margin: 0 0 5px;
+}
+#spud_post_new_category_form  div{
+	margin: 5px 0;
+}
+#spud_post_new_category_form label{
+	float: none;
+	margin: 0 1px 0 0;
+	font-size: 12px;
+	display: inline-block;
+	width: 50px;
+}
+#spud_post_new_category_form input[type=button]{
+	margin-left: 55px;
+}

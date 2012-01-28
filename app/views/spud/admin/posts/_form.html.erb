@@ -13,6 +13,31 @@
 	</div>
 
 	<fieldset>
+		<legend>Categories</legend>
+		<ul id="spud_post_categories_form">
+			<%= render :partial => 'category', :collection => @categories[0] %>
+		</ul>
+		<div id="spud_post_new_category_form">
+			<%= hidden_field_tag 'spud_post_new_category_path', spud_admin_post_categories_path %>
+			<h5>New Category</h5>
+			<div>
+				<label>Parent:</label>
+				<select id="spud_post_new_category_parent_id">
+					<option value="0">No Parent</option>
+					<%=  options_for_select(SpudPostCategory.options_for_categories(@categories)) %>
+				</select>	
+			</div>
+			<div>
+				<label>Name:</label>
+				<input type="text" id="spud_post_new_category_name" />
+			</div>
+			<div>
+				<input type="button" value="Create"/>
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset>
 		<legend>Advanced</legend>
 		<ol>
 			<li>
@@ -37,9 +62,5 @@
 <% end %>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('input[type=submit],.close_dialog').button();
-		initDatePicker();
-		initWysiwym();
-	});
+	$(document).ready(Spud.Admin.Posts.edit);
 </script>

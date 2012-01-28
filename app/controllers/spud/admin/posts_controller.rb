@@ -48,6 +48,8 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 		if @post.blank?
 			flash[:error] = "Post not found!"
 			redirect_to spud_admin_posts_path and return false
+		else
+			@categories = SpudPostCategory.grouped
 		end
 	end
 
