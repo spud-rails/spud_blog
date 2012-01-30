@@ -21,6 +21,15 @@ Installation/Usage
 
 4. run a rails server instance and point your browser to /spud/admin
 
+Setting a Layout
+----------------
+
+The blog will default to your `application` layout. To set a custom one, add the following to your environment file:
+
+	Spud::Blog.configure do |config|
+  	config.default_layout = 'blog'
+	end
+
 Customizing Routes & Views
 -------------------------
 
