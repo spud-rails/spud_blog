@@ -1,4 +1,4 @@
-require 'spud_admin'
+require 'spud_core'
 module Spud
   module Blog
     class Engine < Rails::Engine
