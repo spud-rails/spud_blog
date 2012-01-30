@@ -1,7 +1,7 @@
 Spud Blog
 ========
 
-Spud Blog isa Blog Engine designed to be robust, easy to use, and light weight.
+Spud Blog is a Blog Engine designed to be robust, easy to use, and light weight.
 NOTE: This project is still in its early infancy.
 
 Installation/Usage
