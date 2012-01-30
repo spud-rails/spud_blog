@@ -20,17 +20,19 @@ class SpudPostCategory < ActiveRecord::Base
 	end
 
 	# Returns an array of categories in order of heirarchy
-	# Pass in a :filter option to filter a category (and it's children) from the list
+	# 	:fitler Filters out a category by ID, and all of its children
+	#   :value Pick an attribute to be used in the value field, defaults to ID
 	def self.options_for_categories(config={})
 		collection = config[:collection] || self.grouped
 		level 		 = config[:level] 		 || 0
 		parent_id  = config[:parent_id]  || 0
 		filter 		 = config[:filter] 		 || nil
+		value      = config[:value]			 || :id
 		list 			 = []
 		if collection[parent_id]
 			collection[parent_id].each do |c|
 				if c.id != filter
-					list << [level.times.collect{ '- ' }.join('') + c.name, c.id]
+					list << [level.times.collect{ '- ' }.join('') + c.name, c[value]]
 					list += self.options_for_categories({:collection => collection, :parent_id => c.id, :level => level+1, :filter => filter})
 				end
 			end

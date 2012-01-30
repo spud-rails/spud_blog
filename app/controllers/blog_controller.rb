@@ -5,13 +5,35 @@ class BlogController < ApplicationController
 	layout Spud::Blog.default_layout
 
   def index
-    if params[:category_id]
-      posts = SpudPostCategory.find_by_url_name(params[:category_id]).posts
+    @posts = SpudPost.for_frontend(params[:page], params[:per_page])
+    respond_with @posts
+  end
+
+  def category
+    @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
+    if @post_category.nil?
+      redirect_to blog_path
     else
-      posts = SpudPost
+      if request.post?
+        redirect_to blog_category_path(params[:category_url_name])
+      else        
+        @posts = @post_category.posts.for_frontend(params[:page], params[:per_page])
+        respond_with @posts do |format|
+          format.html { render 'index' }
+        end
+      end 
     end
-    @posts = posts.where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').includes(:comments, :categories).paginate(:page => params[:page], :per_page => 5)
-  	respond_with @posts
+  end
+
+  def archive
+    if request.post?
+      redirect_to blog_archive_path(params[:blog_archive])
+    else
+      @posts = SpudPost.from_archive(params[:blog_archive]).for_frontend(params[:page], params[:per_page])
+      respond_with @posts do |format|
+        format.html { render 'index' }
+      end
+    end
   end
 
   def show
