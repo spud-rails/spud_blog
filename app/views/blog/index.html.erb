@@ -1,3 +1,19 @@
+<div id="spud_blog_categories">
+	<%= form_tag '/blog/category' do %>
+		<label>Filter By Category:</label>
+		<%= spud_blog_category_select %>
+		<input type="submit" value="Submit" />
+	<% end %>
+</div>
+
+<div id="spud_blog_archive">
+	<%= form_tag '/blog/archive' do %>
+		<label>Filter By Month:</label>
+		<%= spud_blog_archive_select %>
+		<input type="submit" value="Submit" />
+	<% end %>
+</div>
+
 <div id="spud_blog_posts">
 	<% if @posts.any? %>
 		<% @posts.each do |post| %>

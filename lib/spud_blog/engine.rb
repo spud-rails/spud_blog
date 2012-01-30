@@ -9,6 +9,11 @@ module Spud
           :thumbnail => 'spud/admin/posts_thumb.png',
           :url => '/spud/admin/posts',
           :order => 1
+        },{
+          :name => 'Post Categories',
+          :thumbnail => 'spud/admin/posts_thumb.png',
+          :url => '/spud/admin/post_categories',
+          :order => 2
         }]
       end
       initializer :assets do

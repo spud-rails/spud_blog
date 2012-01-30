@@ -12,25 +12,25 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 		respond_with @posts
 	end
 
-	def show
-		respond_with @post
-	end
-
 	def edit
+		@categories = SpudPostCategory.grouped
 		respond_with @post
 	end
 
 	def update
+		@categories = SpudPostCategory.grouped
     flash[:notice] = 'Post was successfully updated.' if @post.update_attributes(params[:spud_post])
     respond_with @post, :location => spud_admin_posts_path
 	end
 
 	def new
-		@post = SpudPost.new(:published_at => Date.today)
+		@categories = SpudPostCategory.grouped
+		@post = SpudPost.new(:published_at => Date.today, :spud_user_id => current_user.id)
 		respond_with @post
 	end
 
 	def create
+		@categories = SpudPostCategory.grouped
 		@post = SpudPost.new(params[:spud_post])
     flash[:notice] = 'Post was successfully created.' if @post.save
     respond_with @post, :location => spud_admin_posts_path
@@ -48,8 +48,6 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 		if @post.blank?
 			flash[:error] = "Post not found!"
 			redirect_to spud_admin_posts_path and return false
-		else
-			@categories = SpudPostCategory.grouped
 		end
 	end
 

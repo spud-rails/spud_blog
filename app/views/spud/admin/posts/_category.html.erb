@@ -1,0 +1,9 @@
+<li class="spud_post_form_category">
+	<%= check_box_tag 'spud_post[category_ids][]', category.id, @post.category_ids.include?(category.id), :id => "spud_post_category_#{category.id}" %>
+	<%= label_tag "spud_post_category_#{category.id}", category.name %>
+	<% if @categories[category.id] %>
+		<ul>
+			<%= render :partial => 'category', :collection => @categories[category.id] %>
+		</ul>
+	<% end %>
+</li>
