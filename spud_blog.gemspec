@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-01-30"
+  s.date = "2012-01-31"
   s.email = "greg@westlakedesign.com"
   s.files = [
     "app/assets/javascripts/spud/admin/post_categories.js",
