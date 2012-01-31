@@ -2,7 +2,7 @@ class BlogController < ApplicationController
 
 	respond_to :html, :xml, :json
 	before_filter :find_post, :only => [:show, :create_comment]
-	layout Spud::Blog.default_layout
+	layout Spud::Blog.base_layout
 
   def index
     @posts = SpudPost.for_frontend(params[:page], params[:per_page])
