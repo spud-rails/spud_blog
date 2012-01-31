@@ -1,7 +1,7 @@
 class BlogController < ApplicationController
 
 	respond_to :html, :xml, :json
-	before_filter :find_post, :only => [:show, :create_comment]
+	before_filter :find_post, :only => [:show]
 	layout Spud::Blog.base_layout
 
   def index
@@ -45,10 +45,15 @@ class BlogController < ApplicationController
 
   def create_comment
     return unless params[:comment_validation].empty? # trap spam bots
+    @post = SpudPost.find(params[:id])
+    if @post.blank?
+      flash[:error] = "Post not found!"
+      redirect_to blog_path and return false
+    end
     @comment = @post.comments.new(params[:spud_post_comment])
     flash[:notice] = 'Your comment has been posted, however it will not appear until it is approved.' if @comment.save
     respond_with @comment do |format|
-    	format.html { redirect_to blog_post_path(@post, :anchor => 'spud_post_comment_form') }
+    	format.html { redirect_to blog_post_path(@post.url_name, :anchor => 'spud_post_comment_form') }
     end
   end 
 
