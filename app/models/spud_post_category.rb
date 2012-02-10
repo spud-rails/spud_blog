@@ -1,5 +1,5 @@
 class SpudPostCategory < ActiveRecord::Base
-
+	searchable
 	has_and_belongs_to_many :posts,
 		:class_name => 'SpudPost',
 		:join_table => 'spud_post_categories_posts',
