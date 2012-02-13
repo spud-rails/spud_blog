@@ -35,6 +35,11 @@ module Spud
           has_many :posts, :class_name => 'SpudPost'
         end
       end
+      initializer :news_layout do
+        if Spud::Core.config.news_layout.nil?
+          Spud::Core.config.news_layout = Spud::Core.config.base_layout
+        end
+      end
     end
   end
 end

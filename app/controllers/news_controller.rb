@@ -1,7 +1,7 @@
 class NewsController < ApplicationController
 
 	respond_to :html, :xml, :json
-	layout Spud::Blog.base_layout
+	layout Spud::Blog.news_layout
 
   def index
     @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
