@@ -27,9 +27,9 @@ class BlogController < ApplicationController
 
   def archive
     if request.post?
-      redirect_to blog_archive_path(params[:blog_archive])
+      redirect_to blog_archive_path(params[:archive_date])
     else
-      @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:blog_archive])
+      @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
       respond_with @posts do |format|
         format.html { render 'index' }
       end
