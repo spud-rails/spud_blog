@@ -5,7 +5,7 @@ class BlogController < ApplicationController
 	layout Spud::Blog.base_layout
 
   def index
-    @posts = SpudPost.for_frontend(params[:page], params[:per_page])
+    @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
     respond_with @posts
   end
 
@@ -16,12 +16,12 @@ class BlogController < ApplicationController
     else
       if request.post?
         redirect_to blog_category_path(params[:category_url_name])
-      else        
-        @posts = @post_category.posts.for_frontend(params[:page], params[:per_page])
+      else
+        @posts = @post_category.posts_with_children.public_blog_posts(params[:page], params[:per_page])
         respond_with @posts do |format|
           format.html { render 'index' }
         end
-      end 
+      end
     end
   end
 
@@ -29,7 +29,7 @@ class BlogController < ApplicationController
     if request.post?
       redirect_to blog_archive_path(params[:blog_archive])
     else
-      @posts = SpudPost.from_archive(params[:blog_archive]).for_frontend(params[:page], params[:per_page])
+      @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:blog_archive])
       respond_with @posts do |format|
         format.html { render 'index' }
       end

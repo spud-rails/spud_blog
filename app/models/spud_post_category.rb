@@ -33,11 +33,16 @@ class SpudPostCategory < ActiveRecord::Base
 			collection[parent_id].each do |c|
 				if c.id != filter
 					list << [level.times.collect{ '- ' }.join('') + c.name, c[value]]
-					list += self.options_for_categories({:collection => collection, :parent_id => c.id, :level => level+1, :filter => filter})
+					list += self.options_for_categories({:collection => collection, :parent_id => c.id, :level => level+1, :filter => filter, :value => value})
 				end
 			end
 		end
 		return list
+	end
+
+	def posts_with_children
+		# TO DO: This should return all posts that belong to the instance category and all its child categories
+		return posts
 	end
 
 	private

@@ -1,0 +1,33 @@
+<div id="spud_news_categories">
+	<%= form_tag '/news/category' do %>
+		<label>Filter By Category:</label>
+		<%= spud_post_category_select %>
+		<input type="submit" value="Submit" />
+	<% end %>
+</div>
+
+<div id="spud_news_archive">
+	<%= form_tag '/news/archive' do %>
+		<label>Filter By Month:</label>
+		<%= spud_post_archive_select %>
+		<input type="submit" value="Submit" />
+	<% end %>
+</div>
+
+<div id="spud_news_posts">
+	<% if @posts.any? %>
+		<% @posts.each do |post| %>
+			<div class="spud_news_post">
+				<h3><%= link_to post.title, news_post_path(post.url_name) %></h3>
+				<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
+				<div class="spud_news_post_content">
+					<%= raw post.content %>
+				</div>
+			</div>
+		<% end %>
+	<% else %>
+		<p>No posts were found in this category</p>
+	<% end %>
+</div>
+
+<%= will_paginate @posts %>
