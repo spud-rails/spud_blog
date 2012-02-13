@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       post 'archive', :controller => 'blog', :action => 'archive'
 
       # Blog Posts
-      get '/', :controller => 'blog', :action => 'index', :page => 1
+      get '/', :controller => 'blog', :action => 'index', :page => 1, :as => 'blog'
       get 'page/:page', :controller => 'blog', :action => 'index'
       resources :blog_posts, :path => '/', :controller => 'blog', :only => [:show] do
         post '/', :on => :member, :controller => 'blog', :action => 'create_comment'
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       post 'archive', :controller => 'news', :action => 'archive'
       
       # News Posts
-      get '/', :controller => 'news', :action => 'index', :page => 1
+      get '/', :controller => 'news', :action => 'index', :page => 1, :as => 'news'
       get 'page/:page', :controller => 'news', :action => 'index'
       resources :news_posts, :path => '/', :controller => 'news', :only => [:show]
     end
