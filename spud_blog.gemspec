@@ -5,24 +5,32 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.1.3"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-02-10"
+  s.date = "2012-02-13"
   s.email = "greg@westlakedesign.com"
   s.files = [
+    "app/assets/javascripts/news.js",
+    "app/assets/javascripts/spud/admin/news_posts.js",
     "app/assets/javascripts/spud/admin/post_categories.js",
     "app/assets/javascripts/spud/admin/post_comments.js",
     "app/assets/javascripts/spud/admin/posts.js",
+    "app/assets/stylesheets/news.css",
+    "app/assets/stylesheets/spud/admin/news_posts.css",
     "app/assets/stylesheets/spud/admin/post_categories.css",
     "app/assets/stylesheets/spud/admin/post_comments.css",
     "app/assets/stylesheets/spud/admin/posts.css",
     "app/controllers/blog_controller.rb",
+    "app/controllers/news_controller.rb",
+    "app/controllers/spud/admin/news_posts_controller.rb",
     "app/controllers/spud/admin/post_categories_controller.rb",
     "app/controllers/spud/admin/post_comments_controller.rb",
     "app/controllers/spud/admin/posts_controller.rb",
     "app/helpers/blog_helper.rb",
+    "app/helpers/news_helper.rb",
+    "app/helpers/spud/admin/news_posts_helper.rb",
     "app/helpers/spud/admin/post_categories_helper.rb",
     "app/helpers/spud/admin/post_comments_helper.rb",
     "app/helpers/spud/admin/posts_helper.rb",
@@ -34,6 +42,11 @@ Gem::Specification.new do |s|
     "app/views/blog/index.html.erb",
     "app/views/blog/show.html.erb",
     "app/views/layouts/spud/admin/post.html.erb",
+    "app/views/news/index.html.erb",
+    "app/views/news/show.html.erb",
+    "app/views/spud/admin/news_posts/edit.html.erb",
+    "app/views/spud/admin/news_posts/index.html.erb",
+    "app/views/spud/admin/news_posts/new.html.erb",
     "app/views/spud/admin/post_categories/_form.html.erb",
     "app/views/spud/admin/post_categories/edit.html.erb",
     "app/views/spud/admin/post_categories/index.html.erb",
@@ -44,7 +57,6 @@ Gem::Specification.new do |s|
     "app/views/spud/admin/posts/edit.html.erb",
     "app/views/spud/admin/posts/index.html.erb",
     "app/views/spud/admin/posts/new.html.erb",
-    "app/views/spud/admin/posts/show.html.erb",
     "config/application.rb",
     "config/boot.rb",
     "config/routes.rb",
@@ -53,7 +65,7 @@ Gem::Specification.new do |s|
     "lib/spud_blog/engine.rb"
   ]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.10"
   s.summary = "Spud Blog Engine"
 
   if s.respond_to? :specification_version then

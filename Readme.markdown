@@ -2,7 +2,8 @@ Spud Blog
 ========
 
 Spud Blog is a Blog Engine designed to be robust, easy to use, and light weight.
-NOTE: This project is still in its early infancy.
+
+__NOTE:__ This project is still in its early infancy.
 
 Installation/Usage
 ------------------
@@ -21,18 +22,21 @@ Installation/Usage
 
 4. run a rails server instance and point your browser to /spud/admin
 
-Setting a Layout
-----------------
+Configuration
+-------------
 
-The blog will default to your `application` layout. To set a custom one, add the following to your environment file:
+Spud Blog current accepts the following configuration options.
 
 	Spud::Blog.configure do |config|
-  	config.default_layout = 'blog'
+	  config.base_layout = 'blog'
+	  config.blog_enabled = true
+	  config.news_enabled = true
+	  config.blog_path = 'blog'
+	  config.news_path = 'news'
+	  config.posts_per_page = 5
 	end
 
-Customizing Routes & Views
--------------------------
+Customizing Views
+-----------------
 
 A number of starter views have been provided for you as a jumping off point. You may choose to use these views or write your own from scratch. When displaying a post make sure to respect the individual post's `comments_enabled` flag. 
-
-Routes are currently hard-coded at the engine level, though the ability to customize your blog routes may be a feature at some point in the future. 
