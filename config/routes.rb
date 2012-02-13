@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   get 'blog/category/:category_url_name', :controller => 'blog', :action => 'category', :page => 1, :as => 'blog_category'
-  get 'blog/category/:category_id/page/:page', :controller => 'blog', :action => 'category'
+  get 'blog/category/:category_url_name/page/:page', :controller => 'blog', :action => 'category'
   post 'blog/category', :controller => 'blog', :action => 'category'
 
   get 'blog/archive/:archive_date', :controller => 'blog', :action => 'archive', :page => 1, :as => 'blog_archive'
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   get 'news/category/:category_url_name', :controller => 'news', :action => 'category', :page => 1, :as => 'news_category'
-  get 'news/category/:category_id/page/:page', :controller => 'news', :action => 'category'
+  get 'news/category/:category_url_name/page/:page', :controller => 'news', :action => 'category'
   post 'news/category', :controller => 'news', :action => 'category'
   
   get 'news/archive/:archive_date', :controller => 'news', :action => 'archive', :page => 1, :as => 'news_archive'

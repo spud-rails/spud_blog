@@ -16,7 +16,7 @@ class NewsController < ApplicationController
       if request.post?
         redirect_to news_category_path(params[:category_url_name])
       else
-        @posts = @post_category.posts_with_children.public_news_posts(params[:page], params[:per_page])
+        @posts = @post_category.posts.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
         respond_with @posts do |format|
           format.html { render 'index' }
         end
