@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
       # Blog Posts
       get '/', :controller => 'blog', :action => 'index', :page => 1
-      get '/page/:page', :controller => 'blog', :action => 'index'
+      get 'page/:page', :controller => 'blog', :action => 'index'
       resources :blog_posts, :path => '/', :controller => 'blog', :only => [:show] do
         post '/', :on => :member, :controller => 'blog', :action => 'create_comment'
       end
