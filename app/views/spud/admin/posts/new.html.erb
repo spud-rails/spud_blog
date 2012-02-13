@@ -1,1 +1,3 @@
-<%= render 'form' %>
+<%= form_for @post, :url => new_spud_admin_post_path, :html => {:class => 'right_aligned_form'} do |f| %>	
+	<%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

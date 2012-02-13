@@ -3,12 +3,12 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	layout 'spud/admin/post'
 	respond_to :html, :xml, :json
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
-	add_breadcrumb 'Posts', :spud_admin_posts_path
+	add_breadcrumb 'Blog Posts', :spud_admin_posts_path
 
-	belongs_to_spud_app :posts
+	belongs_to_spud_app :blog_posts
 
 	def index
-		@posts = SpudPost.order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)
+		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)
 		respond_with @posts
 	end
 

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :posts do
       	resources :post_comments, :path => 'comments', :only => :index
       end
+      resources :news_posts
       resources :post_comments, :except => :new
       resources :post_categories
     end

@@ -3,7 +3,7 @@
 	<%= label_tag "spud_post_category_#{category.id}", category.name %>
 	<% if @categories[category.id] %>
 		<ul>
-			<%= render :partial => 'category', :collection => @categories[category.id] %>
+			<%= render :partial => '/spud/admin/posts/category', :collection => @categories[category.id] %>
 		</ul>
 	<% end %>
 </li>
