@@ -4,8 +4,8 @@ class CreateSpudPosts < ActiveRecord::Migration
       t.integer :spud_user_id
       t.string :title
       t.text :content
-      t.boolean :comments_enabled, :default => 0
-      t.boolean :visible, :default => 1
+      t.boolean :comments_enabled, :default => false
+      t.boolean :visible, :default => true
       t.datetime :published_at
       t.timestamps
     end
