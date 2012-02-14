@@ -55,7 +55,7 @@ class SpudPost < ActiveRecord::Base
 		# And published_at < '2012-01-30'
 		# Group By published_month, published_year
 		# Order By published_year desc, published_month desc
-		records = select('Month(published_at) as published_month, Year(published_at) as published_year').where('visible = ? AND published_at < ?', true, DateTime.now).group('published_month, published_year').order('published_year desc, published_month desc')
+		records = select('Extract(Month from published_at) as published_month, Extract(Year from published_at) as published_year').where('visible = ? AND published_at < ?', true, DateTime.now).group('published_month, published_year').order('published_year desc, published_month desc')
 		return records.collect{ |r| Date.new(r[:published_year], r[:published_month]) }
 	end
 
