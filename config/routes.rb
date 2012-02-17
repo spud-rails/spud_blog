@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       resources :post_comments, :except => :new
       resources :post_categories
     end
+    namespace :blog do
+         resource :sitemap,:only => "show"
+    end
   end
 
   if Spud::Blog.config.blog_enabled

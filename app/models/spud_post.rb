@@ -1,5 +1,4 @@
 class SpudPost < ActiveRecord::Base
-
 	searchable
 	has_and_belongs_to_many :categories, 
 		:class_name => 'SpudPostCategory',
@@ -7,13 +6,13 @@ class SpudPost < ActiveRecord::Base
 		:foreign_key => 'spud_post_id'
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
-
+	scope :publicly, where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc')
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
 
 	def self.public_posts(page, per_page)
-		return where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
+		return where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
 	end
 
 	def self.public_blog_posts(page, per_page)
@@ -25,7 +24,7 @@ class SpudPost < ActiveRecord::Base
 	end
 
 	def self.recent_posts(limit=5)
-		return where('visible = 1 AND published_at <= ?', DateTime.now).order('published_at desc').limit(limit)
+		return where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc').limit(limit)
 	end
 
 	def self.recent_blog_posts(limit=5)

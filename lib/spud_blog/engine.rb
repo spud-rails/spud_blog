@@ -10,6 +10,9 @@ module Spud
           :url => '/spud/admin/post_categories',
           :order => 3
         }]
+        if Spud::Blog.enable_sitemap == true
+            Spud::Core.config.sitemap_urls += [:spud_cms_sitemap_url]
+        end
         if Spud::Blog.config.blog_enabled
           Spud::Core.config.admin_applications += [{
             :name => 'Blog Posts', 
@@ -26,6 +29,7 @@ module Spud
             :order => 2
           }]
         end
+        
       end
       initializer :assets do
         Rails.application.config.assets.precompile += ['spud/admin/posts.css']
