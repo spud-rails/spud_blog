@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-02-13"
+  s.date = "2012-02-17"
   s.email = "greg@westlakedesign.com"
   s.files = [
     "app/assets/javascripts/news.js",
@@ -17,23 +17,27 @@ Gem::Specification.new do |s|
     "app/assets/javascripts/spud/admin/post_categories.js",
     "app/assets/javascripts/spud/admin/post_comments.js",
     "app/assets/javascripts/spud/admin/posts.js",
+    "app/assets/javascripts/spud/blog/sitemaps.js",
     "app/assets/stylesheets/news.css",
     "app/assets/stylesheets/spud/admin/news_posts.css",
     "app/assets/stylesheets/spud/admin/post_categories.css",
     "app/assets/stylesheets/spud/admin/post_comments.css",
     "app/assets/stylesheets/spud/admin/posts.css",
+    "app/assets/stylesheets/spud/blog/sitemaps.css",
     "app/controllers/blog_controller.rb",
     "app/controllers/news_controller.rb",
     "app/controllers/spud/admin/news_posts_controller.rb",
     "app/controllers/spud/admin/post_categories_controller.rb",
     "app/controllers/spud/admin/post_comments_controller.rb",
     "app/controllers/spud/admin/posts_controller.rb",
+    "app/controllers/spud/blog/sitemaps_controller.rb",
     "app/helpers/blog_helper.rb",
     "app/helpers/news_helper.rb",
     "app/helpers/spud/admin/news_posts_helper.rb",
     "app/helpers/spud/admin/post_categories_helper.rb",
     "app/helpers/spud/admin/post_comments_helper.rb",
     "app/helpers/spud/admin/posts_helper.rb",
+    "app/helpers/spud/blog/sitemaps_helper.rb",
     "app/models/spud_post.rb",
     "app/models/spud_post_category.rb",
     "app/models/spud_post_comment.rb",
@@ -57,6 +61,7 @@ Gem::Specification.new do |s|
     "app/views/spud/admin/posts/edit.html.erb",
     "app/views/spud/admin/posts/index.html.erb",
     "app/views/spud/admin/posts/new.html.erb",
+    "app/views/spud/blog/sitemaps/show.xml.builder",
     "config/application.rb",
     "config/boot.rb",
     "config/routes.rb",
