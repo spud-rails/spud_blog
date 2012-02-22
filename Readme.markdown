@@ -39,4 +39,8 @@ Spud Blog current accepts the following configuration options.
 Customizing Views
 -----------------
 
-A number of starter views have been provided for you as a jumping off point. You may choose to use these views or write your own from scratch. When displaying a post make sure to respect the individual post's `comments_enabled` flag. 
+A number of built-in views have been provided to help you get started with the frontend display. Customzing these views will require you to copy them into your local application, which can be accomplished by using the views generator. 
+
+	rails generate spud:blog:views
+
+__NOTE:__ The built-in views are likely to undergo changes are features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 

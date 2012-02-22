@@ -5,18 +5,18 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.2.2"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-02-17"
+  s.date = "2012-02-22"
   s.email = "greg@westlakedesign.com"
   s.files = [
-    "app/assets/javascripts/news.js",
     "app/assets/javascripts/spud/admin/news_posts.js",
     "app/assets/javascripts/spud/admin/post_categories.js",
     "app/assets/javascripts/spud/admin/post_comments.js",
     "app/assets/javascripts/spud/admin/posts.js",
+    "app/assets/javascripts/spud/blog.js",
     "app/assets/javascripts/spud/blog/sitemaps.js",
     "app/assets/stylesheets/news.css",
     "app/assets/stylesheets/spud/admin/news_posts.css",
@@ -65,6 +65,8 @@ Gem::Specification.new do |s|
     "config/application.rb",
     "config/boot.rb",
     "config/routes.rb",
+    "lib/generators/spud/blog/views_generator.rb",
+    "lib/scripts/random_data.rb",
     "lib/spud_blog.rb",
     "lib/spud_blog/configuration.rb",
     "lib/spud_blog/engine.rb"

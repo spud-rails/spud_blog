@@ -12,7 +12,9 @@ class SpudPost < ActiveRecord::Base
 	before_validation :set_url_name
 
 	def self.public_posts(page, per_page)
-		return where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
+
+		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
+
 	end
 
 	def self.public_blog_posts(page, per_page)
@@ -24,7 +26,7 @@ class SpudPost < ActiveRecord::Base
 	end
 
 	def self.recent_posts(limit=5)
-		return where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc').limit(limit)
+		return where('visible = ? AND published_at <= ?', true, Time.now.utc).order('published_at desc').limit(limit)
 	end
 
 	def self.recent_blog_posts(limit=5)
@@ -44,6 +46,8 @@ class SpudPost < ActiveRecord::Base
 		end
 	end
 
+	#def self.posts_for_category_archive(category, )
+
  	# Returns an array of Date objects for months with public posts
 	def self.months_with_public_posts
 		# Select 
@@ -54,8 +58,12 @@ class SpudPost < ActiveRecord::Base
 		# And published_at < '2012-01-30'
 		# Group By published_month, published_year
 		# Order By published_year desc, published_month desc
-		records = select('Month(published_at) as published_month, Year(published_at) as published_year').where('visible = 1 And published_at < ?', DateTime.now).group('published_month, published_year').order('published_year desc, published_month desc')
-		return records.collect{ |r| Date.new(r[:published_year], r[:published_month]) }
+		records = SpudPost.select('Extract(Month from published_at) as published_month, Extract(Year from published_at) as published_year').where('visible = ? AND published_at < ?', true, DateTime.now).group('published_month, published_year').order('published_year desc, published_month desc')
+		begin
+			return records.collect{ |r| Date.new(r[:published_year].to_i, r[:published_month].to_i) }
+		rescue Exception => e
+			logger.fatal "Exception occurred while fetching post archive dates:\n #{e.to_s}"
+		end
 	end
 
 	def display_date

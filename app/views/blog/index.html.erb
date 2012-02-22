@@ -1,14 +1,8 @@
-<div id="spud_blog_categories">
-	<%= form_tag '/blog/category' do %>
-		<label>Filter By Category:</label>
+<div id="spud_blog_filters">
+	<%= form_tag blog_path, :class => 'spud_blog_filter_form' do %>
+		<label>Category:</label>
 		<%= spud_post_category_select %>
-		<input type="submit" value="Submit" />
-	<% end %>
-</div>
-
-<div id="spud_blog_archive">
-	<%= form_tag '/blog/archive' do %>
-		<label>Filter By Month:</label>
+		<label>Month:</label>
 		<%= spud_post_archive_select %>
 		<input type="submit" value="Submit" />
 	<% end %>

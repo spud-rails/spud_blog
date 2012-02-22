@@ -1,37 +1,41 @@
 class NewsController < ApplicationController
 
 	respond_to :html, :xml, :json
-	layout Spud::Blog.base_layout
+	layout Spud::Blog.news_layout
 
   def index
     @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
     respond_with @posts
   end
 
-  def category
-    @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
-    if @post_category.nil?
-      redirect_to news_path
+  # The sole purpose of this action is to redirect from a POST to an seo-friendly url
+  def filter
+    if !params[:category_url_name].blank? && !params[:archive_date].blank?
+      redirect_to news_category_archive_path(params[:category_url_name], params[:archive_date])
+    elsif !params[:category_url_name].blank?
+      redirect_to news_category_path(params[:category_url_name])
+    elsif !params[:archive_date].blank?
+      redirect_to news_archive_path(params[:archive_date])
     else
-      if request.post?
-        redirect_to news_category_path(params[:category_url_name])
-      else
-        @posts = @post_category.posts.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
-        respond_with @posts do |format|
-          format.html { render 'index' }
-        end
-      end
+      redirect_to news_path
+    end
+  end
+
+  def category
+    if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
+      @posts = @post_category.posts_with_children.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    else
+      @posts = []
+    end
+    respond_with @posts do |format|
+      format.html { render 'index' }
     end
   end
 
   def archive
-    if request.post?
-      redirect_to news_archive_path(params[:archive_date])
-    else
-      @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
-      respond_with @posts do |format|
-        format.html { render 'index' }
-      end
+    @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    respond_with @posts do |format|
+      format.html { render 'index' }
     end
   end
 
