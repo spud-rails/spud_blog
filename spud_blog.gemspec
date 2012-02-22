@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.2.4"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
@@ -60,7 +60,7 @@ Gem::Specification.new do |s|
     "config/application.rb",
     "config/boot.rb",
     "config/routes.rb",
-    "lib/generators/spud_blog/views_generator.rb",
+    "lib/generators/spud/blog/views_generator.rb",
     "lib/spud_blog.rb",
     "lib/spud_blog/configuration.rb",
     "lib/spud_blog/engine.rb"
