@@ -11,11 +11,30 @@ Spud.Blog = new function(){
   this.didSubmitFilterForm = function(event){
     event.preventDefault();
     var form = $(this);
-    var select = form.find('select');
     var base = form.attr('action');
-    var section = select.attr('rel');
-    var value = select.val();
-    window.location = base + '/' + section + '/' + value;
+    var url = '';
+
+    // find filter values    
+    var category_select = $(this).find('select[rel=category]');
+    if(category_select){
+      var category = category_select.val();
+    }
+    var archive_select = $(this).find('select[rel=archive]');
+    if(archive_select){
+      var archive = archive_select.val();
+    }
+
+    // build url and redirect
+    if(category && archive){
+      url = '/category/' + category + '/' + archive;
+    }
+    else if(category){
+      url = '/category/' + category;
+    }
+    else if(archive){
+      url = '/archive/' + archive;
+    }
+    window.location = base + url;
   };
 };
 
