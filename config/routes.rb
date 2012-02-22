@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       get 'archive/:archive_date/page/:page', :controller => 'blog', :action => 'archive'
       post 'archive', :controller => 'blog', :action => 'archive'
 
+      # Category/Archive filtering
+      post '/', :controller => 'blog', :action => 'filter'
+
       # Blog Posts
       get '/', :controller => 'blog', :action => 'index', :page => 1, :as => 'blog'
       get 'page/:page', :controller => 'blog', :action => 'index'
@@ -45,6 +48,9 @@ Rails.application.routes.draw do
       get 'archive/:archive_date', :controller => 'news', :action => 'archive', :page => 1, :as => 'news_archive'
       get 'archive/:archive_date/page/:page', :controller => 'news', :action => 'archive'
       post 'archive', :controller => 'news', :action => 'archive'
+
+      # Category/Archive filtering
+      post '/', :controller => 'news', :action => 'filter'
       
       # News Posts
       get '/', :controller => 'news', :action => 'index', :page => 1, :as => 'news'
