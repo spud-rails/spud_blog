@@ -20,12 +20,23 @@ class BlogController < ApplicationController
     end
   end
 
+  # def category
+  #   @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
+  #   if @post_category.nil?
+  #     @posts = []
+  #   else
+  #     @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
+  #   end
+  #   respond_with @posts do |format|
+  #     format.html { render 'index' }
+  #   end
+  # end
+
   def category
-    @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
-    if @post_category.nil?
-      @posts = []
+    if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
+      @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
     else
-      @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
+      @posts = []
     end
     respond_with @posts do |format|
       format.html { render 'index' }

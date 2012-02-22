@@ -15,21 +15,32 @@ Rails.application.routes.draw do
     scope Spud::Blog.config.blog_path do
 
       # Blog Post Categories
-      get 'category/:category_url_name', :controller => 'blog', :action => 'category', :page => 1, :as => 'blog_category'
-      get 'category/:category_url_name/page/:page', :controller => 'blog', :action => 'category'
-      post 'category', :controller => 'blog', :action => 'category'
+      get 'category/:category_url_name(/page/:page)', 
+        :controller => 'blog', 
+        :action => 'category',  
+        :as => 'blog_category',
+        :defaults => {:page => 1}
+      get 'category/:category_url_name/:archive_date(/page/:page)', 
+        :controller => 'blog', 
+        :action => 'category', 
+        :defaults => {:page => 1}
 
       # Blog Post Archives
-      get 'archive/:archive_date', :controller => 'blog', :action => 'archive', :page => 1, :as => 'blog_archive'
-      get 'archive/:archive_date/page/:page', :controller => 'blog', :action => 'archive'
-      post 'archive', :controller => 'blog', :action => 'archive'
+      get 'archive/:archive_date(/page/:page)', 
+        :controller => 'blog', 
+        :action => 'archive', 
+        :as => 'blog_archive',
+        :defaults => {:page => 1}
 
       # Category/Archive filtering
       post '/', :controller => 'blog', :action => 'filter'
 
       # Blog Posts
-      get '/', :controller => 'blog', :action => 'index', :page => 1, :as => 'blog'
-      get 'page/:page', :controller => 'blog', :action => 'index'
+      get '/(page/:page)', 
+        :controller => 'blog', 
+        :action => 'index',
+        :as => 'blog',
+        :defaults => {:page => 1}
       resources :blog_posts, :path => '/', :controller => 'blog', :only => [:show] do
         post '/', :on => :member, :controller => 'blog', :action => 'create_comment'
       end

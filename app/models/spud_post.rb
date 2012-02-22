@@ -45,6 +45,8 @@ class SpudPost < ActiveRecord::Base
 		end
 	end
 
+	#def self.posts_for_category_archive(category, )
+
  	# Returns an array of Date objects for months with public posts
 	def self.months_with_public_posts
 		# Select 
