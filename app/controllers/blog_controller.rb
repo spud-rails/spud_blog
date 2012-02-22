@@ -11,26 +11,16 @@ class BlogController < ApplicationController
 
   # The sole purpose of this action is to redirect from a POST to an seo-friendly url
   def filter
-    if params[:category_url_name]
+    if !params[:category_url_name].blank? && !params[:archive_date].blank?
+      redirect_to blog_category_archive_path(params[:category_url_name], params[:archive_date])
+    elsif !params[:category_url_name].blank?
       redirect_to blog_category_path(params[:category_url_name])
-    elsif params[:archive_date]
+    elsif !params[:archive_date].blank?
       redirect_to blog_archive_path(params[:archive_date])
     else
       redirect_to blog_path
     end
   end
-
-  # def category
-  #   @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
-  #   if @post_category.nil?
-  #     @posts = []
-  #   else
-  #     @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
-  #   end
-  #   respond_with @posts do |format|
-  #     format.html { render 'index' }
-  #   end
-  # end
 
   def category
     if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])

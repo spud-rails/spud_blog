@@ -1,14 +1,8 @@
-<div id="spud_news_categories">
+<div id="spud_news_filters">
 	<%= form_tag news_path, :class => 'spud_blog_filter_form' do %>
-		<label>Filter By Category:</label>
+		<label>Category:</label>
 		<%= spud_post_category_select %>
-		<input type="submit" value="Submit" />
-	<% end %>
-</div>
-
-<div id="spud_news_archive">
-	<%= form_tag news_path, :class => 'spud_blog_filter_form' do %>
-		<label>Filter By Month:</label>
+		<label>Month:</label>
 		<%= spud_post_archive_select %>
 		<input type="submit" value="Submit" />
 	<% end %>
