@@ -11,7 +11,7 @@ module Spud
           :order => 3
         }]
         if Spud::Blog.enable_sitemap == true
-            Spud::Core.config.sitemap_urls += [:spud_cms_sitemap_url]
+            Spud::Core.config.sitemap_urls += [:spud_blog_sitemap_url]
         end
         if Spud::Blog.config.blog_enabled
           Spud::Core.config.admin_applications += [{
