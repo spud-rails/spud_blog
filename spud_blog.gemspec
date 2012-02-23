@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-02-22"
+  s.date = "2012-02-23"
   s.email = "greg@westlakedesign.com"
   s.files = [
     "app/assets/javascripts/spud/admin/news_posts.js",
@@ -65,14 +65,14 @@ Gem::Specification.new do |s|
     "config/application.rb",
     "config/boot.rb",
     "config/routes.rb",
+    "lib/generators/spud/blog/random_posts_generator.rb",
     "lib/generators/spud/blog/views_generator.rb",
-    "lib/scripts/random_data.rb",
     "lib/spud_blog.rb",
     "lib/spud_blog/configuration.rb",
     "lib/spud_blog/engine.rb"
   ]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.10"
   s.summary = "Spud Blog Engine"
 
   if s.respond_to? :specification_version then
