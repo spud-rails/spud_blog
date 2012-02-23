@@ -72,7 +72,7 @@ Gem::Specification.new do |s|
     "lib/spud_blog/engine.rb"
   ]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Spud Blog Engine"
 
   if s.respond_to? :specification_version then
