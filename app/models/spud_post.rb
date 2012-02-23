@@ -12,9 +12,7 @@ class SpudPost < ActiveRecord::Base
 	before_validation :set_url_name
 
 	def self.public_posts(page, per_page)
-
 		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
-
 	end
 
 	def self.public_blog_posts(page, per_page)
