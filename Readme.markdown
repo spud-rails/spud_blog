@@ -43,4 +43,4 @@ A number of built-in views have been provided to help you get started with the f
 
 	rails generate spud:blog:views
 
-__NOTE:__ The built-in views are likely to undergo changes are features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 
+__NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 

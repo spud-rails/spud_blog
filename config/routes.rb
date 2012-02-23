@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       resources :post_categories
     end
     namespace :blog do
-         resource :sitemap,:only => "show"
+      resource :sitemap,:only => "show"
     end
   end
 
