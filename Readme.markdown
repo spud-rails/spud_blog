@@ -34,6 +34,7 @@ Spud Blog current accepts the following configuration options.
 	  config.blog_path = 'blog'
 	  config.news_path = 'news'
 	  config.posts_per_page = 5
+	  config.has_custom_fields = true
 	end
 
 Customizing Views
@@ -44,3 +45,33 @@ A number of built-in views have been provided to help you get started with the f
 	rails generate spud:blog:views
 
 __NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 
+
+Javascript Driver
+-----------------
+
+Spud Blog includes a small, unobtrusive javascript driver that adds functionality to the built-in views. Including the driver is optional, as all client-side views and controllers are designed to work whether you include it or not. 
+
+	<%= javascript_include_tag 'spud/blog' %>
+
+Custom Fields
+-------------
+
+You may find that your blog requires a fields that isn't included in the default `spud_post` model. Adding custom fields is easy. 
+
+1. Set `has_custom_fields` to true in your Spud Blog configuration
+2. Create a migration adding the necessary column(s) to your database
+
+		class AddCaptionToPosts < ActiveRecord::Migration
+		  def change
+		    add_column :spud_posts, :caption, :string
+		  end
+		end
+
+3. Save a view partial at `app/views/spud/admin/posts/_custom_fields.html.erb` with the desired inputs
+
+		<ol>
+		  <li>
+		    <%= f.label :caption, 'Caption' %>
+		    <%= f.text_field :caption %>
+		  </li>
+		</ol>
