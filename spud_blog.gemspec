@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.date = "2012-02-24"
   s.email = "greg@westlakedesign.com"
   s.files = [
+    "app/assets/images/spud/admin/news_thumb.png",
+    "app/assets/images/spud/admin/posts_thumb.png",
     "app/assets/javascripts/spud/admin/news_posts.js",
     "app/assets/javascripts/spud/admin/post_categories.js",
     "app/assets/javascripts/spud/admin/post_comments.js",
@@ -44,9 +46,11 @@ Gem::Specification.new do |s|
     "app/views/blog/_comment.html.erb",
     "app/views/blog/_comment_form.html.erb",
     "app/views/blog/index.html.erb",
+    "app/views/blog/index.rss.builder",
     "app/views/blog/show.html.erb",
     "app/views/layouts/spud/admin/post.html.erb",
     "app/views/news/index.html.erb",
+    "app/views/news/index.rss.builder",
     "app/views/news/show.html.erb",
     "app/views/spud/admin/news_posts/edit.html.erb",
     "app/views/spud/admin/news_posts/index.html.erb",
@@ -72,22 +76,19 @@ Gem::Specification.new do |s|
     "lib/spud_blog/engine.rb"
   ]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Spud Blog Engine"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<spud_core>, [">= 0.5.2"])
-      s.add_runtime_dependency(%q<will_paginate>, [">= 0"])
+      s.add_runtime_dependency(%q<spud_core>, [">= 0.6.0"])
     else
-      s.add_dependency(%q<spud_core>, [">= 0.5.2"])
-      s.add_dependency(%q<will_paginate>, [">= 0"])
+      s.add_dependency(%q<spud_core>, [">= 0.6.0"])
     end
   else
-    s.add_dependency(%q<spud_core>, [">= 0.5.2"])
-    s.add_dependency(%q<will_paginate>, [">= 0"])
+    s.add_dependency(%q<spud_core>, [">= 0.6.0"])
   end
 end
 

@@ -1,6 +1,6 @@
 class BlogController < ApplicationController
 
-	respond_to :html, :xml, :json
+	respond_to :html, :xml, :json,:rss
 	before_filter :find_post, :only => [:show]
 	layout Spud::Blog.base_layout
 

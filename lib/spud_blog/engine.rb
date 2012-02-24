@@ -24,7 +24,7 @@ module Spud
         if Spud::Blog.config.news_enabled
           Spud::Core.config.admin_applications += [{
             :name => 'News Posts',
-            :thumbnail => 'spud/admin/posts_thumb.png',
+            :thumbnail => 'spud/admin/news_thumb.png',
             :url => '/spud/admin/news_posts',
             :order => 2
           }]
