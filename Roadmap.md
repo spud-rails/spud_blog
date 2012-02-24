@@ -10,6 +10,7 @@
 - Manage categories from directly within the add/edit post form
 - Category manager tool should display child categories indended below their parents
 - Fields for meta keywords, description, etc
+- Fix `published_at` selector to support time of day
 
 ## Frontend
 
