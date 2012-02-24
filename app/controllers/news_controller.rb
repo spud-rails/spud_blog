@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
 
-	respond_to :html, :xml, :json
+	respond_to :html, :xml, :json,:rss
 	layout Spud::Blog.news_layout
 
   caches_action :show, :index,

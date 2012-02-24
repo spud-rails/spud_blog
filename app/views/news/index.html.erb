@@ -1,3 +1,6 @@
+<%=content_for :head do%>
+<link rel="alternate" type="application/rss+xml" title="<%=Spud::Core.site_name%> News RSS" href="<%=news_url()%>" />
+<%end%>
 <div id="spud_news_filters">
 	<%= form_tag news_path, :class => 'spud_blog_filter_form' do %>
 		<label>Category:</label>

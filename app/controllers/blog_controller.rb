@@ -1,6 +1,8 @@
 class BlogController < ApplicationController
 
-	respond_to :html, :xml, :json
+
+	respond_to :html, :xml, :json,:rss
+
 	layout Spud::Blog.base_layout
 
   caches_action :show, :index,

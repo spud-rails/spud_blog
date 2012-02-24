@@ -11,7 +11,7 @@ Spud.Admin.Posts = new function(){
 	this.edit = function(){
 		$('input[type=submit],.close_dialog').button();
 		initDatePicker();
-		initWysiwym();
+		initTinyMCE();
 		$('#spud_post_new_category_form button').live('click', self.didSubmitCategory);
 	};
 
