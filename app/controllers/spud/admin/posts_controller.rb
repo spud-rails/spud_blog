@@ -8,7 +8,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	belongs_to_spud_app :blog_posts
 
 	def index
-		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)
+		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:comments, :author).paginate(:page => params[:page], :per_page => 15)
 		respond_with @posts
 	end
 
@@ -19,7 +19,10 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	def update
 		@categories = SpudPostCategory.grouped
-    flash[:notice] = 'Post was successfully updated.' if @post.update_attributes(params[:spud_post])
+		if @post.update_attributes(params[:spud_post])
+			flash[:notice] = 'Post was successfully updated.'
+			expire_blog_actions
+		end
     respond_with @post, :location => spud_admin_posts_path
 	end
 
@@ -32,12 +35,18 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	def create
 		@categories = SpudPostCategory.grouped
 		@post = SpudPost.new(params[:spud_post])
-    flash[:notice] = 'Post was successfully created.' if @post.save
+		if @post.save
+	    flash[:notice] = 'Post was successfully created.'
+	    expire_blog_actions
+		end
     respond_with @post, :location => spud_admin_posts_path
 	end
 
 	def destroy
-    flash[:notice] = 'Post was successfully deleted.' if @post.destroy
+		if @post.destroy
+	    flash[:notice] = 'Post was successfully deleted.' 
+	    expire_blog_actions
+   	end
     respond_with @post, :location => spud_admin_posts_path
 	end
 
@@ -49,6 +58,11 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 			flash[:error] = "Post not found!"
 			redirect_to spud_admin_posts_path and return false
 		end
+	end
+
+	def expire_blog_actions
+		expire_action blog_url
+		expire_action blog_post_url(@post.url_name) unless @post.nil?
 	end
 
 end

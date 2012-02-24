@@ -3,6 +3,11 @@ class NewsController < ApplicationController
 	respond_to :html, :xml, :json
 	layout Spud::Blog.news_layout
 
+  caches_action :show, :index,
+    :expires => Spud::Blog.config.caching_expires_in,
+    :if => Proc.new{ |c| Spud::Blog.config.caching_enabled },
+    :unless => Proc.new{ |c| c.params[:page] && c.params[:page].to_i > 1 }
+
   def index
     @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
     respond_with @posts

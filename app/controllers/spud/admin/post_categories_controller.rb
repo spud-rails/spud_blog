@@ -17,7 +17,10 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 	end
 
 	def update
-		flash[:notice] = 'Post Category was successfully updated' if @post_category.update_attributes(params[:spud_post_category])
+		if @post_category.update_attributes(params[:spud_post_category])
+			flash[:notice] = 'Post Category was successfully updated' 
+			expire_post_actions
+		end
 		respond_with @post_category, :location => spud_admin_post_categories_path
 	end
 
@@ -28,12 +31,18 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 
 	def create
 		@post_category = SpudPostCategory.new(params[:spud_post_category])
-		flash[:notice] = 'Post Category was successfully created' if @post_category.save
+		if @post_category.save
+			flash[:notice] = 'Post Category was successfully created'
+			expire_post_actions
+		end
 		respond_with @post_category, :location => spud_admin_post_categories_path
 	end
 
 	def destroy
-		flash[:notice] = 'Post Category was successfully deleted' if @post_category.destroy
+		if @post_category.destroy
+			flash[:notice] = 'Post Category was successfully deleted'
+			expire_post_actions
+		end
 		respond_with @post_category, :location => spud_admin_post_categories_path
 	end
 
@@ -41,6 +50,11 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 
 	def find_category
 		@post_category = SpudPostCategory.find(params[:id])
+	end
+
+	def expire_post_actions
+		expire_action news_url
+		expire_action blog_url
 	end
 
 end

@@ -1,7 +1,7 @@
 module Spud
   module Blog
     include ActiveSupport::Configurable
-    config_accessor :base_layout,:news_layout, :blog_enabled, :news_enabled, :posts_per_page, :blog_path, :news_path, :enable_sitemap, :has_custom_fields
+    config_accessor :base_layout,:news_layout, :blog_enabled, :news_enabled, :posts_per_page, :blog_path, :news_path, :enable_sitemap, :has_custom_fields, :caching_enabled, :caching_expires_in
     self.base_layout = 'application'
     self.news_layout = nil
     self.news_enabled = false
@@ -11,5 +11,7 @@ module Spud
     self.news_path = 'news'
     self.enable_sitemap = true
     self.has_custom_fields = false
+    self.caching_enabled = true
+    self.caching_expires_in = 1.hour
   end
 end
