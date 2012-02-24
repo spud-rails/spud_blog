@@ -5,8 +5,7 @@ Spud Blog is a Blog Engine designed to be robust, easy to use, and light weight.
 
 __NOTE:__ This project is still in its early infancy.
 
-Installation/Usage
-------------------
+## Installation/Usage
 
 1. In your Gemfile add the following
 
@@ -22,8 +21,7 @@ Installation/Usage
 
 4. run a rails server instance and point your browser to /spud/admin
 
-Configuration
--------------
+## Configuration
 
 Spud Blog current accepts the following configuration options.
 
@@ -37,8 +35,7 @@ Spud Blog current accepts the following configuration options.
 	  config.has_custom_fields = true
 	end
 
-Customizing Views
------------------
+## Customizing Views
 
 A number of built-in views have been provided to help you get started with the frontend display. Customzing these views will require you to copy them into your local application, which can be accomplished by using the views generator. 
 
@@ -46,17 +43,15 @@ A number of built-in views have been provided to help you get started with the f
 
 __NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 
 
-Javascript Driver
------------------
+## Javascript Driver
 
 Spud Blog includes a small, unobtrusive javascript driver that adds functionality to the built-in views. Including the driver is optional, as all client-side views and controllers are designed to work whether you include it or not. 
 
 	<%= javascript_include_tag 'spud/blog' %>
 
-Custom Fields
--------------
+## Custom Fields
 
-You may find that your blog requires a fields that isn't included in the default `spud_post` model. Adding custom fields is easy. 
+You may find that your blog requires a field that isn't included in the default `spud_post` model. Adding custom fields is easy. 
 
 1. Set `has_custom_fields` to true in your Spud Blog configuration
 2. Create a migration adding the necessary column(s) to your database
