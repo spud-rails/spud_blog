@@ -28,6 +28,15 @@
 		</ul>
 	</fieldset>
 
+	<% if Spud::Blog.config.has_custom_fields %>
+	<fieldset>
+		<legend>Custom Fields</legend>
+		<ol>
+			<%= render :partial => '/spud/admin/posts/custom_fields', :locals => {:f => f} %>
+		</ol>
+	</fieldset>
+	<% end %>
+
 	<fieldset>
 		<legend>Advanced</legend>
 		<ol>
