@@ -45,7 +45,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	def destroy
 		if @post.destroy
 	    flash[:notice] = 'News Post was successfully deleted.'
-	    expire_news_actions(@post)
+	    expire_news_actions
 		end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
