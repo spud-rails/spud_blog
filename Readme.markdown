@@ -33,6 +33,8 @@ Spud Blog current accepts the following configuration options.
 	  config.news_path = 'news'
 	  config.posts_per_page = 5
 	  config.has_custom_fields = true
+	  config.caching_enabled = true
+	  config.caching_expires_in = 1.hour
 	end
 
 ## Customizing Views
