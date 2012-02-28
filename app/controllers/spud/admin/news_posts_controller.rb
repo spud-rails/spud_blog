@@ -4,8 +4,8 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	respond_to :html, :xml, :json
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
 	add_breadcrumb 'News Posts', :spud_admin_news_posts_path
-
 	belongs_to_spud_app :news_posts
+	cache_sweeper :spud_post_sweeper, :only => [:create, :update, :destroy]
 
 	def index
 		@posts = SpudPost.where(:is_news => true).order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)

@@ -4,8 +4,8 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 	respond_to :html, :xml, :json
 	before_filter :find_category, :only => [:show, :edit, :update, :destroy]
 	add_breadcrumb 'Post Categories', :spud_admin_post_categories_path
-
 	belongs_to_spud_app :post_categories
+	cache_sweeper :spud_post_category_sweeper, :only => [:create, :update, :destroy]
 
 	def index
 		@post_categories = SpudPostCategory.order('name asc').includes(:posts).paginate(:page => params[:page], :per_page => 15)

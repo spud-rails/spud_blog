@@ -1,15 +1,22 @@
 class BlogController < ApplicationController
 
-
-	respond_to :html, :xml, :json,:rss
-
+	respond_to :html, :xml, :json, :rss
 	layout Spud::Blog.base_layout
 
   caches_action :show, :index,
-    :expires => Spud::Blog.config.caching_expires_in,
+    :expires => Spud::Blog.config.action_caching_duration,
+    :layout => false,
     :if => Proc.new{ |c|
-      Spud::Blog.config.caching_enabled && !(c.params[:page] && c.params[:page].to_i > 1)
+      Spud::Blog.config.enable_action_caching && !(c.params[:page] && c.params[:page].to_i > 1)
     }
+
+  after_filter :only => [:show, :index] do |c|
+    if Spud::Blog.enable_full_page_caching && !(c.params[:page] && c.params[:page].to_i > 1)
+      c.cache_page(nil, nil, false)
+    end
+  end
+
+  cache_sweeper :spud_post_comment_sweeper, :only => [:create_comment]
 
   def index
     @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
@@ -65,10 +72,7 @@ class BlogController < ApplicationController
     end
     @comment = @post.comments.new(params[:spud_post_comment])
     @comment.approved = true
-    if @comment.save
-      flash[:notice] = 'Your comment has been posted, however it will not appear until it is approved.'
-      expire_action blog_post_url(@post.url_name)
-    end
+    flash[:notice] = 'Your comment has been posted, however it will not appear until it is approved.' if @comment.save
     respond_with @comment do |format|
     	format.html { redirect_to blog_post_path(@post.url_name, :anchor => 'spud_post_comment_form') }
     end
