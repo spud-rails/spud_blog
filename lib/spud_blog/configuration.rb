@@ -18,7 +18,7 @@ module Spud
     self.enable_sitemap = true
     self.has_custom_fields = false
     self.enable_action_caching = false
-    self.action_caching_duration = 1.hour
+    self.action_caching_duration = 3600
     self.enable_full_page_caching = false
   end
 end
