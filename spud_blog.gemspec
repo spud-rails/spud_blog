@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "spud_blog"
-  s.version = "0.6.3"
+  s.version = "0.6.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Woods"]
-  s.date = "2012-02-24"
+  s.date = "2012-02-29"
   s.email = "greg@westlakedesign.com"
   s.files = [
     "app/assets/images/spud/admin/news_thumb.png",
@@ -42,7 +42,10 @@ Gem::Specification.new do |s|
     "app/helpers/spud/blog/sitemaps_helper.rb",
     "app/models/spud_post.rb",
     "app/models/spud_post_category.rb",
+    "app/models/spud_post_category_sweeper.rb",
     "app/models/spud_post_comment.rb",
+    "app/models/spud_post_comment_sweeper.rb",
+    "app/models/spud_post_sweeper.rb",
     "app/views/blog/_comment.html.erb",
     "app/views/blog/_comment_form.html.erb",
     "app/views/blog/index.html.erb",
@@ -76,7 +79,7 @@ Gem::Specification.new do |s|
     "lib/spud_blog/engine.rb"
   ]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.10"
   s.summary = "Spud Blog Engine"
 
   if s.respond_to? :specification_version then
