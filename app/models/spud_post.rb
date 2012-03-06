@@ -6,6 +6,7 @@ class SpudPost < ActiveRecord::Base
 		:foreign_key => 'spud_post_id'
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
+	has_many :spud_permalinks,:as => :attachment
 	scope :publicly, where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc')
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name

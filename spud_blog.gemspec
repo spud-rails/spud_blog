@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.1"
   s.add_dependency 'spud_core', "~>0.7.0"
+  s.add_dependency 'spud_permalinks', "~>0.0.1"
 
   s.add_development_dependency "mysql2"
   s.add_development_dependency "rspec"
