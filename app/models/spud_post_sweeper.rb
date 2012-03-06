@@ -26,7 +26,7 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
       end
     end
     if Spud::Blog.config.enable_full_page_caching 
-      expire_page spud_blog_sitemap_path
+      expire_page spud_blog_sitemap_path(:format => :xml)
       if record.is_news
         expire_page news_path
         expire_page news_path(:format => :rss)
@@ -38,7 +38,7 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
       end
     end
 
-    expire_page spud_sitemap_path
+    expire_page spud_sitemap_path(:format => :xml)
   end
 
 end

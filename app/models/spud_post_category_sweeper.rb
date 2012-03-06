@@ -35,7 +35,7 @@ class SpudPostCategorySweeper < ActionController::Caching::Sweeper
       end
       expire_page news_path
       expire_page blog_path
-      expire_page spud_blog_sitemap_path
+      expire_page spud_blog_sitemap_path(:format => :xml)
     end
   end
 end

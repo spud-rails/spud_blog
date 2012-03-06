@@ -21,7 +21,6 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		@categories = SpudPostCategory.grouped
 		if @post.update_attributes(params[:spud_post])
 	    flash[:notice] = 'News Post was successfully updated.'
-			expire_news_actions(@post)
 	  end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
@@ -37,7 +36,6 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		@post = SpudPost.new(params[:spud_post])
 		if @post.save
     	flash[:notice] = 'News Post was successfully created.'
-    	expire_news_actions
 	  end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
@@ -45,7 +43,6 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	def destroy
 		if @post.destroy
 	    flash[:notice] = 'News Post was successfully deleted.'
-	    expire_news_actions
 		end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
@@ -58,11 +55,6 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 			flash[:error] = 'News Post not found!'
 			redirect_to spud_admin_news_posts_path and return false
 		end
-	end
-
-	def expire_news_actions
-		expire_action news_url
-		expire_action news_post_url(@post.url_name) unless @post.nil?
 	end
 
 end
