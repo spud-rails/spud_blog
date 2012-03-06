@@ -5,7 +5,6 @@ class NewsController < ApplicationController
 
   caches_action :show, :index,
     :expires => Spud::Blog.config.action_caching_duration,
-    :layout => false,
     :if => Proc.new{ |c|
       Spud::Blog.config.enable_action_caching && !(c.params[:page] && c.params[:page].to_i > 1)
     }
