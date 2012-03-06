@@ -21,7 +21,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		@categories = SpudPostCategory.grouped
 		if @post.update_attributes(params[:spud_post])
 	    flash[:notice] = 'News Post was successfully updated.'
-			expire_news_actions(@post)
+			expire_news_actions
 	  end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
