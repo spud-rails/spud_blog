@@ -14,4 +14,12 @@ module BlogHelper
 		}, params[:archive_date]), :include_blank => true, :rel => 'archive'
 	end
 
+	def spud_blog_rss_link
+		return tag :link, :rel => 'alternate', :type => 'application/rss+xml', :title => "#{Spud::Core.site_name} Blog RSS", :href => blog_url(:format => :rss)
+	end
+
+	def spud_news_rss_link
+		return tag(:link, :rel => 'alternate', :type => 'application/rss+xml', :title => "#{Spud::Core.site_name} News RSS", :href => news_url(:format => :rss))
+	end
+
 end

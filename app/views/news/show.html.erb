@@ -1,3 +1,17 @@
+<% content_for :title do %>
+	<%= @post.title %> | <%= Spud::Core.site_name %>
+<% end %>
+
+<% content_for :head do %>
+	<%= spud_news_rss_link %>
+	<meta name="description" content="<%= @post.meta_description %>" />
+	<% if @post.meta_keywords.blank? %>
+		<meta name="keywords" content="<%= @post.categories.collect{ |c| c.name }.join(',') %>" />
+	<% else %>
+		<meta name="keywords" content="<%= @post.meta_keywords %>" />
+	<% end %>
+<% end %>
+
 <div class="spud_news_post">
 	<h3><%= @post.title %></h3>
 	<h4>Posted by <%= @post.author.full_name %> on <%= @post.display_date %></h4>
