@@ -48,6 +48,14 @@
 				<%= f.label :visible %>
 				<%= f.check_box :visible %>
 			</li>
+			<li>
+				<%= f.label :meta_keywords, 'Keywords' %>
+				<%= f.text_field :meta_keywords %>
+			</li>
+			<li>
+				<%= f.label :meta_description, 'Description' %>
+				<%= f.text_area :meta_description, :rows => 4, :cols => 75 %>
+			</li>
 			<% unless @post.is_news %>
 			<li>
 				<%= f.label :comments_enabled %>
