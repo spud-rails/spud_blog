@@ -15,7 +15,7 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
   def expire_cache_for(record)
     if Spud::Blog.config.enable_action_caching
       expire_action spud_blog_sitemap_url if Spud::Blog.config.blog_enabled
-      if !record.is_news &&  if Spud::Blog.config.blog_enabled
+      if !record.is_news && Spud::Blog.config.blog_enabled
         expire_action blog_url 
         expire_action blog_url(:format => :rss)
         expire_action blog_post_url(record.url_name)
