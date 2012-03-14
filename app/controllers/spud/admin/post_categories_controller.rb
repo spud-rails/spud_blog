@@ -53,8 +53,8 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 	end
 
 	def expire_post_actions
-		expire_action news_url
-		expire_action blog_url
+		expire_action news_url if Spud::Blog.config.news_enabled
+		expire_action blog_url if Spud::Blog.config.blog_enabled
 	end
 
 end
