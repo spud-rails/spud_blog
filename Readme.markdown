@@ -66,9 +66,11 @@ You may find that your blog requires a field that isn't included in the default 
 
 3. Save a view partial at `app/views/spud/admin/posts/_custom_fields.html.erb` with the desired inputs
 
-		<ol>
-		  <li>
-		    <%= f.label :caption, 'Caption' %>
-		    <%= f.text_field :caption %>
-		  </li>
-		</ol>
+		
+		  <div class="control-group">
+		    <%= f.label :caption, 'Caption',:class => "control-label" %>
+		    <div class="controls">
+		    	<%= f.text_field :caption %>
+		    </div>
+		  </div>
+		
