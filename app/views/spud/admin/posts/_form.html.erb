@@ -1,20 +1,14 @@
-	<% if @post.errors.any? %>
-    <div class="spud_admin_form_error_list">
-      <h4><%= pluralize(@post.errors.count, "error") %> prohibited you from saving this post:</h4>
-      <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%=error_messages_for(f.object)%>
 
-	<fieldset>
-		<legend>Post Title</legend>
-		<p>
-			<%= f.text_field :title, :class => 'full-width' %>
-		</p>
-	</fieldset>
+<fieldset>
+  <div class="control-group">
+  <legend>Post Title</legend>
+    	<%=f.label :title, :required=>true,:style =>"display:none;", :class=>"control-label"%>
+      
+        <%=f.text_field :title, :class => "full-width"%>
+      
+  </div>
+</fieldset>
 
 	<div>
 		<%= f.label :content %>
