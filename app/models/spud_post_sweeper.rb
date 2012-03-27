@@ -2,7 +2,11 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
   
   observe SpudPost
 
-  def after_save(record)
+  def after_create(record)
+    expire_cache_for(record)
+  end
+
+  def before_update(record)
     expire_cache_for(record)
   end
 
@@ -37,7 +41,6 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
         expire_page blog_post_path(record.url_name)
       end
     end
-
     expire_page spud_sitemap_path(:format => :xml)
   end
 
