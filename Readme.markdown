@@ -9,14 +9,13 @@ __NOTE:__ This project is still in its early infancy.
 
 1. In your Gemfile add the following
 
-		gem 'spud_core', :git => "git://github.com/davydotcom/spud_core_admin.git"
-		gem 'spud_blog', :git => "git://github.com/davydotcom/spud_blog.git"
+		gem 'spud_core'
+		gem 'spud_blog'
 
 2. Run bundle install
 3. Copy in database migrations to your new rails project
 
-		bundle exec rake spud_core:install:migrations
-		bundle exec rake spud_blog:install:migrations
+		bundle exec rake railties:install:migrations
 		rake db:migrate
 
 4. run a rails server instance and point your browser to /spud/admin
