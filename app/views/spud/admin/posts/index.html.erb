@@ -1,5 +1,5 @@
 <%= content_for :data_controls do %>
-	<%= link_to "New Post", new_spud_admin_post_path, :class => "button", :title => "New Post" %>
+	<%= link_to "New Post", new_spud_admin_post_path, :class => "btn btn-primary", :title => "New Post" %>
 <% end %>
 
 <%=content_for :detail do %>
@@ -21,7 +21,7 @@
 					<td><%= link_to(post.published_at.strftime('%m/%d/%Y'), blog_post_path(post.url_name)) %></td>
 					<td><%= post.comments.size %></td>
 					<td align="right">
-						<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?', :class => 'spud_admin_button_delete' %>
+						<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?', :class => 'btn btn-danger' %>
 					</td>
 				</tr>
 			<%end%>

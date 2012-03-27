@@ -2,17 +2,16 @@
 
 <fieldset>
   <div class="control-group">
-  <legend>Post Title</legend>
+  
     	<%=f.label :title, :required=>true,:style =>"display:none;", :class=>"control-label"%>
       
-        <%=f.text_field :title, :class => "full-width"%>
+    <%=f.text_field :title, :class => "full-width",:placeholder=>"Enter title here"%>
       
   </div>
 </fieldset>
 
 	<div>
-		<%= f.label :content %>
-		<%= f.text_area :content, :class => 'wysiwym tinymce' %>
+		<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce full-width' %>
 	</div>
 
 	<fieldset>
@@ -25,45 +24,57 @@
 	<% if Spud::Blog.config.has_custom_fields %>
 	<fieldset>
 		<legend>Custom Fields</legend>
-		<ol>
+		
 			<%= render :partial => '/spud/admin/posts/custom_fields', :locals => {:f => f} %>
-		</ol>
+		
 	</fieldset>
 	<% end %>
 
 	<fieldset>
 		<legend>Advanced</legend>
-		<ol>
-			<li>
-				<%= f.label :published_at, 'Publish Date' %>
-				<%= f.text_field :published_at, :class => 'spud_form_date_picker' %>
-			</li>
-			<li>
-				<%= f.label :visible %>
-				<%= f.check_box :visible %>
-			</li>
-			<li>
-				<%= f.label :meta_keywords, 'Keywords' %>
-				<%= f.text_field :meta_keywords %>
-			</li>
-			<li>
-				<%= f.label :meta_description, 'Description' %>
-				<%= f.text_area :meta_description, :rows => 4, :cols => 75 %>
-			</li>
+		
+			<div class="control-group">
+				<%= f.label :published_at, 'Publish Date', :class=>"control-label" %>
+				<div class="controls">
+					<%= f.text_field :published_at, :class => 'spud_form_date_picker' %>
+				</div>
+			</div>
+			<div class="control-group">
+				<%= f.label :visible, :class=>"control-label" %>
+				<div class="controls">
+					<%= f.check_box :visible %>
+				</div>
+			</div>
+			<div class="control-group">
+				<%= f.label :meta_keywords, 'Keywords', :class=>"control-label" %>
+				<div class="controls">
+					<%= f.text_field :meta_keywords ,:style=>"width:600px;" %>
+			        <span class="help-block">A Comma seperated list of keywords for search engines. Keep it short (no more than 10 keywords)</span>
+				</div>
+			</div>
+			<div class="control-group">
+				<%= f.label :meta_description, 'Description', :class=>"control-label" %>
+				<div class="controls">
+					<%= f.text_area :meta_description, :style =>"width:600px;height:40px;"%>
+			        <span class="help-block">A short description of the article. This is what appears on a search engines search result page.</span>
+				</div>
+			</div>
 			<% unless @post.is_news %>
-			<li>
-				<%= f.label :comments_enabled %>
-				<%= f.check_box :comments_enabled %>
-			</li>
+			<div class="control-group">
+				<%= f.label :comments_enabled,"Comments Enabled", :class=>"control-label" %>
+				<div class="controls">
+					<%= f.check_box :comments_enabled %>
+				</div>
+			</div>
 			<% end %>
 		</ol>
 	</fieldset>
-
-	<fieldset class="submit">
-		<%= f.hidden_field :is_news %>
+	<%= f.hidden_field :is_news %>
 		<%= f.hidden_field :spud_user_id %>
-		<%= f.submit 'Save Post', :class => "wymupdate"%> or <%= link_to "cancel",request.referer %>
-	</fieldset>
+	<div class="form-actions">
+    	<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer,:class => "btn"%>
+    </div>
+
 
 <script type="text/javascript">
 	$(document).ready(Spud.Admin.Posts.edit);

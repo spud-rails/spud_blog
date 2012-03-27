@@ -1,36 +1,30 @@
-<%= form_for @post_category, :url => path, :html => {:class => 'right_aligned_form'} do |f| %>	
-
-	<% if @post_category.errors.any? %>
-    <div class="spud_admin_form_error_list">
-      <h4><%= pluralize(@post_category.errors.count, "error") %> prohibited you from saving this post:</h4>
-      <ul>
-      <% @post_category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for @post_category, :url => path, :html => {:class => 'form-horizontal'} do |f| %>	
+<%=error_messages_for(f.object)%>
 
 	<fieldset>
-		<legend>Post Category</legend>
-		<ol>
-			<li>
-				<%= f.label :name %>
-				<%= f.text_field :name %>
-			</li>
-			<li>
-				<%= label_tag 'Parent' %>
-				<select name="spud_post_category[parent_id]">
-					<option value="0">No Parent</option>
-					<%= options_for_select(SpudPostCategory.options_for_categories(:filter => @post_category.id), @post_category.parent_id) %>
-				</select>
-			</li>
-		</ol>
+		<legend>Category Info</legend>
+		
+			<div class="control-group">
+				<%= f.label :name,"Name",:class => "control-label" %>
+				<div class="controls">
+					<%= f.text_field :name %>
+				</div>
+			</div>
+			<div class="control-group">
+				<%= label_tag :parent,'Parent',:class => "control-label" %>
+				<div class="controls">
+					<select name="spud_post_category[parent_id]">
+						<option value="0">No Parent</option>
+						<%= options_for_select(SpudPostCategory.options_for_categories(:filter => @post_category.id), @post_category.parent_id) %>
+					</select>
+				</div>
+			</div>
+		
 	</fieldset>
 
-	<fieldset class="submit">
-		<%= f.submit 'Save Post Category' %> or <%= link_to "cancel", request.referer %>
-	</fieldset>
+	<div class="form-actions">
+    	<%=f.submit "Save Post Category", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer,:class => "btn"%>
+    </div>
 
 <% end %>
 

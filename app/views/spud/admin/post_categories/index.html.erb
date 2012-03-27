@@ -1,5 +1,5 @@
 <%= content_for :data_controls do %>
-	<%= link_to "New Post Category", new_spud_admin_post_category_path, :class => "button", :title => "New Post Category" %>
+	<%= link_to "New Post Category", new_spud_admin_post_category_path, :class => "btn btn-primary", :title => "New Post Category" %>
 <% end %>
 
 <%=content_for :detail do %>
@@ -17,7 +17,7 @@
 					<td><%= link_to category.name, edit_spud_admin_post_category_path(category) %></td>
 					<td><%= category.posts.size %></td>
 					<td align="right">
-						<%= link_to 'Delete', spud_admin_post_category_path(category), :method => :delete, :confirm => 'Are you sure you want to delete this category?', :class => 'spud_admin_button_delete' %>
+						<%= link_to 'Delete', spud_admin_post_category_path(category), :method => :delete, :confirm => 'Are you sure you want to delete this category?', :class => 'btn btn-danger' %>
 					</td>
 				</tr>
 			<%end%>
