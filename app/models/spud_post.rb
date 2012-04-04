@@ -1,5 +1,7 @@
 class SpudPost < ActiveRecord::Base
 	searchable
+
+
 	has_and_belongs_to_many :categories, 
 		:class_name => 'SpudPostCategory',
 		:join_table => 'spud_post_categories_posts', 
@@ -7,10 +9,14 @@ class SpudPost < ActiveRecord::Base
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
 	has_many :spud_permalinks,:as => :attachment
-	scope :publicly, where('visible = 1 AND published_at <= ?', Time.now.utc).order('published_at desc')
+
+
+	scope :publicly, where('visible = true AND published_at <= ?', Time.now.utc).order('published_at desc')
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
+	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description
+
 
 	def self.public_posts(page, per_page)
 		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
