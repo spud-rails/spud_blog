@@ -15,7 +15,7 @@ class SpudPostCategory < ActiveRecord::Base
 
 	scope :top_level, where(:parent_id => 0).order('name asc')
 
-	attr_accessible :name,:url_name,
+	attr_accessible :name, :url_name, :parent_id
 
 	def self.grouped
 		return all.group_by(&:parent_id)
