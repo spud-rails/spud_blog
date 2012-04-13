@@ -22,6 +22,7 @@
 #spud_post_categories_form label{
 	float: none;
 	text-align: left;
+	display: inline;
 }
 #spud_post_new_category_form{
 	background: white;
