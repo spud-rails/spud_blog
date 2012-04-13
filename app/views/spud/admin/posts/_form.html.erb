@@ -38,6 +38,17 @@
 					<%= f.text_field :published_at, :class => 'spud_form_date_picker' %>
 				</div>
 			</div>
+			<%if @current_user.super_admin%>
+				<div class="control-group">
+					<%= f.label :spud_user_id, 'Author', :class=>"control-label" %>
+					<div class="controls">
+						<%=f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
+					</div>
+				</div>
+				
+			<%else%>
+				<%= f.hidden_field :spud_user_id %>
+			<%end%>
 			<div class="control-group">
 				<%= f.label :visible, :class=>"control-label" %>
 				<div class="controls">
@@ -69,7 +80,7 @@
 		</ol>
 	</fieldset>
 	<%= f.hidden_field :is_news %>
-		<%= f.hidden_field :spud_user_id %>
+	
 	<div class="form-actions">
     	<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer,:class => "btn"%>
     </div>
