@@ -17,7 +17,7 @@ class SpudPost < ActiveRecord::Base
 	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids
 
 	def self.public_posts(page, per_page)
-		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:comments, :categories).paginate(:page => page, :per_page => per_page)
+		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:categories).paginate(:page => page, :per_page => per_page)
 	end
 
 	def self.public_blog_posts(page, per_page)

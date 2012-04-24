@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    spud_blog (0.8.4)
+    spud_blog (0.8.5)
       rails (~> 3.2.1)
       spud_core (>= 0.8.0, < 0.9.0)
       spud_permalinks (~> 0.0.1)
