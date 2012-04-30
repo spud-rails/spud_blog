@@ -33,11 +33,11 @@ class SpudPost < ActiveRecord::Base
 	end
 
 	def self.recent_blog_posts(limit=5)
-		return self.recent_posts.where(:is_news => false)
+		return self.recent_posts(limit).where(:is_news => false)
 	end
 
 	def self.recent_news_posts(limit=5)
-		return self.recent_posts.where(:is_news => true)
+		return self.recent_posts(limit).where(:is_news => true)
 	end
 
 	def self.from_archive(date_string)
