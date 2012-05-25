@@ -27,7 +27,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 
 	def new
 		@categories = SpudPostCategory.grouped
-		@post = SpudPost.new(:published_at => Date.today, :spud_user_id => current_user.id, :is_news => true, :comments_enabled => false)
+		@post = SpudPost.new(:published_at => Time.zone.now, :spud_user_id => current_user.id, :is_news => true, :comments_enabled => false)
 		respond_with @post
 	end
 

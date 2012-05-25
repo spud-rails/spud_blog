@@ -35,7 +35,7 @@
 			<div class="control-group">
 				<%= f.label :published_at, 'Publish Date', :class=>"control-label" %>
 				<div class="controls">
-					<%= f.text_field :published_at, :class => 'spud_form_date_picker' %>
+					<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
 				</div>
 			</div>
 			<%if @current_user.super_admin%>
