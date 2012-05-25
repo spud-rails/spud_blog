@@ -2,11 +2,8 @@
 
 <fieldset>
   <div class="control-group">
-  
-    	<%=f.label :title, :required=>true,:style =>"display:none;", :class=>"control-label"%>
-      
-    <%=f.text_field :title, :class => "full-width",:placeholder=>"Enter title here"%>
-      
+		<%=f.label :title, :required=>true,:style =>"display:none;", :class=>"control-label"%>
+    <%=f.text_field :title, :class => "full-width",:placeholder=>"Enter title here"%>  
   </div>
 </fieldset>
 
@@ -45,7 +42,6 @@
 						<%=f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
 					</div>
 				</div>
-				
 			<%else%>
 				<%= f.hidden_field :spud_user_id %>
 			<%end%>
@@ -82,8 +78,8 @@
 	<%= f.hidden_field :is_news %>
 	
 	<div class="form-actions">
-    	<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer,:class => "btn"%>
-    </div>
+		<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer, :class => "btn"%>
+	</div>
 
 
 <script type="text/javascript">

@@ -69,6 +69,24 @@ class SpudPost < ActiveRecord::Base
 		end
 	end
 
+	def self.months_with_public_news_posts
+		records = SpudPost.select('Extract(Month from published_at) as published_month, Extract(Year from published_at) as published_year').where('visible = ? AND published_at < ? AND is_news = ?', true, DateTime.now, true).group('published_month, published_year').order('published_year desc, published_month desc')
+		begin
+			return records.collect{ |r| Date.new(r[:published_year].to_i, r[:published_month].to_i) }
+		rescue Exception => e
+			logger.fatal "Exception occurred while fetching post archive dates:\n #{e.to_s}"
+		end
+	end
+
+	def self.months_with_public_blog_posts
+		records = SpudPost.select('Extract(Month from published_at) as published_month, Extract(Year from published_at) as published_year').where('visible = ? AND published_at < ? AND is_news = ?', true, DateTime.now, false).group('published_month, published_year').order('published_year desc, published_month desc')
+		begin
+			return records.collect{ |r| Date.new(r[:published_year].to_i, r[:published_month].to_i) }
+		rescue Exception => e
+			logger.fatal "Exception occurred while fetching post archive dates:\n #{e.to_s}"
+		end
+	end
+
 	def display_date
 		return published_at.strftime("%b %d, %Y")
 	end

@@ -2,6 +2,15 @@ require 'spud_core'
 module Spud
   module Blog
     class Engine < Rails::Engine
+
+      def self.require_model(model_name)
+        require "#{root}/app/models/#{model_name}"
+      end
+
+      def self.require_controller(controller_name)
+        require "#{root}/app/controllers/#{controller_name}"
+      end
+
       engine_name :spud_blog
       initializer :admin do
         Spud::Core.config.admin_applications += [{
