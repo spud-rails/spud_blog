@@ -10,6 +10,7 @@ class SpudPost < ActiveRecord::Base
 	has_many :spud_permalinks,:as => :attachment
 
 	scope :publicly, where('visible = true AND published_at <= ?', Time.now.utc).order('published_at desc')
+	scope :future_posts, where('visible = true AND published_at >', Time.now.utc)
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
