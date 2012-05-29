@@ -3,6 +3,8 @@ class BlogController < ApplicationController
 	respond_to :html, :xml, :json, :rss
 	layout Spud::Blog.base_layout
 
+  before_filter :find_post, :only => :show
+
   caches_action :show, :index,
     :expires => Spud::Blog.config.action_caching_duration,
     :if => Proc.new{ |c|
@@ -57,7 +59,6 @@ class BlogController < ApplicationController
   end
 
   def show
-    find_post
     if @post.comments_enabled
       @comment = SpudPostComment.new(:spud_post_id => params[:id])
     end
