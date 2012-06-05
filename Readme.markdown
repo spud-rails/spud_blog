@@ -73,3 +73,20 @@ You may find that your blog requires a field that isn't included in the default 
 		    </div>
 		  </div>
 		
+## Extending the Post Model
+
+Rails engines allow you to extend or even completely override classes by adding them to your local application. Source files found in your local app's path will take precedence over those found within the Spud Blog gem. Lets say you wanted to extend the SpudPost model.
+
+1. Create a file at `app/models/spud_post.rb`
+2. Add the following code:
+
+		# Use this helper method to pull in the SpudPost source code from the engine
+		Spud::Blog::Engine.require_model('spud_post')
+
+		# Add your own methods to SpudPost
+		class SpudPost
+			attr_accessible :caption
+			def byline
+				return "'#{self.title}' was posted by #{self.author.full_name} on #{self.display_date}"
+			end
+		end
