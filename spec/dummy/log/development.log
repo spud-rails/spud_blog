@@ -1,0 +1,92 @@
+Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
+  [1m[36m (483.0ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (140.9ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)
+  [1m[36m (0.2ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+Migrating to CreateSpudPosts (20120125180945)
+  [1m[35m (435.2ms)[0m  CREATE TABLE `spud_posts` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_user_id` int(11), `title` varchar(255), `content` text, `comments_enabled` tinyint(1) DEFAULT 0, `visible` tinyint(1) DEFAULT 1, `published_at` datetime, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (205.1ms)[0m  [1mCREATE INDEX `index_spud_posts_on_spud_user_id` ON `spud_posts` (`spud_user_id`)[0m
+  [1m[35m (200.2ms)[0m  CREATE INDEX `index_spud_posts_on_visible` ON `spud_posts` (`visible`)
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120125180945')[0m
+Migrating to CreateSpudPostCategories (20120125181022)
+  [1m[35m (190.2ms)[0m  CREATE TABLE `spud_post_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (232.2ms)[0m  [1mCREATE TABLE `spud_post_categories_posts` (`spud_post_id` int(11), `spud_post_category_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (203.9ms)[0m  CREATE INDEX `index_spud_post_categories_posts_on_spud_post_category_id` ON `spud_post_categories_posts` (`spud_post_category_id`)
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120125181022')[0m
+Migrating to CreateSpudPostComments (20120125181359)
+  [1m[35m (193.3ms)[0m  CREATE TABLE `spud_post_comments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_post_id` int(11), `author` varchar(255), `content` text, `approved` tinyint(1) DEFAULT 0, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (236.3ms)[0m  [1mCREATE INDEX `index_spud_post_comments_on_spud_post_id` ON `spud_post_comments` (`spud_post_id`)[0m
+  [1m[35m (200.4ms)[0m  CREATE INDEX `index_spud_post_comments_on_approved` ON `spud_post_comments` (`approved`)
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120125181359')[0m
+Migrating to AddUrlToSpudPosts (20120127143054)
+  [1m[35m (206.9ms)[0m  ALTER TABLE `spud_posts` ADD `url_name` varchar(255)
+  [1m[36m (223.3ms)[0m  [1mCREATE INDEX `index_spud_posts_on_url_name` ON `spud_posts` (`url_name`)[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120127143054')
+Migrating to AddUrlToSpudPostCategories (20120127144942)
+  [1m[36m (186.2ms)[0m  [1mALTER TABLE `spud_post_categories` ADD `parent_id` int(11) DEFAULT 0[0m
+  [1m[35m (220.5ms)[0m  ALTER TABLE `spud_post_categories` ADD `url_name` varchar(255)
+  [1m[36m (201.2ms)[0m  [1mCREATE INDEX `index_spud_post_categories_on_parent_id` ON `spud_post_categories` (`parent_id`)[0m
+  [1m[35m (189.9ms)[0m  CREATE INDEX `index_spud_post_categories_on_url_name` ON `spud_post_categories` (`url_name`)
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120127144942')[0m
+Migrating to AddIsNewsToSpudPosts (20120210165540)
+  [1m[35m (217.3ms)[0m  ALTER TABLE `spud_posts` ADD `is_news` tinyint(1) DEFAULT 0
+  [1m[36m (235.8ms)[0m  [1mCREATE INDEX `index_spud_posts_on_is_news` ON `spud_posts` (`is_news`)[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120210165540')
+Migrating to AddMetaToPosts (20120309181917)
+  [1m[36m (196.1ms)[0m  [1mALTER TABLE `spud_posts` ADD `meta_keywords` varchar(255)[0m
+  [1m[35m (232.6ms)[0m  ALTER TABLE `spud_posts` ADD `meta_description` text
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120309181917')[0m
+Migrating to AddCommentsCounterToSpudPosts (20120413020437)
+  [1m[35m (156.0ms)[0m  ALTER TABLE `spud_posts` ADD `comments_count` int(11) DEFAULT 0
+  [1m[36mSpudPost Load (0.3ms)[0m  [1mSELECT `spud_posts`.* FROM `spud_posts` WHERE (`spud_posts`.`id` >= 0) ORDER BY `spud_posts`.`id` ASC LIMIT 1000[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120413020437')
+Migrating to CreateSpudAdminPermissions (20120610130206)
+  [1m[36m (195.8ms)[0m  [1mCREATE TABLE `spud_admin_permissions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `access` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120610130206')
+Migrating to CreateSpudUsers (20120610130207)
+  [1m[36m (208.0ms)[0m  [1mCREATE TABLE `spud_users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `super_admin` tinyint(1), `login` varchar(255) NOT NULL, `email` varchar(255) NOT NULL, `crypted_password` varchar(255) NOT NULL, `password_salt` varchar(255) NOT NULL, `persistence_token` varchar(255) NOT NULL, `single_access_token` varchar(255) NOT NULL, `perishable_token` varchar(255) NOT NULL, `login_count` int(11) DEFAULT 0 NOT NULL, `failed_login_count` int(11) DEFAULT 0 NOT NULL, `last_request_at` datetime, `current_login_at` datetime, `last_login_at` datetime, `current_login_ip` varchar(255), `last_login_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (203.6ms)[0m  CREATE INDEX `index_spud_users_on_login` ON `spud_users` (`login`)
+  [1m[36m (200.0ms)[0m  [1mCREATE INDEX `index_spud_users_on_email` ON `spud_users` (`email`)[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120610130207')
+Migrating to AddTimeZoneToSpudUser (20120610130208)
+  [1m[36m (206.7ms)[0m  [1mALTER TABLE `spud_users` ADD `time_zone` varchar(255)[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120610130208')
+Migrating to AddScopeToSpudAdminPermissions (20120610130209)
+  [1m[36m (209.6ms)[0m  [1mALTER TABLE `spud_admin_permissions` ADD `scope` varchar(255)[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120610130209')
+Migrating to CreateSpudUserSettings (20120610130210)
+  [1m[36m (194.2ms)[0m  [1mCREATE TABLE `spud_user_settings` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_user_id` int(11), `key` varchar(255), `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20120610130210')
+  [1m[36m (0.1ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+  [1m[36m (0.2ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+  [1m[35m (0.3ms)[0m  DROP DATABASE IF EXISTS `spud_blog_test`
+  [1m[36m (0.2ms)[0m  [1mCREATE DATABASE `spud_blog_test` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`[0m
+  [1m[35m (116.6ms)[0m  CREATE TABLE `spud_admin_permissions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `access` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `scope` varchar(255)) ENGINE=InnoDB
+  [1m[36m (273.0ms)[0m  [1mCREATE TABLE `spud_post_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `parent_id` int(11) DEFAULT 0, `url_name` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (215.1ms)[0m  CREATE INDEX `index_spud_post_categories_on_parent_id` ON `spud_post_categories` (`parent_id`)
+  [1m[36m (266.9ms)[0m  [1mCREATE INDEX `index_spud_post_categories_on_url_name` ON `spud_post_categories` (`url_name`)[0m
+  [1m[35m (174.8ms)[0m  CREATE TABLE `spud_post_categories_posts` (`spud_post_id` int(11), `spud_post_category_id` int(11)) ENGINE=InnoDB
+  [1m[36m (225.7ms)[0m  [1mCREATE INDEX `index_spud_post_categories_posts_on_spud_post_category_id` ON `spud_post_categories_posts` (`spud_post_category_id`)[0m
+  [1m[35m (194.8ms)[0m  CREATE TABLE `spud_post_comments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_post_id` int(11), `author` varchar(255), `content` text, `approved` tinyint(1) DEFAULT 0, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (226.1ms)[0m  [1mCREATE INDEX `index_spud_post_comments_on_approved` ON `spud_post_comments` (`approved`)[0m
+  [1m[35m (210.8ms)[0m  CREATE INDEX `index_spud_post_comments_on_spud_post_id` ON `spud_post_comments` (`spud_post_id`)
+  [1m[36m (216.0ms)[0m  [1mCREATE TABLE `spud_posts` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_user_id` int(11), `title` varchar(255), `content` text, `comments_enabled` tinyint(1) DEFAULT 0, `visible` tinyint(1) DEFAULT 1, `published_at` datetime, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `url_name` varchar(255), `is_news` tinyint(1) DEFAULT 0, `meta_keywords` varchar(255), `meta_description` text, `comments_count` int(11) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (225.3ms)[0m  CREATE INDEX `index_spud_posts_on_is_news` ON `spud_posts` (`is_news`)
+  [1m[36m (200.1ms)[0m  [1mCREATE INDEX `index_spud_posts_on_spud_user_id` ON `spud_posts` (`spud_user_id`)[0m
+  [1m[35m (220.8ms)[0m  CREATE INDEX `index_spud_posts_on_url_name` ON `spud_posts` (`url_name`)
+  [1m[36m (235.0ms)[0m  [1mCREATE INDEX `index_spud_posts_on_visible` ON `spud_posts` (`visible`)[0m
+  [1m[35m (227.6ms)[0m  CREATE TABLE `spud_user_settings` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `spud_user_id` int(11), `key` varchar(255), `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (231.2ms)[0m  [1mCREATE TABLE `spud_users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `super_admin` tinyint(1), `login` varchar(255) NOT NULL, `email` varchar(255) NOT NULL, `crypted_password` varchar(255) NOT NULL, `password_salt` varchar(255) NOT NULL, `persistence_token` varchar(255) NOT NULL, `single_access_token` varchar(255) NOT NULL, `perishable_token` varchar(255) NOT NULL, `login_count` int(11) DEFAULT 0 NOT NULL, `failed_login_count` int(11) DEFAULT 0 NOT NULL, `last_request_at` datetime, `current_login_at` datetime, `last_login_at` datetime, `current_login_ip` varchar(255), `last_login_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `time_zone` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (214.3ms)[0m  CREATE INDEX `index_spud_users_on_email` ON `spud_users` (`email`)
+  [1m[36m (211.8ms)[0m  [1mCREATE INDEX `index_spud_users_on_login` ON `spud_users` (`login`)[0m
+  [1m[35m (222.4ms)[0m  CREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB
+  [1m[36m (237.1ms)[0m  [1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM `schema_migrations`
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120610130210')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120125180945')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120125181022')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120125181359')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120127143054')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120127144942')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120210165540')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120309181917')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120413020437')[0m
