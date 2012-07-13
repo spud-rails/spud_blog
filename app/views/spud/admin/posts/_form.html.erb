@@ -26,6 +26,23 @@
 	</fieldset>
 	<% end %>
 
+	<% if Spud::Core.config.multisite_mode_enabled %>
+	<fieldset>
+		<legend>Sites</legend>
+		<div class="control-group">
+			<div class="controls">
+				<span class="help-block">Choose which websites you would like to publish to.</span>
+				<%= spud_post_site_check_box_tag(Spud::Core.default_site_config, @post) %>
+				<%= spud_post_site_label_tag(Spud::Core.default_site_config) %>
+				<% Spud::Core.config.multisite_config.each do |site| %>
+					<%= spud_post_site_check_box_tag(site, @post) %>
+					<%= spud_post_site_label_tag(site) %>
+				<% end %>
+			</div>
+		</div>
+	</fieldset>
+	<% end %>
+
 	<fieldset>
 		<legend>Advanced</legend>
 		

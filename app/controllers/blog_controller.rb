@@ -23,6 +23,9 @@ class BlogController < ApplicationController
 
   def index
     @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
+    if Spud::Core.config.multisite_mode_enabled
+      @posts = @posts.for_spud_site(current_site_id)
+    end 
     respond_with @posts
   end
 
@@ -41,7 +44,11 @@ class BlogController < ApplicationController
 
   def category
     if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
-      @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+      if Spud::Core.config.multisite_mode_enabled
+        @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
+      else
+        @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+      end
     else
       redirect_to blog_path
       return
@@ -52,7 +59,11 @@ class BlogController < ApplicationController
   end
 
   def archive
-    @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    if Spud::Core.config.multisite_mode_enabled
+      @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
+    else
+      @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    end
     respond_with @posts do |format|
       format.html { render 'index' }
     end
@@ -74,17 +85,17 @@ class BlogController < ApplicationController
     end
     @comment = @post.comments.new(params[:spud_post_comment])
     @comment.approved = true
-    flash[:notice] = 'Your comment has been posted, however it will not appear until it is approved.' if @comment.save
+    flash[:notice] = 'Your comment has been posted.' if @comment.save
     respond_with @comment do |format|
     	format.html { redirect_to blog_post_path(@post.url_name, :anchor => 'spud_post_comment_form') }
     end
   end 
 
-  private 
+  private
 
   def find_post
   	@post = SpudPost.find_by_url_name(params[:id])
-		if @post.blank? || @post.is_private?
+		if @post.blank? || @post.is_private? || (Spud::Core.config.multisite_mode_enabled && !@post.spud_site_ids.include?(current_site_id))
 			flash[:error] = "Post not found!"
 			redirect_to blog_path and return false
 		end

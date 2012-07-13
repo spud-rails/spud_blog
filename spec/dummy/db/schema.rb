@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610130210) do
+ActiveRecord::Schema.define(:version => 20120713150446) do
 
   create_table "spud_admin_permissions", :force => true do |t|
     t.integer  "user_id"
@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(:version => 20120610130210) do
 
   add_index "spud_post_comments", ["approved"], :name => "index_spud_post_comments_on_approved"
   add_index "spud_post_comments", ["spud_post_id"], :name => "index_spud_post_comments_on_spud_post_id"
+
+  create_table "spud_post_sites", :force => true do |t|
+    t.integer  "spud_post_id", :null => false
+    t.integer  "spud_site_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "spud_post_sites", ["spud_post_id"], :name => "index_spud_post_sites_on_spud_post_id"
+  add_index "spud_post_sites", ["spud_site_id"], :name => "index_spud_post_sites_on_spud_site_id"
 
   create_table "spud_posts", :force => true do |t|
     t.integer  "spud_user_id"

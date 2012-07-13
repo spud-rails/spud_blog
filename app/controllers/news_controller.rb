@@ -21,6 +21,9 @@ class NewsController < ApplicationController
 
   def index
     @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
+    if Spud::Core.config.multisite_mode_enabled
+      @posts = @posts.for_spud_site(current_site_id)
+    end 
     respond_with @posts
   end
 
@@ -39,7 +42,11 @@ class NewsController < ApplicationController
 
   def category
     if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
-      @posts = @post_category.posts_with_children.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+      if Spud::Core.config.multisite_mode_enabled
+        @posts = @post_category.posts_with_children.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
+      else
+        @posts = @post_category.posts_with_children.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+      end
     else
       redirect_to news_path
       return
@@ -50,7 +57,11 @@ class NewsController < ApplicationController
   end
 
   def archive
-    @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    if Spud::Core.config.multisite_mode_enabled
+      @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
+    else
+      @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+    end
     respond_with @posts do |format|
       format.html { render 'index' }
     end

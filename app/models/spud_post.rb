@@ -8,14 +8,22 @@ class SpudPost < ActiveRecord::Base
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
 	has_many :spud_permalinks,:as => :attachment
+	has_many :spud_post_sites, :dependent => :destroy
 
 	scope :publicly, where('visible = true AND published_at <= ?', Time.now.utc).order('published_at desc')
 	scope :future_posts, where('visible = true AND published_at > ?', Time.now.utc)
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
+	
+	after_save :set_spud_site_ids
 
-	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids
+	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids, :spud_site_ids
+	attr_accessor :spud_site_ids
+
+	def self.for_spud_site(spud_site_id)
+		return joins(:spud_post_sites).where(:spud_post_sites => {:spud_site_id => spud_site_id})
+	end
 
 	def self.public_posts(page, per_page)
 		return where('visible = ? AND published_at <= ?', true,Time.now.utc).order('published_at desc').includes(:categories).paginate(:page => page, :per_page => per_page)
@@ -100,9 +108,36 @@ class SpudPost < ActiveRecord::Base
 		return !is_public?
 	end
 
+	# Spud site ids getter
+	def spud_site_ids
+		if @spud_site_ids.nil?
+			@spud_site_ids = spud_post_sites.collect{ |site| site.spud_site_id }
+		end
+		return @spud_site_ids
+	end
+
+	# Spud site ids setter
+	def spud_site_ids=(site_ids)
+		if site_ids.is_a?(Array)
+			@spud_site_ids = site_ids
+		else
+			raise 'Site ids must be an Array'
+		end
+	end
+
 	private
 
 	def set_url_name
 		self.url_name = "#{self.published_at.strftime('%Y-%m-%d')}-#{self.title.parameterize}"
+	end
+
+	def set_spud_site_ids
+		if Spud::Core.multisite_mode_enabled
+			_spud_post_sites = []
+			self.spud_site_ids.each do |site_id|
+				_spud_post_sites << SpudPostSite.new(:spud_post_id => id, :spud_site_id => site_id)
+			end
+			self.spud_post_sites = _spud_post_sites
+		end
 	end
 end
