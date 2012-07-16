@@ -119,7 +119,7 @@ class SpudPost < ActiveRecord::Base
 	# Spud site ids setter
 	def spud_site_ids=(site_ids)
 		if site_ids.is_a?(Array)
-			@spud_site_ids = site_ids
+			@spud_site_ids = site_ids.collect{ |id| id.to_i }
 		else
 			raise 'Site ids must be an Array'
 		end

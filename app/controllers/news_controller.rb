@@ -69,7 +69,7 @@ class NewsController < ApplicationController
 
   def show
   	@post = SpudPost.find_by_url_name(params[:id])
-		if @post.blank? || @post.is_private?
+		if @post.blank? || @post.is_private? || (Spud::Core.config.multisite_mode_enabled && !@post.spud_site_ids.include?(current_site_id))
 			flash[:error] = "Post not found!"
 			redirect_to news_path and return false
 		else

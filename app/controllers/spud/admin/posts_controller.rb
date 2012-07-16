@@ -19,6 +19,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	def update
 		@categories = SpudPostCategory.grouped
+		params[:spud_post][:spud_site_ids] ||= []
 		if @post.update_attributes(params[:spud_post])
 			flash[:notice] = 'Post was successfully updated.'
 		end
@@ -33,6 +34,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	def create
 		@categories = SpudPostCategory.grouped
+		params[:spud_post][:spud_site_ids] ||= []
 		@post = SpudPost.new(params[:spud_post])
 		if @post.save
 	    flash[:notice] = 'Post was successfully created.'
@@ -43,7 +45,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	def destroy
 		if @post.destroy
 	    flash[:notice] = 'Post was successfully deleted.' 
-   	end
+		end
     respond_with @post, :location => spud_admin_posts_path
 	end
 

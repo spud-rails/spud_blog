@@ -19,9 +19,10 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 
 	def update
 		@categories = SpudPostCategory.grouped
+		params[:spud_post][:spud_site_ids] ||= []
 		if @post.update_attributes(params[:spud_post])
 	    flash[:notice] = 'News Post was successfully updated.'
-	  end
+		end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
 
@@ -33,10 +34,11 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 
 	def create
 		@categories = SpudPostCategory.grouped
+		params[:spud_post][:spud_site_ids] ||= []
 		@post = SpudPost.new(params[:spud_post])
 		if @post.save
     	flash[:notice] = 'News Post was successfully created.'
-	  end
+		end
     respond_with @post, :location => spud_admin_news_posts_path
 	end
 
