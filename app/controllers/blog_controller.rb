@@ -77,7 +77,10 @@ class BlogController < ApplicationController
   end
 
   def create_comment
-    return unless params[:comment_validation].empty? # trap spam bots
+    unless params[:comment_validation].blank? # trap spam bots
+      render :nothing => true
+      return
+    end
     @post = SpudPost.find(params[:id])
     if @post.blank?
       flash[:error] = "Post not found!"
