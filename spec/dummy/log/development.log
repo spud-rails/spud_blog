@@ -183,3 +183,6 @@ Migrating to CreateSpudPostSites (20120713150446)
   [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120210165540')
   [1m[36m (1.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20120309181917')[0m
   [1m[35m (0.8ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20120413020437')
+Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
+Connecting to database specified by database.yml
+Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`

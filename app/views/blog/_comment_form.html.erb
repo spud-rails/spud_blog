@@ -7,11 +7,14 @@
 		<%= f.label :content %>
 		<%= f.text_area :content %>
 	</div>
-	<div style="display:none;">
+	<div class="comment_validity">
 		<%= label_tag 'Comment Validation' %>
 		<%= text_field_tag 'comment_validation' %>
 	</div>
 	<div>
 		<%= f.submit 'Post Comment' %>
 	</div>
+
 <% end %>
+<%= stylesheet_link_tag    "spud/blog/validity.css", :media => "all" %>
+

@@ -24,7 +24,7 @@ module Spud
         end
         if Spud::Blog.config.blog_enabled
           Spud::Core.config.admin_applications += [{
-            :name => 'Blog Posts', 
+            :name => 'Blog Posts',
             :thumbnail => 'spud/admin/posts_thumb.png',
             :url => '/spud/admin/posts',
             :order => 1
@@ -40,7 +40,7 @@ module Spud
         end
       end
       initializer :assets do
-        Rails.application.config.assets.precompile += ['spud/admin/posts.css']
+        Rails.application.config.assets.precompile += ['spud/admin/posts.css','spud/blog/validity.css']
       end
       initializer :associations do
         SpudUser.class_eval do
