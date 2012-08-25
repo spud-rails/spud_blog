@@ -38,21 +38,21 @@ Spud Blog current accepts the following configuration options.
 
 ## Customizing Views
 
-A number of built-in views have been provided to help you get started with the frontend display. Customzing these views will require you to copy them into your local application, which can be accomplished by using the views generator. 
+A number of built-in views have been provided to help you get started with the frontend display. Customzing these views will require you to copy them into your local application, which can be accomplished by using the views generator.
 
 	rails generate spud:blog:views
 
-__NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed. 
+__NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed.
 
 ## Javascript Driver
 
-Spud Blog includes a small, unobtrusive javascript driver that adds functionality to the built-in views. Including the driver is optional, as all client-side views and controllers are designed to work whether you include it or not. 
+Spud Blog includes a small, unobtrusive javascript driver that adds functionality to the built-in views. Including the driver is optional, as all client-side views and controllers are designed to work whether you include it or not.
 
 	<%= javascript_include_tag 'spud/blog' %>
 
 ## Custom Fields
 
-You may find that your blog requires a field that isn't included in the default `spud_post` model. Adding custom fields is easy. 
+You may find that your blog requires a field that isn't included in the default `spud_post` model. Adding custom fields is easy.
 
 1. Set `has_custom_fields` to true in your Spud Blog configuration
 2. Create a migration adding the necessary column(s) to your database
@@ -65,14 +65,14 @@ You may find that your blog requires a field that isn't included in the default 
 
 3. Save a view partial at `app/views/spud/admin/posts/_custom_fields.html.erb` with the desired inputs
 
-		
+
 		  <div class="control-group">
 		    <%= f.label :caption, 'Caption',:class => "control-label" %>
 		    <div class="controls">
 		    	<%= f.text_field :caption %>
 		    </div>
 		  </div>
-		
+
 ## Extending the Post Model
 
 Rails engines allow you to extend or even completely override classes by adding them to your local application. Source files found in your local app's path will take precedence over those found within the Spud Blog gem. Lets say you wanted to extend the SpudPost model.
@@ -91,13 +91,27 @@ Rails engines allow you to extend or even completely override classes by adding 
 			end
 		end
 
+## Akismet Support
+
+Spud Blog Engine now supports spam comment filtering using akismet. All you have to do is configure the rakismet gem and enable_rakismet in the spud_blog configuration. Add the following to your application.rb file
+
+    Spud::Blog.configure do |config|
+        config.enable_rakismet = true
+    end
+    config.rakismet.key = "your key here"
+    config.rakismet.url = 'http://yourdomain.com/'
+
+Also make sure to add the rakismet gem to your gemfile
+
+		gem 'rakismet'
+
 Testing
 -----------------
 
 Spud uses RSpec for testing. Get the tests running with a few short commands:
 
 1. Create and migrate the databases:
-   
+
         rake db:create
         rake db:migrate
 
