@@ -1,12 +1,12 @@
 module Spud
   module Blog
     include ActiveSupport::Configurable
-    config_accessor( 
-      :base_layout, :news_layout, :blog_enabled, 
-      :news_enabled, :posts_per_page, :blog_path, 
-      :news_path, :enable_sitemap, :has_custom_fields, 
-      :enable_action_caching, :action_caching_duration, 
-      :enable_full_page_caching
+    config_accessor(
+      :base_layout, :news_layout, :blog_enabled,
+      :news_enabled, :posts_per_page, :blog_path,
+      :news_path, :enable_sitemap, :has_custom_fields,
+      :enable_action_caching, :action_caching_duration,
+      :enable_full_page_caching,:enable_rakismet
     )
     self.base_layout = 'application'
     self.news_layout = nil
@@ -20,5 +20,6 @@ module Spud
     self.enable_action_caching = false
     self.action_caching_duration = 3600
     self.enable_full_page_caching = false
+    self.enable_rakismet = false
   end
 end

@@ -32,6 +32,6 @@
 		<%= render 'comment_form' %>
 	</div>
 	<ul id="spud_blog_post_comments">
-		<%= render :partial => 'comment', :collection => @post.comments %>
+		<%= render :partial => 'comment', :collection => @post.visible_comments %>
 	</ul>
 <% end %>

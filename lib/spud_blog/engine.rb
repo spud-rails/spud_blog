@@ -52,6 +52,12 @@ module Spud
           Spud::Core.config.news_layout = Spud::Core.config.base_layout
         end
       end
+
+      initializer :rakismet do
+        if Spud::Blog.enable_rakismet
+          require 'rakismet'
+        end
+      end
     end
   end
 end

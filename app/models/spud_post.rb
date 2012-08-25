@@ -1,12 +1,13 @@
 class SpudPost < ActiveRecord::Base
 	searchable
 
-	has_and_belongs_to_many :categories, 
+	has_and_belongs_to_many :categories,
 		:class_name => 'SpudPostCategory',
-		:join_table => 'spud_post_categories_posts', 
+		:join_table => 'spud_post_categories_posts',
 		:foreign_key => 'spud_post_id'
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
+	has_many :visible_comments, :class_name => 'SpudPostComment',:conditions => {:spam => [nil,false]}
 	has_many :spud_permalinks,:as => :attachment
 	has_many :spud_post_sites, :dependent => :destroy
 
@@ -15,7 +16,7 @@ class SpudPost < ActiveRecord::Base
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
-	
+
 	after_save :set_spud_site_ids
 
 	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids, :spud_site_ids
@@ -62,7 +63,7 @@ class SpudPost < ActiveRecord::Base
 
  	# Returns an array of Date objects for months with public posts
 	def self.months_with_public_posts
-		# Select 
+		# Select
 		# 	Month(published_at) as published_month,
 		# 	Year(published_at) as published_year
 		# From spud_posts

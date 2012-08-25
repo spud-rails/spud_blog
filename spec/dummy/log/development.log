@@ -186,3 +186,5 @@ Migrating to CreateSpudPostSites (20120713150446)
 Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
 Connecting to database specified by database.yml
 Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
+Connecting to database specified by database.yml
+Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`

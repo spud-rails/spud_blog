@@ -25,7 +25,7 @@ class BlogController < ApplicationController
     @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
     if Spud::Core.config.multisite_mode_enabled
       @posts = @posts.for_spud_site(current_site_id)
-    end 
+    end
     respond_with @posts
   end
 
@@ -87,12 +87,16 @@ class BlogController < ApplicationController
       redirect_to blog_path and return false
     end
     @comment = @post.comments.new(params[:spud_post_comment])
+    @comment.user_agent = request.env["HTTP_USER_AGENT"]
+    @comment.user_ip = request.remote_ip
+    @comment.referrer = request.referrer
     @comment.approved = true
+    @comment.permalink = blog_post_url(@post.url_name)
     flash[:notice] = 'Your comment has been posted.' if @comment.save
     respond_with @comment do |format|
     	format.html { redirect_to blog_post_path(@post.url_name, :anchor => 'spud_post_comment_form') }
     end
-  end 
+  end
 
   private
 
