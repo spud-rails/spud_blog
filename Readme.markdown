@@ -5,6 +5,10 @@ Spud Blog is a Blog Engine designed to be robust, easy to use, and light weight.
 
 __NOTE:__ This project is still in its early infancy.
 
+## Release Notes
+
+* 0.8.15 - Increased Spam Protection and Akismet spam service support (Check further down in Readme for instructions)
+
 ## Installation/Usage
 
 1. In your Gemfile add the following
