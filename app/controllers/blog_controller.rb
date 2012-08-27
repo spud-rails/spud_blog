@@ -27,7 +27,7 @@ class BlogController < ApplicationController
       page = params[:page].to_i
     end
 
-    @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
+    @posts = SpudPost.public_blog_posts(page, Spud::Blog.config.posts_per_page)
     if Spud::Core.config.multisite_mode_enabled
       @posts = @posts.for_spud_site(current_site_id)
     end
