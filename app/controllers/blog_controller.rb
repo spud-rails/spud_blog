@@ -25,8 +25,13 @@ class BlogController < ApplicationController
     page = 1
     if params[:page].blank? == false && params[:page].to_i > 1
       page = params[:page].to_i
+      if(page.to_s != params[:page] && page > 1)
+        redirect_to blog_path(:page => page),:status => :moved_permanently and return
+      end
     end
 
+
+    logger.debug("Page = #{page}")
     @posts = SpudPost.public_blog_posts(page, Spud::Blog.config.posts_per_page)
     if Spud::Core.config.multisite_mode_enabled
       @posts = @posts.for_spud_site(current_site_id)
