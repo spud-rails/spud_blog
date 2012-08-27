@@ -22,6 +22,11 @@ class BlogController < ApplicationController
   cache_sweeper :spud_post_comment_sweeper, :only => [:create_comment]
 
   def index
+    page = 1
+    if params[:page].blank? == false && params[:page].to_i > 1
+      page = params[:page].to_i
+    end
+
     @posts = SpudPost.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page)
     if Spud::Core.config.multisite_mode_enabled
       @posts = @posts.for_spud_site(current_site_id)
