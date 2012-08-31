@@ -28,7 +28,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	def new
 		@categories = SpudPostCategory.grouped
-		@post = SpudPost.new(:published_at => Time.zone.now, :spud_user_id => current_user.id, :spud_site_ids => [current_site_id])
+		@post = SpudPost.new(:published_at => Time.zone.now, :spud_user_id => current_user.id, :spud_site_ids => [session[:admin_site] || 0])
 		respond_with @post
 	end
 
@@ -44,7 +44,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	def destroy
 		if @post.destroy
-	    flash[:notice] = 'Post was successfully deleted.' 
+	    flash[:notice] = 'Post was successfully deleted.'
 		end
     respond_with @post, :location => spud_admin_posts_path
 	end
