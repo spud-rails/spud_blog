@@ -1,33 +1,23 @@
-<%= form_for @post_category, :url => path, :html => {:class => 'form-horizontal'} do |f| %>	
-<%=error_messages_for(f.object)%>
+<%= form_for @post_category, :url => (@post_category.new_record? ? spud_admin_post_categories_path : spud_admin_post_category_path(@post_category)), :html => {:class => 'form-horizontal spud_post_category_form'} do |f| %>
+
+	<%= error_messages_for(f.object) %>
 
 	<fieldset>
-		<legend>Category Info</legend>
-		
-			<div class="control-group">
-				<%= f.label :name,"Name",:class => "control-label" %>
-				<div class="controls">
-					<%= f.text_field :name %>
-				</div>
+		<div class="control-group">
+			<%= f.label :name,"Name",:class => "control-label" %>
+			<div class="controls">
+				<%= f.text_field :name %>
 			</div>
-			<div class="control-group">
-				<%= label_tag :parent,'Parent',:class => "control-label" %>
-				<div class="controls">
-					<select name="spud_post_category[parent_id]">
-						<option value="0">No Parent</option>
-						<%= options_for_select(SpudPostCategory.options_for_categories(:filter => @post_category.id), @post_category.parent_id) %>
-					</select>
-				</div>
+		</div>
+		<div class="control-group">
+			<%= label_tag :parent,'Parent',:class => "control-label" %>
+			<div class="controls">
+				<select name="spud_post_category[parent_id]">
+					<option value="0">No Parent</option>
+					<%= options_for_select(SpudPostCategory.options_for_categories(:filter => @post_category.id), @post_category.parent_id) %>
+				</select>
 			</div>
-		
+		</div>
 	</fieldset>
 
-	<div class="form-actions">
-    	<%=f.submit "Save Post Category", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer,:class => "btn"%>
-    </div>
-
 <% end %>
-
-<script type="text/javascript">
-	$(document).ready(Spud.Admin.Posts.edit);
-</script>

@@ -1,9 +1,9 @@
-<li class="spud_post_form_category">
-	<%= check_box_tag 'spud_post[category_ids][]', category.id, @post.category_ids.include?(category.id), :id => "spud_post_category_#{category.id}" %>
+<%= content_tag :li, :class => 'spud_post_form_category', 'data-id' => category.id do %>
+	<%= check_box_tag 'spud_post[category_ids][]', category.id, @post.category_ids.include?(category.id) %>
 	<%= label_tag "spud_post_category_#{category.id}", category.name %>
-	<% if @categories[category.id] %>
-		<ul>
-			<%= render :partial => '/spud/admin/posts/category', :collection => @categories[category.id] %>
-		</ul>
-	<% end %>
-</li>
+  <ul>
+    <% if @categories[category.id] %>
+      <%= render :partial => '/spud/admin/posts/category', :collection => @categories[category.id] %>
+  	<% end %>
+  </ul>
+<% end %>

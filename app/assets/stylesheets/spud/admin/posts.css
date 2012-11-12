@@ -3,7 +3,7 @@
   They will automatically be included in application.css.
 */
 
-#spud_post_categories_form{
+.spud_post_categories_form{
 	list-style-type: none;
 	margin: 15px 0 15px 20px;
 	height: 200px;
@@ -13,12 +13,12 @@
 	padding: 10px;
 	overflow: scroll;
 }
-#spud_post_categories_form ul{
+.spud_post_categories_form ul{
 	list-style-type: none;
 	margin: 3px 0;
 	padding: 0 0 0 20px;
 }
-#spud_post_categories_form label{
+.spud_post_categories_form label{
 	float: none;
 	text-align: left;
 	display: inline;

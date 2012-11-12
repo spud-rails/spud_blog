@@ -14,7 +14,8 @@
 <fieldset>
 	<legend>Categories</legend>
 	<input type="hidden" name="spud_post[category_ids][]" value="" />
-	<ul id="spud_post_categories_form">
+	<%= link_to 'Add Category', new_spud_admin_post_category_path, :class => 'btn btn-small spud_post_add_category' %>
+	<ul class="spud_post_categories_form">
 		<%= render :partial => '/spud/admin/posts/category', :collection => @categories[0] %>
 	</ul>
 </fieldset>
