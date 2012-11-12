@@ -1,24 +1,13 @@
 <%=error_messages_for(f.object)%>
 
 <fieldset>
-  <div class="control-group">
-		<%=f.label :title, :required=>true,:style =>"display:none;", :class=>"control-label"%>
-    <%=f.text_field :title, :class => "full-width",:placeholder=>"Enter title here"%>  
-  </div>
+	<%= f.label :title, :required=>true,:style =>"display:none;" %>
+  <%= f.text_field :title, :class => "full-width",:placeholder=>"Enter title here" %>
 </fieldset>
 
 <div>
 	<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce full-width' %>
 </div>
-
-<fieldset>
-	<legend>Categories</legend>
-	<input type="hidden" name="spud_post[category_ids][]" value="" />
-	<%= link_to 'Add Category', new_spud_admin_post_category_path, :class => 'btn btn-small spud_post_add_category' %>
-	<ul class="spud_post_categories_form">
-		<%= render :partial => '/spud/admin/posts/category', :collection => @categories[0] %>
-	</ul>
-</fieldset>
 
 <% if Spud::Blog.config.has_custom_fields %>
 <fieldset>
@@ -27,71 +16,84 @@
 </fieldset>
 <% end %>
 
-<% if Spud::Core.config.multisite_mode_enabled %>
-<fieldset id="spud_post_site_options">
-	<legend>Sites</legend>
-	<div class="control-group">
-		<div class="controls">
-			<span class="help-block"><b>Choose which websites you would like to publish to:</b></span>
-			<%= spud_post_site_check_box_tag(Spud::Core.default_site_config, @post) %>
-			<%= spud_post_site_label_tag(Spud::Core.default_site_config) %>
-			<% Spud::Core.config.multisite_config.each do |site| %>
-				<%= spud_post_site_check_box_tag(site, @post) %>
-				<%= spud_post_site_label_tag(site) %>
-			<% end %>
-		</div>
-	</div>
-</fieldset>
-<% end %>
-
-<fieldset>
+<fieldset class="spud_post_form_fieldset">
 	<legend>Advanced</legend>
 	
-		<div class="control-group">
-			<%= f.label :published_at, 'Publish Date', :class=>"control-label" %>
-			<div class="controls">
+		<div class="spud_post_form_col">
+			<h4>Meta Data</h4>
+
+			<div class="spud_post_form_row">
+				<%= f.label :published_at, 'Publish Date' %>
 				<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
 			</div>
-		</div>
-		<%if @current_user.super_admin%>
-			<div class="control-group">
-				<%= f.label :spud_user_id, 'Author', :class=>"control-label" %>
-				<div class="controls">
-					<%=f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
+			
+			<% if @current_user.super_admin %>
+				<div class="spud_post_form_row">
+					<%= f.label :spud_user_id, 'Author' %>
+					<%= f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
+				</div>
+			<% else %>
+				<%= f.hidden_field :spud_user_id %>
+			<% end %>
+
+			<% if Spud::Core.config.multisite_mode_enabled %>
+				<div class="spud_post_form_row">
+					<%= f.label :sites, 'Websites to Publish' %>
+					<div class="spud_post_form_input_group">
+						<%= spud_post_site_check_box_tag(Spud::Core.default_site_config, @post) %>
+						<%= spud_post_site_label_tag(Spud::Core.default_site_config) %>
+						<% Spud::Core.config.multisite_config.each do |site| %>
+							<%= spud_post_site_check_box_tag(site, @post) %>
+							<%= spud_post_site_label_tag(site) %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
+
+			<div class="spud_post_form_row">
+				<%= f.label :visible %>
+				<div class="spud_post_form_input_group">
+					<%= f.radio_button :visible, true %>
+					<label class="radio inline" for="spud_post_visible_true">Yes</label>
+					<%= f.radio_button :visible, false %>
+					<label class="radio inline" for="spud_post_visible_false">No</label>
 				</div>
 			</div>
-		<%else%>
-			<%= f.hidden_field :spud_user_id %>
-		<%end%>
-		<div class="control-group">
-			<%= f.label :visible, :class=>"control-label" %>
-			<div class="controls">
-				<%= f.check_box :visible %>
+
+			<% unless @post.is_news %>
+				<div class="spud_post_form_row">
+					<%= f.label :comments_enabled,"Comments Enabled" %>
+					<div class="spud_post_form_input_group">
+						<%= f.radio_button :comments_enabled, true %>
+						<label class="radio inline" for="spud_post_comments_enabled_true">Yes</label>
+						<%= f.radio_button :comments_enabled, false %>
+						<label class="radio inline" for="spud_post_comments_enabled_false">No</label>
+					</div>
+				</div>
+			<% end %>
+
+			<div class="spud_post_form_row">
+				<%= f.label :meta_keywords, 'Keywords' %>
+				<%= f.text_field :meta_keywords %>
+				<span class="spud_post_form_help_block">A Comma seperated list of keywords for search engines. Keep it short (no more than 10 keywords)</span>
+			</div>
+
+			<div class="spud_post_form_row">
+				<%= f.label :meta_description, 'Description' %>
+				<%= f.text_area :meta_description %>
+				<span class="spud_post_form_help_block">A short description of the article. This is what appears on a search engines search result page.</span>
 			</div>
 		</div>
-		<div class="control-group">
-			<%= f.label :meta_keywords, 'Keywords', :class=>"control-label" %>
-			<div class="controls">
-				<%= f.text_field :meta_keywords ,:style=>"width:600px;" %>
-		        <span class="help-block">A Comma seperated list of keywords for search engines. Keep it short (no more than 10 keywords)</span>
-			</div>
+
+		<div class="spud_post_form_col">
+			<h4>Categories</h4>
+			<%= link_to 'Add Category', new_spud_admin_post_category_path, :class => 'btn btn-mini spud_post_add_category' %>
+			<input type="hidden" name="spud_post[category_ids][]" value="" />
+			<ul class="spud_post_categories_form">
+				<%= render :partial => '/spud/admin/posts/category', :collection => @categories[0] %>
+			</ul>
 		</div>
-		<div class="control-group">
-			<%= f.label :meta_description, 'Description', :class=>"control-label" %>
-			<div class="controls">
-				<%= f.text_area :meta_description, :style =>"width:600px;height:40px;"%>
-		        <span class="help-block">A short description of the article. This is what appears on a search engines search result page.</span>
-			</div>
-		</div>
-		<% unless @post.is_news %>
-		<div class="control-group">
-			<%= f.label :comments_enabled,"Comments Enabled", :class=>"control-label" %>
-			<div class="controls">
-				<%= f.check_box :comments_enabled %>
-			</div>
-		</div>
-		<% end %>
-	</ol>
+
 </fieldset>
 <%= f.hidden_field :is_news %>
 

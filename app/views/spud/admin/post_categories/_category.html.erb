@@ -1,0 +1,14 @@
+<%= content_tag :li, :class => 'spud_blog_category_manager_item', 'data-id' => category.id do %>
+  <span class="spud_blog_category_manager_item_name">
+    <%= category.name %>
+  </span>
+  <span class="spud_blog_category_manager_item_actions">
+    <%= link_to 'Edit', edit_spud_admin_post_category_path(category), :class => 'btn btn-mini spud_blog_category_edit' %>
+    <%= link_to 'Delete', spud_admin_post_category_path(category), :class => 'btn btn-mini btn-danger spud_blog_category_delete' %>
+  </span>
+  <ul class="spud_blog_category_manager_item_children">
+    <% if @post_categories[category.id] %>
+      <%= render :partial => 'category', :collection => @post_categories[category.id] %>
+    <% end %>
+  </ul>
+<% end %>
