@@ -7,85 +7,12 @@ Spud.Admin.Posts = new function(){
 	
 	var self = this;
 
-	this.index = function(){
-		$('.spud_blog_manage_categories').live('click', self.clickedManageCategories);
-		$('.spud_blog_category_add_new').live('click', self.clickedAddNewCategory);
-		$('.spud_blog_category_edit').live('click', self.clickedEditCategory);
-		$('.spud_blog_manage_categories_back').live('click', self.clickedBackButton);
-		$('.spud_blog_manage_categories_save').live('click', self.clickedSaveCategory);
-		$('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);
-		$('.spud_blog_category_delete').live('click', self.clickedDeleteCategory);
-	};
-
 	this.edit = function(){
 		initDatePicker();
 		initTinyMCE();
 		$('.spud_post_add_category').live('click', self.clickedPostAddCategory);
 		$('.save_post_category_button').live('click', self.submittedPostCategoryForm);
 		$('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);
-	};
-
-	this.clickedManageCategories = function(e){
-		e.preventDefault();
-		$.ajax({
-			url: $(this).attr('href'),
-			success: function(html, textStatus, jqXHR){
-				displayModalDialogWithOptions({
-					title: 'Manage Categories',
-					html: html,
-					buttons: {
-						'spud_blog_manage_categories_back': 'Back',
-						'spud_blog_manage_categories_save btn-primary': 'Save'
-					}
-				});
-			}
-		});
-	};
-
-	var _cachedCategoryIndex;
-
-	this.clickedAddNewCategory = function(e){
-		e.preventDefault();
-		$.ajax({
-			url: $(this).attr('href'),
-			dataType: 'html',
-			success: function(html, textStatus, jqXHR){
-				_cachedCategoryIndex = $('.spud_blog_category_manager').parent().html();
-				$('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').show();
-				$('.spud_blog_category_manager').replaceWith(html);
-			}
-		});
-	};
-
-	this.clickedEditCategory = function(e){
-		e.preventDefault();
-		$.ajax({
-			url: $(this).attr('href'),
-			dataType: 'html',
-			success: function(html, textStatus, jqXHR){
-				_cachedCategoryIndex = $('.spud_blog_category_manager').parent().html();
-				$('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').show();
-				$('.spud_blog_category_manager').replaceWith(html);
-			}
-		});
-	};
-
-	this.clickedBackButton = function(e){
-		e.preventDefault();
-		$('.spud_post_category_form').replaceWith(_cachedCategoryIndex);
-		$('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').hide();
-	};
-
-	this.clickedDeleteCategory = function(e){
-		e.preventDefault();
-		$.ajax({
-			url: $(this).attr('href'),
-			data: {_method: 'delete'},
-			dataType: 'html',
-			success: function(html, textStatus, jqXHR){
-				$('.spud_blog_category_manager').replaceWith(html);
-			}
-		});
 	};
 
 	this.clickedPostAddCategory = function(e){

@@ -83,7 +83,7 @@ Spud.Admin.PostCategories = new function(){
     }
   };
 
-this.submittedPostCategoryForm = function(e){
+  this.submittedPostCategoryForm = function(e){
     e.preventDefault();
     var form = $('.spud_post_category_form');
     $.ajax({
