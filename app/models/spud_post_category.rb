@@ -15,6 +15,11 @@ class SpudPostCategory < ActiveRecord::Base
 
 	attr_accessible :name, :url_name, :parent_id
 
+	# tell awesome_nested_set not to destroy descendants
+	def skip_before_destroy
+		return true
+	end
+
 	def self.grouped
 		return all.group_by(&:parent_id)
 	end
@@ -59,6 +64,8 @@ class SpudPostCategory < ActiveRecord::Base
 	end
 
 	def update_child_categories
+		logger.debug 'update_child_categories'
 		self.children.update_all(:parent_id => self.parent_id)
+		self.class.rebuild!
 	end
 end
