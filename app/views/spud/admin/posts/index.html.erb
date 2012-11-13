@@ -1,4 +1,5 @@
 <%= content_for :data_controls do %>
+	<%= link_to "Manage Categories", spud_admin_post_categories_path, :class => 'btn spud_blog_manage_categories', :title => 'Manage Categories' %>
 	<%= link_to "New Post", new_spud_admin_post_path, :class => "btn btn-primary", :title => "New Post" %>
 <% end %>
 

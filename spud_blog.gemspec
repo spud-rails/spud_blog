@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'spud_permalinks', "~>0.9.0"
 
   s.add_development_dependency 'mysql2', '0.3.11'
+  s.add_development_dependency 'awesome_nested_set'
   s.add_development_dependency 'rspec', '2.8.0'
   s.add_development_dependency 'rspec-rails', '2.8.1'
   s.add_development_dependency 'shoulda', '~> 3.0.1'

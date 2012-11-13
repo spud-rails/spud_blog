@@ -13,7 +13,7 @@
 			<%= label_tag :parent,'Parent',:class => "control-label" %>
 			<div class="controls">
 				<select name="spud_post_category[parent_id]">
-					<option value="0">No Parent</option>
+					<option value="">No Parent</option>
 					<%= options_for_select(SpudPostCategory.options_for_categories(:filter => @post_category.id), @post_category.parent_id) %>
 				</select>
 			</div>

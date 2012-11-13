@@ -1,19 +1,17 @@
 class SpudPostCategory < ActiveRecord::Base
 	searchable
+	acts_as_nested_set
+
 	has_and_belongs_to_many :posts,
 		:class_name => 'SpudPost',
 		:join_table => 'spud_post_categories_posts',
 		:foreign_key => 'spud_post_category_id'
-	has_many :children, :class_name => 'SpudPostCategory', :foreign_key => 'parent_id'
 	
 	validates_presence_of :name, :url_name
 	validates_uniqueness_of :name, :url_name
-	validate :parent_is_valid
 	before_validation :set_url_name
 
 	before_destroy :update_child_categories
-
-	scope :top_level, where(:parent_id => 0).order('name asc')
 
 	attr_accessible :name, :url_name, :parent_id
 
@@ -27,7 +25,7 @@ class SpudPostCategory < ActiveRecord::Base
 	def self.options_for_categories(config={})
 		collection = config[:collection] || self.grouped
 		level 		 = config[:level] 		 || 0
-		parent_id  = config[:parent_id]  || 0
+		parent_id  = config[:parent_id]  || nil
 		filter 		 = config[:filter] 		 || nil
 		value      = config[:value]			 || :id
 		list 			 = []
@@ -43,8 +41,9 @@ class SpudPostCategory < ActiveRecord::Base
 	end
 
 	def posts_with_children
-		# TO DO: This should return all posts that belong to the instance category and all its child categories
-		return posts
+		category_ids = self.self_and_ancestors.collect{ |category| category.id }
+		post_ids = SpudPostCategoriesPost.where(:spud_post_category_id => category_ids).collect{ |it| it.spud_post_id  }
+		return SpudPost.where(:id => post_ids)
 	end
 
 	private

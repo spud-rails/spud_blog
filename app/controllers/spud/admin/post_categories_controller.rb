@@ -45,13 +45,13 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 
 	def destroy
 		if @post_category.destroy
-			if @post_category.children.any?
-				@post_category.children.update_attribute(:parent_id, @post_category.parent_id)
-			end
 			flash[:notice] = 'Post Category was successfully deleted'
 			expire_post_actions
+			@post_categories = SpudPostCategory.grouped
+			render 'index'
+		else
+			respond_with @post_category, :location => spud_admin_post_categories_path
 		end
-		respond_with @post_category, :location => spud_admin_post_categories_path
 	end
 
 	private
