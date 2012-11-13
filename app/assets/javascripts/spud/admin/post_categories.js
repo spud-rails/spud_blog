@@ -40,6 +40,7 @@ Spud.Admin.PostCategories = new function(){
       url: $(this).attr('href'),
       dataType: 'html',
       success: function(html, textStatus, jqXHR){
+        $('.modal-footer button[data-dismiss="modal"]').hide();
         $('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').show();
         $('.spud_blog_category_manager').replaceWith(html);
       }
@@ -52,6 +53,7 @@ Spud.Admin.PostCategories = new function(){
       url: $(this).attr('href'),
       dataType: 'html',
       success: function(html, textStatus, jqXHR){
+        $('.modal-footer button[data-dismiss="modal"]').hide();
         $('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').show();
         $('.spud_blog_category_manager').replaceWith(html);
       }
@@ -61,6 +63,7 @@ Spud.Admin.PostCategories = new function(){
   this.clickedBackButton = function(e){
     e.preventDefault();
     $('.spud_post_category_form').replaceWith(_cachedCategoryIndex);
+    $('.modal-footer button[data-dismiss="modal"]').show();
     $('.spud_blog_manage_categories_save, .spud_blog_manage_categories_back').hide();
   };
 
