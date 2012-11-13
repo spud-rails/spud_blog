@@ -64,7 +64,6 @@ class SpudPostCategory < ActiveRecord::Base
 	end
 
 	def update_child_categories
-		logger.debug 'update_child_categories'
 		self.children.update_all(:parent_id => self.parent_id)
 		self.class.rebuild!
 	end
