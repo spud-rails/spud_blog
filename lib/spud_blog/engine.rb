@@ -13,12 +13,6 @@ module Spud
 
       engine_name :spud_blog
       initializer :admin do
-        Spud::Core.config.admin_applications += [{
-          :name => 'Post Categories',
-          :thumbnail => 'spud/admin/posts_thumb.png',
-          :url => '/spud/admin/post_categories',
-          :order => 3
-        }]
         if Spud::Blog.enable_sitemap == true
           Spud::Core.config.sitemap_urls += [:spud_blog_sitemap_url]
         end
