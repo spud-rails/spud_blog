@@ -38,4 +38,8 @@
 	<div class="spud_admin_pagination">
 		<%= will_paginate @posts %>
 	</div>
+
+	<script>
+		$(document).ready(Spud.Admin.PostCategories.index);
+	</script>
 <%end%>
