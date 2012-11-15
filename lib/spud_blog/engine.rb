@@ -1,4 +1,8 @@
 require 'spud_core'
+require 'awesome_nested_set'
+require 'spud_permalinks'
+require 'truncate_html'
+
 module Spud
   module Blog
     class Engine < Rails::Engine
