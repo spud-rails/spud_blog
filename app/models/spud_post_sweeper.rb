@@ -1,5 +1,5 @@
 class SpudPostSweeper < ActionController::Caching::Sweeper
-  
+
   observe SpudPost
 
   def after_create(record)
@@ -17,10 +17,10 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
   private
 
   def expire_cache_for(record)
-    if Spud::Blog.config.enable_action_caching
+    if Spud::Blog.config.cache_mode == :action
       expire_action spud_blog_sitemap_url
       if !record.is_news && Spud::Blog.config.blog_enabled
-        expire_action blog_url 
+        expire_action blog_url
         expire_action blog_url(:format => :rss)
         expire_action blog_post_url(record.url_name)
       elsif Spud::Blog.config.news_enabled
@@ -29,7 +29,7 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
         expire_action news_post_url(record.url_name)
       end
     end
-    if Spud::Blog.config.enable_full_page_caching 
+    if Spud::Blog.config.cache_mode == :full_page
       expire_page spud_blog_sitemap_path(:format => :xml)
       if record.is_news && Spud::Blog.config.news_enabled
         expire_page news_path

@@ -6,11 +6,11 @@ class NewsController < ApplicationController
   caches_action :show, :index,
     :expires => Spud::Blog.config.action_caching_duration,
     :if => Proc.new{ |c|
-      Spud::Blog.config.enable_action_caching && !(c.params[:page] && c.params[:page].to_i > 1) && (SpudPost.where(:is_news => true).future_posts.count == 0)
+      Spud::Blog.cache_mode == :action && !(c.params[:page] && c.params[:page].to_i > 1) && (SpudPost.where(:is_news => true).future_posts.count == 0)
     }
 
   after_filter :only => [:show, :index] do |c|
-    if Spud::Blog.enable_full_page_caching && !(c.params[:page] && c.params[:page].to_i > 1)
+    if Spud::Blog.cache_mode == :full_page && !(c.params[:page] && c.params[:page].to_i > 1)
       if (SpudPost.where(:is_news => true).future_posts.count == 0)
         c.cache_page(nil, nil, false)
       end
@@ -23,7 +23,7 @@ class NewsController < ApplicationController
     @posts = SpudPost.public_news_posts(params[:page], Spud::Blog.config.posts_per_page)
     if Spud::Core.config.multisite_mode_enabled
       @posts = @posts.for_spud_site(current_site_id)
-    end 
+    end
     respond_with @posts
   end
 

@@ -13,7 +13,7 @@ class SpudPostCategorySweeper < ActionController::Caching::Sweeper
   private
 
   def expire_cache_for(record)
-    if Spud::Blog.config.enable_action_caching
+    if Spud::Blog.config.cache_mode = :action
       SpudPost.find_each do |p|
         if p.is_news && Spud::Blog.config.news_enabled
           expire_action news_post_url(p.url_name)
@@ -25,7 +25,7 @@ class SpudPostCategorySweeper < ActionController::Caching::Sweeper
       expire_action blog_url if Spud::Blog.config.blog_enabled
       expire_action spud_blog_sitemap_url
     end
-    if Spud::Blog.config.enable_full_page_caching
+    if Spud::Blog.config.cache_mode = :full_page
       SpudPost.find_each do |p|
         if p.is_news && Spud::Blog.config.news_enabled
           expire_page news_post_path(p.url_name)

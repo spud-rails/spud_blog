@@ -1,5 +1,5 @@
 class SpudPostCommentSweeper < ActionController::Caching::Sweeper
-  
+
   observe SpudPostComment
 
   def after_save(record)
@@ -14,14 +14,14 @@ class SpudPostCommentSweeper < ActionController::Caching::Sweeper
 
   def expire_cache_for(record)
     unless record.post.nil?
-      if Spud::Blog.config.enable_action_caching
+      if Spud::Blog.config.cache_mode == :action
         if record.post.is_news
           expire_action news_post_url(record.post.url_name)
         else
           expire_action blog_post_url(record.post.url_name)
         end
       end
-      if Spud::Blog.config.enable_full_page_caching
+      if Spud::Blog.config.cache_mode == :full_page
         if record.post.is_news
           expire_page news_post_path(record.post.url_name)
         else
