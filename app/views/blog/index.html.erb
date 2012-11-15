@@ -23,7 +23,7 @@
 				<h3><%= link_to post.title, blog_post_path(post.url_name) %></h3>
 				<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
 				<div class="spud_blog_post_content">
-					<%= raw post.content %>
+					<%= truncate_html post.content.html_safe, :length => 250 %>
 				</div>
 			</div>
 		<% end %>
