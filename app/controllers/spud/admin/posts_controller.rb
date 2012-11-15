@@ -1,6 +1,6 @@
 class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
-	layout 'spud/admin/post'
+	layout 'spud/admin/detail'
 	respond_to :html, :xml, :json
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
 	add_breadcrumb 'Blog Posts', :spud_admin_posts_path
