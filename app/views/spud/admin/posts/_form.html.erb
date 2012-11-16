@@ -26,7 +26,7 @@
 				<%= f.label :published_at, 'Publish Date' %>
 				<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
 				<span class="time_select">
-					<%= f.time_select :published_at, :ignore_date => true, :class => "time_select"%>
+					<%= f.time_select :published_at, :ignore_date => true,:ampm => true%>
 				</span>
 			</div>
 
