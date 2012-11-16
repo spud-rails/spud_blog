@@ -4,12 +4,12 @@ Spud = (typeof(Spud) == 'undefined') ? {} : Spud;
 Spud.Admin = (typeof(Spud.Admin) == 'undefined') ? {} : Spud.Admin;
 
 Spud.Admin.Posts = new function(){
-	
+
 	var self = this;
 
 	this.edit = function(){
 		initDatePicker();
-		initTinyMCE();
+		spud.admin.editor.init();
 		$('.spud_post_add_category').live('click', self.clickedPostAddCategory);
 		$('.save_post_category_button').live('click', self.submittedPostCategoryForm);
 		$('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);
