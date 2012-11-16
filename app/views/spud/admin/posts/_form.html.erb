@@ -6,7 +6,7 @@
 </fieldset>
 
 <div>
-	<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce-blog full-width' %>
+	<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce full-width' %>
 </div>
 
 <% if Spud::Blog.config.has_custom_fields %>
@@ -25,6 +25,9 @@
 			<div class="spud_post_form_row">
 				<%= f.label :published_at, 'Publish Date' %>
 				<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
+				<span class="time_select">
+					<%= f.time_select :published_at, :ignore_date => true, :class => "time_select"%>
+				</span>
 			</div>
 
 			<% if @current_user.super_admin %>
