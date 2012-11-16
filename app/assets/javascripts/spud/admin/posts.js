@@ -9,7 +9,9 @@ Spud.Admin.Posts = new function(){
 
 	this.edit = function(){
 		initDatePicker();
-		spud.admin.editor.init();
+
+
+		spud.admin.editor.initWithOptions({selector:'textarea.tinymce-blog'});
 		$('.spud_post_add_category').live('click', self.clickedPostAddCategory);
 		$('.save_post_category_button').live('click', self.submittedPostCategoryForm);
 		$('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);

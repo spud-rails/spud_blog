@@ -6,19 +6,19 @@
 </fieldset>
 
 <div>
-	<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce full-width' %>
+	<%= f.text_area :content,:style => "width:100%;", :class => 'tinymce-blog full-width' %>
 </div>
 
 <% if Spud::Blog.config.has_custom_fields %>
 <fieldset>
-	<legend>Custom Fields</legend>		
+	<legend>Custom Fields</legend>
 	<%= render :partial => '/spud/admin/posts/custom_fields', :locals => {:f => f} %>
 </fieldset>
 <% end %>
 
 <fieldset class="spud_post_form_fieldset">
 	<legend>Advanced</legend>
-	
+
 		<div class="spud_post_form_col">
 			<h4>Meta Data</h4>
 
@@ -26,7 +26,7 @@
 				<%= f.label :published_at, 'Publish Date' %>
 				<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
 			</div>
-			
+
 			<% if @current_user.super_admin %>
 				<div class="spud_post_form_row">
 					<%= f.label :spud_user_id, 'Author' %>
