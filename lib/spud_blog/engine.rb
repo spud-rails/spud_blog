@@ -24,7 +24,7 @@ module Spud
           Spud::Core.config.admin_applications += [{
             :name => 'Blog Posts',
             :thumbnail => 'spud/admin/posts_thumb.png',
-            :url => '/spud/admin/posts',
+            :url => {:controller => '/spud/admin/posts'},
             :order => 1
           }]
         end
@@ -32,7 +32,7 @@ module Spud
           Spud::Core.config.admin_applications += [{
             :name => 'News Posts',
             :thumbnail => 'spud/admin/news_thumb.png',
-            :url => '/spud/admin/news_posts',
+            :url => {:controller => '/spud/admin/news_posts'},
             :order => 2
           }]
         end

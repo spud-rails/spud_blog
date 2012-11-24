@@ -1,4 +1,4 @@
-<%= form_for @comment, :url => blog_post_path(@post) do |f| %>
+<%= form_for @comment, :url => spud_blog.blog_post_path(@post) do |f| %>
 	<div>
 		<%= f.label :author %>
 		<%= f.text_field :author %>

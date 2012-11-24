@@ -5,9 +5,11 @@ module Spud
       :base_layout, :news_layout, :blog_enabled,
       :news_enabled, :posts_per_page, :blog_path,
       :news_path, :enable_sitemap, :has_custom_fields,
-      :cache_mode, :action_caching_duration,
+      :cache_mode, :action_caching_duration, :automount,
       :enable_rakismet
     )
+
+    self.automount = true
     self.base_layout = 'application'
     self.news_layout = nil
     self.news_enabled = false

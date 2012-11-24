@@ -16,16 +16,16 @@ class SpudPostCommentSweeper < ActionController::Caching::Sweeper
     unless record.post.nil?
       if Spud::Blog.config.cache_mode == :action
         if record.post.is_news
-          expire_action news_post_url(record.post.url_name)
+          expire_action spud_blog.news_post_url(record.post.url_name)
         else
-          expire_action blog_post_url(record.post.url_name)
+          expire_action spud_blog.blog_post_url(record.post.url_name)
         end
       end
       if Spud::Blog.config.cache_mode == :full_page
         if record.post.is_news
-          expire_page news_post_path(record.post.url_name)
+          expire_page spud_blog.news_post_path(record.post.url_name)
         else
-          expire_page blog_post_path(record.post.url_name)
+          expire_page spud_blog.blog_post_path(record.post.url_name)
         end
       end
     end

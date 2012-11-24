@@ -3,7 +3,9 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	layout 'spud/admin/detail'
 	respond_to :html, :xml, :json
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
-	add_breadcrumb 'News Posts', :spud_admin_news_posts_path
+	add_breadcrumb 'News Posts', {:action => :index}
+	add_breadcrumb "New", '',:only =>  [:new, :create]
+	add_breadcrumb "Edit", '',:only => [:edit, :update]
 	belongs_to_spud_app :news_posts
 	cache_sweeper :spud_post_sweeper, :only => [:create, :update, :destroy]
 
@@ -23,7 +25,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		if @post.update_attributes(params[:spud_post])
 	    flash[:notice] = 'News Post was successfully updated.'
 		end
-    respond_with @post, :location => spud_admin_news_posts_path
+    respond_with @post, :location => spud_core.admin_news_posts_path
 	end
 
 	def new
@@ -39,14 +41,14 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		if @post.save
     	flash[:notice] = 'News Post was successfully created.'
 		end
-    respond_with @post, :location => spud_admin_news_posts_path
+    respond_with @post, :location => spud_core.admin_news_posts_path
 	end
 
 	def destroy
 		if @post.destroy
 	    flash[:notice] = 'News Post was successfully deleted.'
 		end
-    respond_with @post, :location => spud_admin_news_posts_path
+    respond_with @post, :location => spud_core.admin_news_posts_path
 	end
 
 	private
@@ -55,7 +57,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 		@post = SpudPost.find(params[:id])
 		if @post.blank?
 			flash[:error] = 'News Post not found!'
-			redirect_to spud_admin_news_posts_path and return false
+			redirect_to spud_core.admin_news_posts_path and return false
 		end
 	end
 

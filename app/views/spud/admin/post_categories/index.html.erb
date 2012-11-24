@@ -1,5 +1,5 @@
 <div class="spud_blog_category_manager">
-	<%= link_to "New Post Category", new_spud_admin_post_category_path, :class => "btn btn-small btn-primary spud_blog_category_add_new", :title => "New Post Category" %>
+	<%= link_to "New Post Category", spud_core.new_admin_post_category_path, :class => "btn btn-small btn-primary spud_blog_category_add_new", :title => "New Post Category" %>
 	<ul class="spud_blog_category_manager_list">
 		<%= render :partial => 'category', :collection => @post_categories[nil] %>
 	</ul>

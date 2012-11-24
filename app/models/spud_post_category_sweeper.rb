@@ -16,26 +16,26 @@ class SpudPostCategorySweeper < ActionController::Caching::Sweeper
     if Spud::Blog.config.cache_mode = :action
       SpudPost.find_each do |p|
         if p.is_news && Spud::Blog.config.news_enabled
-          expire_action news_post_url(p.url_name)
+          expire_action spud_blog.news_post_url(p.url_name)
         elsif Spud::Blog.config.blog_enabled
-          expire_action blog_post_url(p.url_name)
+          expire_action spud_blog.blog_post_url(p.url_name)
         end
       end
-      expire_action news_url if Spud::Blog.config.news_enabled
-      expire_action blog_url if Spud::Blog.config.blog_enabled
-      expire_action spud_blog_sitemap_url
+      expire_action spud_blog.news_url if Spud::Blog.config.news_enabled
+      expire_action spud_blog.blog_url if Spud::Blog.config.blog_enabled
+      expire_action spud_core.blog_sitemap_url
     end
     if Spud::Blog.config.cache_mode = :full_page
       SpudPost.find_each do |p|
         if p.is_news && Spud::Blog.config.news_enabled
-          expire_page news_post_path(p.url_name)
+          expire_page spud_blog.news_post_path(p.url_name)
         elsif Spud::Blog.config.blog_enabled
-          expire_page blog_post_path(p.url_name)
+          expire_page spud_blog.blog_post_path(p.url_name)
         end
       end
-      expire_page news_path if Spud::Blog.config.news_enabled
-      expire_page blog_path if Spud::Blog.config.blog_enabled
-      expire_page spud_blog_sitemap_path(:format => :xml)
+      expire_page spud_blog.news_path if Spud::Blog.config.news_enabled
+      expire_page spud_blog.blog_path if Spud::Blog.config.blog_enabled
+      expire_page spud_core.blog_sitemap_path(:format => :xml)
     end
   end
 end

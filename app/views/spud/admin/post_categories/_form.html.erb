@@ -1,4 +1,4 @@
-<%= form_for @post_category, :url => (@post_category.new_record? ? spud_admin_post_categories_path : spud_admin_post_category_path(@post_category)), :html => {:class => 'form-horizontal spud_post_category_form'} do |f| %>
+<%= form_for @post_category, :url => (@post_category.new_record? ? spud_core.admin_post_categories_path : spud_core.admin_post_category_path(@post_category)), :html => {:class => 'form-horizontal spud_post_category_form'} do |f| %>
 
 	<%= error_messages_for(f.object) %>
 
