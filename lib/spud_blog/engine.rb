@@ -43,8 +43,8 @@ module Spud
         Spud::Core.append_admin_stylesheets('spud/admin/posts')
       end
       initializer :associations do
-        SpudUser.class_eval do
-          has_many :posts, :class_name => 'SpudPost'
+        Spud::Core::Engine.user_model.class_eval do
+          has_many :posts, :class_name => 'SpudPost', :foreign_key => :spud_user_id
         end
       end
       initializer :news_layout do

@@ -5,7 +5,7 @@ class SpudPost < ActiveRecord::Base
 		:class_name => 'SpudPostCategory',
 		:join_table => 'spud_post_categories_posts',
 		:foreign_key => 'spud_post_id'
-	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
+	belongs_to :author, :class_name => Spud::Core.config.user_model, :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
 	has_many :visible_comments, :class_name => 'SpudPostComment',:conditions => {:spam => [nil,false]}
 	has_many :spud_permalinks,:as => :attachment

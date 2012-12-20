@@ -33,7 +33,7 @@
 			<% if @current_user.super_admin %>
 				<div class="spud_post_form_row">
 					<%= f.label :spud_user_id, 'Author' %>
-					<%= f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
+					<%= f.select :spud_user_id,options_for_select(Spud::Core::Engine.user_model.order(:first_name,:last_name,:login).all.collect{|user| [user.to_s,user.id]},f.object.spud_user_id)%>
 				</div>
 			<% else %>
 				<%= f.hidden_field :spud_user_id %>
