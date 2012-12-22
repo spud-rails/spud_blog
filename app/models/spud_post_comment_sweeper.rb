@@ -1,6 +1,9 @@
 class SpudPostCommentSweeper < ActionController::Caching::Sweeper
-
   observe SpudPostComment
+  include Spud::Core::Engine.routes.url_helpers
+  include Spud::Core::Engine.routes.mounted_helpers
+  include Spud::Blog::Engine.routes.url_helpers
+  include Spud::Blog::Engine.routes.mounted_helpers
 
   def after_save(record)
     expire_cache_for(record)

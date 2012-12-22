@@ -6,7 +6,7 @@ class SpudPostCategory < ActiveRecord::Base
 		:class_name => 'SpudPost',
 		:join_table => 'spud_post_categories_posts',
 		:foreign_key => 'spud_post_category_id'
-	
+
 	validates_presence_of :name, :url_name
 	validates_uniqueness_of :name, :url_name
 	before_validation :set_url_name
@@ -46,7 +46,8 @@ class SpudPostCategory < ActiveRecord::Base
 	end
 
 	def posts_with_children
-		category_ids = self.self_and_ancestors.collect{ |category| category.id }
+		category_ids = self.self_and_descendants.collect{ |category| category.id }
+
 		post_ids = SpudPostCategoriesPost.where(:spud_post_category_id => category_ids).collect{ |it| it.spud_post_id  }
 		return SpudPost.where(:id => post_ids)
 	end
@@ -54,13 +55,7 @@ class SpudPostCategory < ActiveRecord::Base
 	private
 
 	def set_url_name
-		self.url_name = self.name.parameterize
-	end
-
-	def parent_is_valid
-		if parent_id == self.id
-			errors.add :base, 'Category cannot be its own parent'
-		end
+		self.url_name = self.name.parameterize if !self.name.blank?
 	end
 
 	def update_child_categories

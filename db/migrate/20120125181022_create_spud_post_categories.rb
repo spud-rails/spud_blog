@@ -8,6 +8,6 @@ class CreateSpudPostCategories < ActiveRecord::Migration
     	t.integer :spud_post_id
     	t.integer :spud_post_category_id
     end
-    add_index :spud_post_categories_posts, :spud_post_category_id
+    add_index :spud_post_categories_posts, :spud_post_category_id, :name => "idx_category_id"
   end
 end
