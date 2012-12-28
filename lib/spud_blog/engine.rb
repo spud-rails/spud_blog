@@ -38,7 +38,7 @@ module Spud
         end
       end
       initializer :assets do
-        Rails.application.config.assets.precompile += ['spud/admin/posts.css','spud/blog/validity.css']
+        Rails.application.config.assets.precompile += ['spud/admin/posts.*','spud/blog/validity.css']
         Spud::Core.append_admin_javascripts('spud/admin/posts')
         Spud::Core.append_admin_stylesheets('spud/admin/posts')
       end
