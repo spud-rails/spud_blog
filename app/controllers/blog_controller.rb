@@ -23,10 +23,14 @@ class BlogController < ApplicationController
 
   def index
     page = 1
-    if params[:page].blank? == false && params[:page].to_i > 1
+    if params[:page].blank? == false
       page = params[:page].to_i
-      if(page.to_s != params[:page] && page > 1)
-        redirect_to blog_path(:page => page),:status => :moved_permanently and return
+      if page.to_s != params[:page].to_s
+        if(page > 1)
+          redirect_to blog_path(:page => page),:status => :moved_permanently and return
+        else
+          redirect_to blog_path(:page => nil),:status => :moved_permanently and return
+        end
       end
     end
 
@@ -51,11 +55,23 @@ class BlogController < ApplicationController
   end
 
   def category
+    page = 1
+    if params[:page].blank? == false
+      page = params[:page].to_i
+      if page.to_s != params[:page].to_s
+        if(page > 1)
+          redirect_to blog_category_path(:page => page),:status => :moved_permanently and return
+        else
+          redirect_to blog_category_path(:page => nil),:status => :moved_permanently and return
+        end
+      end
+    end
+
     if @post_category = SpudPostCategory.find_by_url_name(params[:category_url_name])
       if Spud::Core.config.multisite_mode_enabled
-        @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
+        @posts = @post_category.posts_with_children.public_blog_posts(page, Spud::Blog.config.posts_per_page).for_spud_site(current_site_id).from_archive(params[:archive_date])
       else
-        @posts = @post_category.posts_with_children.public_blog_posts(params[:page], Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
+        @posts = @post_category.posts_with_children.public_blog_posts(page, Spud::Blog.config.posts_per_page).from_archive(params[:archive_date])
       end
     else
       redirect_to blog_path
