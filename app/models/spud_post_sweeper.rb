@@ -41,7 +41,7 @@ class SpudPostSweeper < ActionController::Caching::Sweeper
         expire_page blog_post_path(record.url_name)
       end
     end
-    expire_page spud_sitemap_path(:format => :xml)
+    # expire_page spud_sitemap_path(:format => :xml)
   end
 
 end
