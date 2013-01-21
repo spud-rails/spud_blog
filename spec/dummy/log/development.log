@@ -188,3 +188,26 @@ Connecting to database specified by database.yml
 Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
 Connecting to database specified by database.yml
 Mysql2::Error: Table 'spud_blog_development.spud_users' doesn't exist: SHOW FULL FIELDS FROM `spud_users`
+Connecting to database specified by database.yml
+  [1m[36m (2.6ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+Migrating to CreateSpudPosts (20120125180945)
+Migrating to CreateSpudPostCategories (20120125181022)
+Migrating to CreateSpudPostComments (20120125181359)
+Migrating to AddUrlToSpudPosts (20120127143054)
+Migrating to AddUrlToSpudPostCategories (20120127144942)
+Migrating to AddIsNewsToSpudPosts (20120210165540)
+Migrating to AddMetaToPosts (20120309181917)
+Migrating to AddCommentsCounterToSpudPosts (20120413020437)
+Migrating to CreateSpudAdminPermissions (20120610130206)
+Migrating to CreateSpudUsers (20120610130207)
+Migrating to AddTimeZoneToSpudUser (20120610130208)
+Migrating to AddScopeToSpudAdminPermissions (20120610130209)
+Migrating to CreateSpudUserSettings (20120610130210)
+Migrating to CreateSpudPostSites (20120713150446)
+Migrating to AddSpamFieldsToSpudPostComments (20120825142547)
+Migrating to AddPermalinkToSpudPostComments (20120825144506)
+Migrating to AddNestedSetToPostCategories (20121113135812)
+Migrating to AddContentFormatToSpudPosts (20130120151857)
+  [1m[35m (56.0ms)[0m  ALTER TABLE `spud_posts` ADD `content_format` varchar(255) DEFAULT 'HTML'
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130120151857')[0m
+  [1m[35m (0.2ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 

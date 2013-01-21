@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713150446) do
+ActiveRecord::Schema.define(:version => 20130120151857) do
 
   create_table "spud_admin_permissions", :force => true do |t|
     t.integer  "user_id"
@@ -28,17 +28,20 @@ ActiveRecord::Schema.define(:version => 20120713150446) do
     t.datetime "updated_at",                :null => false
     t.integer  "parent_id",  :default => 0
     t.string   "url_name"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
-  add_index "spud_post_categories", ["parent_id"], :name => "index_spud_post_categories_on_parent_id"
-  add_index "spud_post_categories", ["url_name"], :name => "index_spud_post_categories_on_url_name"
+  add_index "spud_post_categories", ["parent_id"], :name => "idx_post_cat_parent"
+  add_index "spud_post_categories", ["url_name"], :name => "idx_post_cat_url"
 
   create_table "spud_post_categories_posts", :id => false, :force => true do |t|
     t.integer "spud_post_id"
     t.integer "spud_post_category_id"
   end
 
-  add_index "spud_post_categories_posts", ["spud_post_category_id"], :name => "index_spud_post_categories_posts_on_spud_post_category_id"
+  add_index "spud_post_categories_posts", ["spud_post_category_id"], :name => "idx_category_id"
 
   create_table "spud_post_comments", :force => true do |t|
     t.integer  "spud_post_id"
@@ -47,10 +50,15 @@ ActiveRecord::Schema.define(:version => 20120713150446) do
     t.boolean  "approved",     :default => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.boolean  "spam"
+    t.string   "user_ip"
+    t.string   "user_agent"
+    t.string   "referrer"
+    t.string   "permalink"
   end
 
-  add_index "spud_post_comments", ["approved"], :name => "index_spud_post_comments_on_approved"
-  add_index "spud_post_comments", ["spud_post_id"], :name => "index_spud_post_comments_on_spud_post_id"
+  add_index "spud_post_comments", ["approved"], :name => "idx_comment_approved"
+  add_index "spud_post_comments", ["spud_post_id"], :name => "idx_comment_post_id"
 
   create_table "spud_post_sites", :force => true do |t|
     t.integer  "spud_post_id", :null => false
@@ -69,13 +77,14 @@ ActiveRecord::Schema.define(:version => 20120713150446) do
     t.boolean  "comments_enabled", :default => false
     t.boolean  "visible",          :default => true
     t.datetime "published_at"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "url_name"
     t.boolean  "is_news",          :default => false
     t.string   "meta_keywords"
     t.text     "meta_description"
     t.integer  "comments_count",   :default => 0
+    t.string   "content_format",   :default => "HTML"
   end
 
   add_index "spud_posts", ["is_news"], :name => "index_spud_posts_on_is_news"

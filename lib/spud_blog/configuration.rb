@@ -6,7 +6,7 @@ module Spud
       :news_enabled, :posts_per_page, :blog_path,
       :news_path, :enable_sitemap, :has_custom_fields,
       :cache_mode, :action_caching_duration,
-      :enable_rakismet
+      :enable_rakismet, :enable_markdown
     )
     self.base_layout = 'application'
     self.news_layout = nil
@@ -20,5 +20,6 @@ module Spud
     self.cache_mode = nil #options :full_page, :action
     self.action_caching_duration = 3600
     self.enable_rakismet = false
+    self.enable_markdown = false
   end
 end

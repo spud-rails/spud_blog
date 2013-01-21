@@ -16,10 +16,11 @@ class SpudPost < ActiveRecord::Base
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
+	before_save :postprocess_content
 
 	after_save :set_spud_site_ids
 
-	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids, :spud_site_ids
+	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids, :spud_site_ids, :content_format
 	attr_accessor :spud_site_ids
 
 	def self.for_spud_site(spud_site_id)
@@ -95,6 +96,29 @@ class SpudPost < ActiveRecord::Base
 		rescue Exception => e
 			logger.fatal "Exception occurred while fetching post archive dates:\n #{e.to_s}"
 		end
+	end
+
+	def postprocess_content
+		if self.content_format == 'Markdown'
+			require 'redcarpet'
+	    renderer = Redcarpet::Render::HTML.new
+	    extensions = {fenced_code_blocks: true}
+	    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
+	    self.content_processed = redcarpet.render self.content
+		else
+			self.content_processed = content
+		end
+	end
+
+	def content_processed
+		if read_attribute(:content_processed).blank?
+			postprocess_content
+		end
+		read_attribute(:content_processed)
+	end
+
+	def content_processed=(content)
+		write_attribute(:content_processed,content)
 	end
 
 	def display_date
