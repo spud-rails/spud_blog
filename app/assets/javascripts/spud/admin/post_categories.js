@@ -1,19 +1,19 @@
-Spud = (typeof(Spud) == 'undefined') ? {} : Spud;
-Spud.Admin = (typeof(Spud.Admin) == 'undefined') ? {} : Spud.Admin;
+spud = (typeof(spud) == 'undefined') ? {} : spud;
+spud.admin = (typeof(spud.admin) == 'undefined') ? {} : spud.admin;
 
-Spud.Admin.PostCategories = new function(){
+spud.admin.post_categories = new function(){
 
   var self = this;
   var _cachedCategoryIndex;
 
   this.index = function(){
-    $('.spud_blog_manage_categories').live('click', self.clickedManageCategories);
-    $('.spud_blog_category_add_new').live('click', self.clickedAddNewCategory);
-    $('.spud_blog_category_edit').live('click', self.clickedEditCategory);
-    $('.spud_blog_manage_categories_back').live('click', self.clickedBackButton);
-    $('.spud_blog_manage_categories_save').live('click', self.submittedPostCategoryForm);
-    $('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);
-    $('.spud_blog_category_delete').live('click', self.clickedDeleteCategory);
+    $('body').on('click', '.spud_blog_manage_categories', self.clickedManageCategories);
+    $('body').on('click', '.spud_blog_category_add_new', self.clickedAddNewCategory);
+    $('body').on('click', '.spud_blog_category_edit', self.clickedEditCategory);
+    $('body').on('click', '.spud_blog_manage_categories_back', self.clickedBackButton);
+    $('body').on('click', '.spud_blog_manage_categories_save', self.submittedPostCategoryForm);
+    $('body').on('submit', '.spud_post_category_form', self.submittedPostCategoryForm);
+    $('body').on('click', '.spud_blog_category_delete', self.clickedDeleteCategory);
   };
 
   this.clickedManageCategories = function(e){

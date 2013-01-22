@@ -1,18 +1,18 @@
 //= require spud/admin/post_categories
 
-Spud = (typeof(Spud) == 'undefined') ? {} : Spud;
-Spud.Admin = (typeof(Spud.Admin) == 'undefined') ? {} : Spud.Admin;
+spud = (typeof(spud) == 'undefined') ? {} : spud;
+spud.admin = (typeof(spud.admin) == 'undefined') ? {} : spud.admin;
 
-Spud.Admin.Posts = new function(){
+spud.admin.posts = new function(){
 
 	var self = this;
 
 	this.edit = function(){
 		initDatePicker();
 
-		$('.spud_post_add_category').live('click', self.clickedPostAddCategory);
-		$('.save_post_category_button').live('click', self.submittedPostCategoryForm);
-		$('.spud_post_category_form').live('submit', self.submittedPostCategoryForm);
+		$('body').on('click', '.spud_post_add_category', self.clickedPostAddCategory);
+		$('body').on('click', '.save_post_category_button', self.submittedPostCategoryForm);
+		$('body').on('submit', '.spud_post_category_form', self.submittedPostCategoryForm);
 	};
 
 	this.clickedPostAddCategory = function(e){

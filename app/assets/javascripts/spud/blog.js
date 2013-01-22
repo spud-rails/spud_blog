@@ -1,11 +1,11 @@
-Spud = (typeof(Spud) == 'undefined') ? {} : Spud;
+spud = (typeof(spud) == 'undefined') ? {} : spud;
 
-Spud.Blog = new function(){
+spud.blog = new function(){
   
   var self = this;
 
   this.init = function(){
-    $('.spud_blog_filter_form').live('submit', self.didSubmitFilterForm)
+    $('body').on('submit', '.spud_blog_filter_form', self.didSubmitFilterForm);
   };
 
   this.didSubmitFilterForm = function(event){
@@ -38,4 +38,4 @@ Spud.Blog = new function(){
   };
 };
 
-$(document).ready(Spud.Blog.init);
+$(document).ready(spud.blog.init);
