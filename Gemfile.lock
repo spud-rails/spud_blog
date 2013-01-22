@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spud_blog (0.9.7)
+    spud_blog (0.9.8)
       awesome_nested_set
       rails (~> 3.2.1)
       redcarpet
