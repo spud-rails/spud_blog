@@ -1,12 +1,12 @@
 class SpudPostCategory < ActiveRecord::Base
-	searchable
+	spud_searchable
 	acts_as_nested_set
 
 	has_and_belongs_to_many :posts,
 		:class_name => 'SpudPost',
 		:join_table => 'spud_post_categories_posts',
 		:foreign_key => 'spud_post_category_id'
-	
+
 	validates_presence_of :name, :url_name
 	validates_uniqueness_of :name, :url_name
 	before_validation :set_url_name
