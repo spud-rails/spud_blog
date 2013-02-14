@@ -6,7 +6,12 @@ Rails.application.routes.draw do
       	resources :post_comments, :path => 'comments', :only => :index
       end
       resources :news_posts
-      resources :post_comments, :except => :new
+      resources :post_comments, :except => [:new, :create, :edit, :update] do
+        member do
+          get 'approve'
+          get 'spam'
+        end
+      end
       resources :post_categories
     end
     namespace :blog do
@@ -18,21 +23,21 @@ Rails.application.routes.draw do
     scope Spud::Blog.config.blog_path do
 
       # Blog Post Categories
-      get 'category/:category_url_name(/page/:page)', 
-        :controller => 'blog', 
-        :action => 'category',  
+      get 'category/:category_url_name(/page/:page)',
+        :controller => 'blog',
+        :action => 'category',
         :as => 'blog_category',
         :defaults => {:page => 1}
-      get 'category/:category_url_name/:archive_date(/page/:page)', 
-        :controller => 'blog', 
-        :action => 'category', 
+      get 'category/:category_url_name/:archive_date(/page/:page)',
+        :controller => 'blog',
+        :action => 'category',
         :as => 'blog_category_archive',
         :defaults => {:page => 1}
 
       # Blog Post Archives
-      get 'archive/:archive_date(/page/:page)', 
-        :controller => 'blog', 
-        :action => 'archive', 
+      get 'archive/:archive_date(/page/:page)',
+        :controller => 'blog',
+        :action => 'archive',
         :as => 'blog_archive',
         :defaults => {:page => 1}
 
@@ -40,8 +45,8 @@ Rails.application.routes.draw do
       post '/', :controller => 'blog', :action => 'filter'
 
       # Blog Posts
-      get '/(page/:page)', 
-        :controller => 'blog', 
+      get '/(page/:page)',
+        :controller => 'blog',
         :action => 'index',
         :as => 'blog',
         :defaults => {:page => 1}
@@ -55,31 +60,31 @@ Rails.application.routes.draw do
     scope Spud::Blog.config.news_path do
 
       # News Post Categories
-      get 'category/:category_url_name(/page/:page)', 
-        :controller => 'news', 
+      get 'category/:category_url_name(/page/:page)',
+        :controller => 'news',
         :action => 'category',
         :as => 'news_category',
         :defaults => {:page => 1}
-      get 'category/:category_url_name/:archive_date(/page/:page)', 
-        :controller => 'news', 
-        :action => 'category', 
+      get 'category/:category_url_name/:archive_date(/page/:page)',
+        :controller => 'news',
+        :action => 'category',
         :as => 'news_category_archive',
         :defaults => {:page => 1}
-      
+
       # News Post Archives
-      get 'archive/:archive_date(/page/:page)', 
+      get 'archive/:archive_date(/page/:page)',
         :controller => 'news',
-        :action => 'archive', 
+        :action => 'archive',
         :as => 'news_archive',
         :defaults => {:page => 1}
 
       # Category/Archive filtering
       post '/', :controller => 'news', :action => 'filter'
-      
+
       # News Posts
-      get '/(page/:page)', 
-        :controller => 'news', 
-        :action => 'index', 
+      get '/(page/:page)',
+        :controller => 'news',
+        :action => 'index',
         :as => 'news',
         :defaults => {:page => 1}
       resources :news_posts, :path => '/', :controller => 'news', :only => [:show]

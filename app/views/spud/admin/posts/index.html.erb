@@ -1,5 +1,6 @@
 <%= content_for :data_controls do %>
 	<%= link_to "Manage Categories", spud_admin_post_categories_path, :class => 'btn spud_blog_manage_categories', :title => 'Manage Categories' %>
+	<%= link_to "Manage Comments", spud_admin_post_comments_path, :class => 'btn', :title => 'Manage Comments' %>
 	<%= link_to "New Post", new_spud_admin_post_path, :class => "btn btn-primary", :title => "New Post" %>
 <% end %>
 
@@ -12,7 +13,7 @@
 				<th>Published At</th>
 				<th>Comments</th>
 				<th>&nbsp;</th>
-			</tr>			
+			</tr>
 		</thead>
 		<tbody>
 			<% @posts.each do |post| %>
@@ -27,7 +28,11 @@
 					</td>
 					<td><%= post.author.full_name %></td>
 					<td><%= link_to(post.published_at.strftime('%m/%d/%Y'), blog_post_path(post.url_name)) %></td>
-					<td><%= post.comments.size %></td>
+					<td>
+						Approved: <%=link_to post.visible_comments.count, spud_admin_post_post_comments_path(:post_id => post.id) %>
+						<br/>
+						Spam: <%=link_to post.spam_comments.count, spud_admin_post_post_comments_path(:post_id => post.id) %>
+					</td>
 					<td align="right">
 						<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :confirm => 'Are you sure you want to delete this post?', :class => 'btn btn-danger' %>
 					</td>

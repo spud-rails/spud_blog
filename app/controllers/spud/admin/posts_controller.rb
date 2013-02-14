@@ -8,7 +8,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	cache_sweeper :spud_post_sweeper, :only => [:create, :update, :destroy]
 
 	def index
-		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:comments, :author).paginate(:page => params[:page], :per_page => 15)
+		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:visible_comments, :spam_comments, :author).paginate(:page => params[:page], :per_page => 15)
 		respond_with @posts
 	end
 

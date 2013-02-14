@@ -105,3 +105,9 @@
 .spud_blog_manage_categories_save, .spud_blog_manage_categories_back{
 	display: none;
 }
+
+/*Comment Manager*/
+.submitted-on {
+	display:block;
+	color:#555;
+}

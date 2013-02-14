@@ -8,6 +8,7 @@ class SpudPost < ActiveRecord::Base
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
 	has_many :visible_comments, :class_name => 'SpudPostComment',:conditions => {:spam => [nil,false]}
+	has_many :spam_comments, :class_name => "SpudPostComment", :conditions => {:spam => true}
 	has_many :spud_permalinks,:as => :attachment
 	has_many :spud_post_sites, :dependent => :destroy
 
@@ -77,6 +78,7 @@ class SpudPost < ActiveRecord::Base
 			return records.collect{ |r| Date.new(r[:published_year].to_i, r[:published_month].to_i) }
 		rescue Exception => e
 			logger.fatal "Exception occurred while fetching post archive dates:\n #{e.to_s}"
+			return []
 		end
 	end
 
