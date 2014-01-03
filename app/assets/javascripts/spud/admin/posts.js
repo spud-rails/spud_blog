@@ -8,7 +8,7 @@ spud.admin.posts = new function(){
 	var self = this;
 
 	this.edit = function(){
-		initDatePicker();
+		spud.admin.date_picker.init()
 
 		$('body').on('click', '.spud_post_add_category', self.clickedPostAddCategory);
 		$('body').on('click', '.save_post_category_button', self.submittedPostCategoryForm);

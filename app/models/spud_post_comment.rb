@@ -6,9 +6,9 @@ class SpudPostComment < ActiveRecord::Base
 
 
 	validates_presence_of :author, :content
-	belongs_to :post, :class_name => 'SpudPost', :foreign_key => 'spud_post_id', :counter_cache => :comments_count
+	belongs_to :post, :class_name => 'SpudPost', :foreign_key => 'spud_post_id', :counter_cache => :comments_count, :touch => true
 
-	attr_accessible :author,:content,:spud_post_id,:referrer,:spam,:user_agent,:user_ip,:permalink
+	# attr_accessible :author,:content,:spud_post_id,:referrer,:spam,:user_agent,:user_ip,:permalink
 
 
   def rakismet_check_for_spam

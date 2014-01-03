@@ -1,5 +1,5 @@
 module Spud
 	module Blog
-	  VERSION = "0.9.11"
+	  VERSION = "1.0.0.rc1"
 	end
 end

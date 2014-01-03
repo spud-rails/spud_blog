@@ -1,25 +1,24 @@
 class BlogController < ApplicationController
-
+  # include ActionController::Caching::Sweeping
 	respond_to :html, :xml, :json, :rss
 	layout Spud::Blog.base_layout
 
   before_filter :find_post, :only => :show
 
-  caches_action :show, :index,
-    :expires => Spud::Blog.config.action_caching_duration,
-    :if => Proc.new{ |c|
-      Spud::Blog.cache_mode == :action && !(c.params[:page] && c.params[:page].to_i > 1) && (SpudPost.where(:is_news => false).future_posts.count == 0)
-    }
+  # caches_action :show, :index,
+  #   :expires => Spud::Blog.config.action_caching_duration,
+  #   :if => Proc.new{ |c|
+  #     Spud::Blog.cache_mode == :action && !(c.params[:page] && c.params[:page].to_i > 1) && (SpudPost.where(:is_news => false).future_posts.count == 0)
+  #   }
 
-  after_filter :only => [:show, :index] do |c|
-    if Spud::Blog.cache_mode == :full_page && !(c.params[:page] && c.params[:page].to_i > 1)
-      if (SpudPost.where(:is_news => false).future_posts.count == 0)
-        c.cache_page(nil, nil, false)
-      end
-    end
-  end
+  # after_filter :only => [:show, :index] do |c|
+  #   if Spud::Blog.cache_mode == :full_page && !(c.params[:page] && c.params[:page].to_i > 1)
+  #     if (SpudPost.where(:is_news => false).future_posts.count == 0)
+  #       c.cache_page(nil, nil, false)
+  #     end
+  #   end
+  # end
 
-  cache_sweeper :spud_post_comment_sweeper, :only => [:create_comment]
 
   def index
     page = 1
@@ -110,7 +109,7 @@ class BlogController < ApplicationController
       flash[:error] = "Post not found!"
       redirect_to blog_path and return false
     end
-    @comment = @post.comments.new(params[:spud_post_comment])
+    @comment = @post.comments.new(comment_params)
     @comment.user_agent = request.env["HTTP_USER_AGENT"]
     @comment.user_ip = request.remote_ip
     @comment.referrer = request.referrer
@@ -122,7 +121,7 @@ class BlogController < ApplicationController
     end
   end
 
-  private
+private
 
   def find_post
   	@post = SpudPost.find_by_url_name(params[:id])
@@ -130,6 +129,10 @@ class BlogController < ApplicationController
 			flash[:error] = "Post not found!"
 			redirect_to blog_path and return false
 		end
+  end
+
+  def comment_params
+    params.require(:spud_post_comment).permit(:author,:content)
   end
 
 end

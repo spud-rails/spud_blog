@@ -5,7 +5,6 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
 	add_breadcrumb 'News Posts', :spud_admin_news_posts_path
 	belongs_to_spud_app :news_posts
-	cache_sweeper :spud_post_sweeper, :only => [:create, :update, :destroy]
 
 	def index
 		@posts = SpudPost.where(:is_news => true).order('published_at desc').includes(:comments).paginate(:page => params[:page], :per_page => 15)
@@ -20,7 +19,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	def update
 		@categories = SpudPostCategory.grouped
 		params[:spud_post][:spud_site_ids] ||= []
-		if @post.update_attributes(params[:spud_post])
+		if @post.update_attributes(post_params)
 	    flash[:notice] = 'News Post was successfully updated.'
 		end
     respond_with @post, :location => spud_admin_news_posts_path
@@ -35,7 +34,7 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	def create
 		@categories = SpudPostCategory.grouped
 		params[:spud_post][:spud_site_ids] ||= []
-		@post = SpudPost.new(params[:spud_post])
+		@post = SpudPost.new(post_params)
 		if @post.save
     	flash[:notice] = 'News Post was successfully created.'
 		end
@@ -57,6 +56,10 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 			flash[:error] = 'News Post not found!'
 			redirect_to spud_admin_news_posts_path and return false
 		end
+	end
+
+	def post_params
+		params.require(:spud_post).permit(:is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,{:category_ids => []}, {:spud_site_ids => []}, :content_format)
 	end
 
 end

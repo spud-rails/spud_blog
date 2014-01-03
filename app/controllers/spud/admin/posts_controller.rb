@@ -1,3 +1,5 @@
+
+
 class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 
 	layout 'spud/admin/detail'
@@ -5,7 +7,6 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	before_filter :find_post, :only => [:show, :edit, :update, :destroy]
 	add_breadcrumb 'Blog Posts', :spud_admin_posts_path
 	belongs_to_spud_app :blog_posts
-	cache_sweeper :spud_post_sweeper, :only => [:create, :update, :destroy]
 
 	def index
 		@posts = SpudPost.where(:is_news => false).order('published_at desc').includes(:visible_comments, :spam_comments, :author).paginate(:page => params[:page], :per_page => 15)
@@ -20,7 +21,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	def update
 		@categories = SpudPostCategory.grouped
 		params[:spud_post][:spud_site_ids] ||= []
-		if @post.update_attributes(params[:spud_post])
+		if @post.update_attributes(post_params)
 			flash[:notice] = 'Post was successfully updated.'
 		end
     respond_with @post, :location => spud_admin_posts_path
@@ -35,7 +36,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 	def create
 		@categories = SpudPostCategory.grouped
 		params[:spud_post][:spud_site_ids] ||= []
-		@post = SpudPost.new(params[:spud_post])
+		@post = SpudPost.new(post_params)
 		if @post.save
 	    flash[:notice] = 'Post was successfully created.'
 		end
@@ -49,7 +50,7 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
     respond_with @post, :location => spud_admin_posts_path
 	end
 
-	private
+private
 
 	def find_post
 		@post = SpudPost.find(params[:id])
@@ -57,6 +58,11 @@ class Spud::Admin::PostsController < Spud::Admin::ApplicationController
 			flash[:error] = "Post not found!"
 			redirect_to spud_admin_posts_path and return false
 		end
+	end
+
+
+	def post_params
+		params.require(:spud_post).permit(:is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,{:category_ids => []}, {:spud_site_ids => []}, :content_format)
 	end
 
 end

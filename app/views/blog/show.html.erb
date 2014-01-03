@@ -12,26 +12,28 @@
 	<% end %>
 <% end %>
 
-<div class="spud_blog_post">
-	<h3><%= @post.title %></h3>
-	<h4>Posted by <%= @post.author.full_name %> on <%= @post.display_date %></h4>
-	<% if @post.categories.any? %>
-	<p id="spud_blog_post_categories">
-		Filed under
-		<%= raw(@post.categories.collect{ |c| link_to c.name, blog_category_path(c.url_name) }.join(', ')) %>
-	</p>
-	<% end %>
-	<div id="spud_blog_post_content">
-		<%= raw @post.content_processed %>
+<%cache ['blog/show', @post] do%>
+	<div class="spud_blog_post">
+		<h3><%= @post.title %></h3>
+		<h4>Posted by <%= @post.author.full_name %> on <%= @post.display_date %></h4>
+		<% if @post.categories.any? %>
+		<p id="spud_blog_post_categories">
+			Filed under
+			<%= raw(@post.categories.collect{ |c| link_to c.name, blog_category_path(c.url_name) }.join(', ')) %>
+		</p>
+		<% end %>
+		<div id="spud_blog_post_content">
+			<%= raw @post.content_processed %>
+		</div>
 	</div>
-</div>
 
-<% if @post.comments_enabled %>
-	<div class="spud_blog_post_comment">
-		<h5>Post a Comment:</h5>
-		<%= render 'comment_form' %>
-	</div>
-	<ul id="spud_blog_post_comments">
-		<%= render :partial => 'comment', :collection => @post.visible_comments %>
-	</ul>
-<% end %>
+	<% if @post.comments_enabled %>
+		<div class="spud_blog_post_comment">
+			<h5>Post a Comment:</h5>
+			<%= render 'comment_form' %>
+		</div>
+		<ul id="spud_blog_post_comments">
+			<%= render :partial => 'comment', :collection => @post.visible_comments %>
+		</ul>
+	<% end %>
+<%end%>

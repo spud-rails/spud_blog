@@ -1,10 +1,13 @@
+require 'actionpack/action_caching'
+require 'actionpack/page_caching'
+
 class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 
 	layout false
 	respond_to :html, :json
 
 	before_filter :find_category, :only => [:show, :edit, :update, :destroy]
-	cache_sweeper :spud_post_category_sweeper, :only => [:create, :update, :destroy]
+	# cache_sweeper :spud_post_category_sweeper, :only => [:create, :update, :destroy]
 
 	def index
 		@post_categories = SpudPostCategory.grouped
@@ -16,7 +19,7 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 	end
 
 	def update
-		if @post_category.update_attributes(params[:spud_post_category])
+		if @post_category.update_attributes(category_params)
 			flash[:notice] = 'Post Category was successfully updated'
 			respond_with @post_category, :location => spud_admin_post_categories_path
 		else
@@ -30,7 +33,7 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 	end
 
 	def create
-		@post_category = SpudPostCategory.new(params[:spud_post_category])
+		@post_category = SpudPostCategory.new(category_params)
 		if @post_category.save
 			flash[:notice] = 'Post Category was successfully created'
 			respond_with @post_category, :location => spud_admin_post_categories_path
@@ -49,11 +52,13 @@ class Spud::Admin::PostCategoriesController < Spud::Admin::ApplicationController
 		end
 	end
 
-	private
+private
 
 	def find_category
 		@post_category = SpudPostCategory.find(params[:id])
 	end
 
-
+	def category_params
+		params.require(:spud_post_category).permit(:name, :url_name, :parent_id)
+	end
 end

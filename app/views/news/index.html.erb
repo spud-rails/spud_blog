@@ -18,15 +18,7 @@
 
 <div id="spud_news_posts">
 	<% if @posts.any? %>
-		<% @posts.each do |post| %>
-			<div class="spud_news_post">
-				<h3><%= link_to post.title, news_post_path(post.url_name) %></h3>
-				<h4>Posted by <%= post.author.full_name %> on <%= post.display_date %></h4>
-				<div class="spud_news_post_content">
-					<%= truncate_html post.content_processed.html_safe, :length => 250 %>
-				</div>
-			</div>
-		<% end %>
+		<%= render :partial => "post", :collection => @posts %>
 	<% else %>
 		<p>No posts were found in this category</p>
 	<% end %>

@@ -1,3 +1,4 @@
+
 class Spud::Admin::PostCommentsController < Spud::Admin::ApplicationController
 
 	respond_to :html, :xml, :json

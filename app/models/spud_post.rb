@@ -7,13 +7,13 @@ class SpudPost < ActiveRecord::Base
 		:foreign_key => 'spud_post_id'
 	belongs_to :author, :class_name => 'SpudUser', :foreign_key => 'spud_user_id'
 	has_many :comments, :class_name => 'SpudPostComment'
-	has_many :visible_comments, :class_name => 'SpudPostComment',:conditions => {:spam => [nil,false]}
-	has_many :spam_comments, :class_name => "SpudPostComment", :conditions => {:spam => true}
+	has_many :visible_comments, -> { where spam: [nil,false]}, :class_name => 'SpudPostComment'
+	has_many :spam_comments, -> { where spam: true }, :class_name => "SpudPostComment"
 	has_many :spud_permalinks,:as => :attachment
 	has_many :spud_post_sites, :dependent => :destroy
 
-	scope :publicly, where('visible = true AND published_at <= ?', Time.now.utc).order('published_at desc')
-	scope :future_posts, where('visible = true AND published_at > ?', Time.now.utc)
+	scope :publicly, -> { where('visible = true AND published_at <= ?', Time.now.utc).order('published_at desc') }
+	scope :future_posts, -> { where('visible = true AND published_at > ?', Time.now.utc) }
 	validates_presence_of :title, :content, :published_at, :spud_user_id, :url_name
 	validates_uniqueness_of :url_name
 	before_validation :set_url_name
@@ -21,7 +21,6 @@ class SpudPost < ActiveRecord::Base
 
 	after_save :set_spud_site_ids
 
-	attr_accessible :is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,:category_ids, :spud_site_ids, :content_format
 	attr_accessor :spud_site_ids
 
 	def self.for_spud_site(spud_site_id)
@@ -101,15 +100,23 @@ class SpudPost < ActiveRecord::Base
 	end
 
 	def postprocess_content
-		if self.content_format == 'Markdown'
-			require 'redcarpet'
-	    renderer = Redcarpet::Render::HTML.new
-	    extensions = {fenced_code_blocks: true}
-	    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
-	    self.content_processed = redcarpet.render self.content
+		rendererClass = Spud::Core.renderer(self.content_format)
+		puts "Getting Class For #{self.content_format} - #{rendererClass}"
+		if rendererClass
+			renderer = rendererClass.new()
+			self.content_processed = renderer.render self.content
 		else
 			self.content_processed = content
 		end
+		# if self.content_format == 'Markdown'
+		# 	require 'redcarpet'
+	 #    renderer = Redcarpet::Render::HTML.new
+	 #    extensions = {fenced_code_blocks: true}
+	 #    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
+	 #    self.content_processed = redcarpet.render self.content
+		# else
+		# 	self.content_processed = content
+		# end
 	end
 
 	def content_processed

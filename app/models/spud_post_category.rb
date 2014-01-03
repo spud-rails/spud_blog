@@ -1,7 +1,8 @@
 class SpudPostCategory < ActiveRecord::Base
 	spud_searchable
 	acts_as_nested_set
-
+	has_many :spud_post_categories_posts
+	# has_many :posts, :class_name => "SpudPost", :through => :spud_post_categories_posts
 	has_and_belongs_to_many :posts,
 		:class_name => 'SpudPost',
 		:join_table => 'spud_post_categories_posts',
@@ -13,7 +14,6 @@ class SpudPostCategory < ActiveRecord::Base
 
 	before_destroy :update_child_categories
 
-	attr_accessible :name, :url_name, :parent_id
 
 	# tell awesome_nested_set not to destroy descendants
 	def skip_before_destroy

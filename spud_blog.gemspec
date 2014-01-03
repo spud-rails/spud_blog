@@ -16,19 +16,22 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "Readme.markdown"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.1"
-  s.add_dependency 'spud_core', ">= 0.9.10"
-  s.add_dependency 'spud_permalinks', "~>0.9.0"
+  s.add_dependency "rails", "~> 4.0.0"
+  s.add_dependency 'spud_core', "~> 1.0.0.rc1"
+  s.add_dependency 'spud_permalinks', "~> 1.0.0.rc1"
   s.add_dependency 'truncate_html'
   s.add_dependency 'awesome_nested_set'
   s.add_dependency 'redcarpet'
+  s.add_dependency 'actionpack-page_caching'
+  s.add_dependency 'actionpack-action_caching'
 
-  s.add_development_dependency 'mysql2', '0.3.11'
-  s.add_development_dependency 'rspec', '2.8.0'
-  s.add_development_dependency 'rspec-rails', '2.8.1'
-  s.add_development_dependency 'shoulda', '~> 3.0.1'
-  s.add_development_dependency 'factory_girl', '2.5.0'
-  s.add_development_dependency 'mocha', '0.10.3'
-  s.add_development_dependency 'database_cleaner', '0.7.1'
+  s.add_development_dependency 'mysql2', '0.3.14'
   s.add_development_dependency 'simplecov', '~> 0.6.4'
+
+  s.add_development_dependency 'rspec', '2.14.0'
+  s.add_development_dependency 'rspec-rails', '2.14.0'
+  s.add_development_dependency 'shoulda', '~> 3.0.1'
+  s.add_development_dependency 'factory_girl', '~> 3.0'
+  s.add_development_dependency 'database_cleaner', '1.0.0.RC1'
+  s.add_development_dependency 'mocha', '0.14.0'
 end

@@ -91,4 +91,9 @@ Rails.application.routes.draw do
     end
   end
 
+  if Spud::Blog.config.blog_path == '/'
+    root 'blog#index'
+  elsif Spud::Blog.config.news_path == '/'
+    root 'news#index'
+  end
 end
