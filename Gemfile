@@ -7,17 +7,6 @@ source "http://rubygems.org"
 # group :development do
 # 	gem 'spud_core', :path => "../spud_core_admin"
 # end
-group :test do
-  gem 'mysql2', '0.3.11'
-  gem 'spud_permalinks'
-
-  gem 'rspec', '2.14.0'
-  gem 'shoulda', '~> 3.0.1'
-  gem 'factory_girl', '~> 3.0'
-  gem 'mocha', '0.14.0'
-  gem "database_cleaner", "1.0.0.RC1"
-end
-
 gemspec
 
 # jquery-rails is used by the dummy application
