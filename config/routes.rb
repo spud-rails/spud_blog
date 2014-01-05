@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   if Spud::Blog.config.blog_enabled
-    scope Spud::Blog.config.blog_path do
+    scope (Spud::Blog.config.blog_path == '/' ? 'blog' : Spud::Blog.config.blog_path) do
 
       # Blog Post Categories
       get 'category/:category_url_name(/page/:page)',
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   end
 
   if Spud::Blog.config.news_enabled
-    scope Spud::Blog.config.news_path do
+    scope (Spud::Blog.config.news_path == '/' ? 'news' : Spud::Blog.config.news_path) do
 
       # News Post Categories
       get 'category/:category_url_name(/page/:page)',

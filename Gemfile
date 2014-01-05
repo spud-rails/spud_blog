@@ -4,9 +4,9 @@ source "http://rubygems.org"
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 
-group :development do
-	gem 'spud_core', :path => "../spud_core_admin"
-end
+# group :development do
+# 	gem 'spud_core', :path => "../spud_core_admin"
+# end
 group :test do
   gem 'mysql2', '0.3.11'
   gem 'spud_permalinks'

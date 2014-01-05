@@ -101,22 +101,12 @@ class SpudPost < ActiveRecord::Base
 
 	def postprocess_content
 		rendererClass = Spud::Core.renderer(self.content_format)
-		puts "Getting Class For #{self.content_format} - #{rendererClass}"
 		if rendererClass
 			renderer = rendererClass.new()
 			self.content_processed = renderer.render self.content
 		else
 			self.content_processed = content
 		end
-		# if self.content_format == 'Markdown'
-		# 	require 'redcarpet'
-	 #    renderer = Redcarpet::Render::HTML.new
-	 #    extensions = {fenced_code_blocks: true}
-	 #    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
-	 #    self.content_processed = redcarpet.render self.content
-		# else
-		# 	self.content_processed = content
-		# end
 	end
 
 	def content_processed
