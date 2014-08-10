@@ -23,7 +23,7 @@ module Spud
         if Spud::Blog.config.blog_enabled
           Spud::Core.config.admin_applications += [{
             :name => 'Blog Posts',
-            :thumbnail => 'spud/admin/posts_thumb.png',
+            :thumbnail => 'spud/admin/blog_icon.png',
             :url => '/spud/admin/posts',
             :order => 1
           }]
@@ -31,7 +31,7 @@ module Spud
         if Spud::Blog.config.news_enabled
           Spud::Core.config.admin_applications += [{
             :name => 'News Posts',
-            :thumbnail => 'spud/admin/news_thumb.png',
+            :thumbnail => 'spud/admin/news_icon.png',
             :url => '/spud/admin/news_posts',
             :order => 2
           }]

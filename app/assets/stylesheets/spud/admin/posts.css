@@ -32,9 +32,7 @@
 	margin: 0 0 20px;
 	display: block;
 }
-#spud_post_meta_keywords, #spud_post_meta_description{
-	width: 380px;
-}
+
 #spud_post_meta_description{
 	height: 100px;
 }

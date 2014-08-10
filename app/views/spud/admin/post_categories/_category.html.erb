@@ -3,8 +3,12 @@
     <%= category.name %>
   </span>
   <span class="spud_blog_category_manager_item_actions">
-    <%= link_to 'Edit', edit_spud_admin_post_category_path(category), :class => 'btn btn-mini spud_blog_category_edit' %>
-    <%= link_to 'Delete', spud_admin_post_category_path(category), :class => 'btn btn-mini btn-danger spud_blog_category_delete' %>
+    <%= link_to edit_spud_admin_post_category_path(category), :class => 'btn btn-xs btn-link spud_blog_category_edit' do%>
+      <span class="glyphicon glyphicon-pencil"></span>
+    <%end%>
+    <%= link_to spud_admin_post_category_path(category), :class => 'btn btn-xs btn-danger spud_blog_category_delete' do%>
+      <span class="glyphicon glyphicon-trash"></span>
+    <%end%>
   </span>
   <ul class="spud_blog_category_manager_item_children">
     <% if @post_categories[category.id] %>

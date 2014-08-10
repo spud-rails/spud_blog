@@ -1,17 +1,20 @@
 <%=error_messages_for(f.object)%>
 
 <fieldset>
-	<div class="control-group">
-	<%= f.label :title, :required=>true,:style =>"display:none;" %>
-  <%= f.text_field :title, :class => "full-width",:placeholder=>"Enter title here" %>
+	<div class="form-group">
+		<%= f.label :title, :required=>true,:style =>"display:none;" %>
+		<div class="col-sm-12">
+			<%= f.text_field :title, :class => "full-width form-control",:placeholder=>"Enter title here" %>		
+		</div>
 	</div>
 </fieldset>
-	<div class="control-group">
-		<div class="controls">
+	
+<div style="formtab clearfix">
+	<div class="form-group">
+		<div class="col-sm-12">
 			<%=f.select :content_format,Spud::Core.renderers.collect { |k,v| [v[:description] || k, k]}, {:include_blank => false}, :class => "pull-right", "data-formatter" => "spud_post_content"%>
 		</div>
 	</div>
-<div style="clear:both;">
 	<%= f.text_area :content,:style => "width:100%;", :class => 'spud-formatted-editor full-width', "data-format" => f.object.content_format %>
 </div>
 
@@ -25,30 +28,37 @@
 <fieldset class="spud_post_form_fieldset">
 	<legend>Advanced</legend>
 
-		<div class="spud_post_form_col">
+		<div class="col-sm-6">
+			<div class="form-horizontal">
 			<h4>Meta Data</h4>
 
-			<div class="spud_post_form_row">
-				<%= f.label :published_at, 'Publish Date' %>
-				<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker' %>
-				<span class="time_select">
-					<%= f.time_select :published_at, :ignore_date => true,:ampm => true%>
-				</span>
+			<div class="form-group">
+				<%= f.label :published_at, 'Publish Date', :class => "control-label col-sm-4" %>
+				<div class="col-sm-8">
+					<%= f.text_field :published_at,:value => f.object.published_at.strftime("%Y-%m-%d %H:%M") , :class => 'spud_form_date_picker form-control' %>
+					<span class="time_select">
+						<%= f.time_select :published_at, :ignore_date => true,:ampm => true%>
+					</span>	
+				</div>
+				
 			</div>
 
 			<% if @current_user.super_admin %>
-				<div class="spud_post_form_row">
-					<%= f.label :spud_user_id, 'Author' %>
-					<%= f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id)%>
+				<div class="form-group">
+					<%= f.label :spud_user_id, 'Author', :class => "control-label col-sm-4" %>
+					<div class="col-sm-8">
+						<%= f.select :spud_user_id,options_for_select(SpudUser.order(:first_name,:last_name,:login).all.collect{|user| [user.full_name,user.id]},f.object.spud_user_id), :class => "form-control"%>	
+					</div>
+					
 				</div>
 			<% else %>
 				<%= f.hidden_field :spud_user_id %>
 			<% end %>
 
 			<% if Spud::Core.config.multisite_mode_enabled %>
-				<div class="spud_post_form_row">
-					<%= f.label :sites, 'Websites to Publish' %>
-					<div class="spud_post_form_input_group">
+				<div class="form-group">
+					<%= f.label :sites, 'Websites to Publish', :class => "control-label col-sm-4" %>
+					<div class="spud_post_form_input_group col-sm-8">
 						<%= spud_post_site_check_box_tag(Spud::Core.default_site_config, @post) %>
 						<%= spud_post_site_label_tag(Spud::Core.default_site_config) %>
 						<% Spud::Core.config.multisite_config.each do |site| %>
@@ -59,55 +69,64 @@
 				</div>
 			<% end %>
 
-			<div class="spud_post_form_row">
-				<%= f.label :visible %>
-				<div class="spud_post_form_input_group">
-					<%= f.radio_button :visible, true %>
-					<label class="radio inline" for="spud_post_visible_true">Yes</label>
-					<%= f.radio_button :visible, false %>
-					<label class="radio inline" for="spud_post_visible_false">No</label>
+			<div class="form-group">
+				<%= f.label :visible, :class => "control-label col-sm-4" %>
+				<div class="col-sm-8">
+					<label class="radio-inline">
+						<%= f.radio_button :visible, true %> Yes
+					</label>
+					<label class="radio-inline">
+						<%= f.radio_button :visible, false %> No	
+					</label>
 				</div>
 			</div>
 
 			<% unless @post.is_news %>
-				<div class="spud_post_form_row">
-					<%= f.label :comments_enabled,"Comments Enabled" %>
-					<div class="spud_post_form_input_group">
-						<%= f.radio_button :comments_enabled, true %>
-						<label class="radio inline" for="spud_post_comments_enabled_true">Yes</label>
-						<%= f.radio_button :comments_enabled, false %>
-						<label class="radio inline" for="spud_post_comments_enabled_false">No</label>
+				<div class="form-group">
+					<%= f.label :comments_enabled,"Comments Enabled", :class => "control-label col-sm-4" %>
+					<div class="col-sm-8">
+						<label class="radio-inline">
+							<%= f.radio_button :comments_enabled, true %> Yes
+						</label>
+						<label class="radio-inline">
+							<%= f.radio_button :comments_enabled, false %> No	
+						</label>
 					</div>
 				</div>
 			<% end %>
 
-			<div class="spud_post_form_row">
-				<%= f.label :meta_keywords, 'Keywords' %>
-				<%= f.text_field :meta_keywords %>
-				<span class="spud_post_form_help_block">A Comma seperated list of keywords for search engines. Keep it short (no more than 10 keywords)</span>
+			<div class="form-group">
+				<%= f.label :meta_keywords, 'Keywords', :class => "control-label col-sm-4" %>
+				<div class="col-sm-8">
+					<%= f.text_field :meta_keywords, :class => "form-control" %>
+					<span class="spud_post_form_help_block">A Comma seperated list of keywords for search engines. Keep it short (no more than 10 keywords)</span>	
+				</div>
+				
 			</div>
 
-			<div class="spud_post_form_row">
-				<%= f.label :meta_description, 'Description' %>
-				<%= f.text_area :meta_description %>
-				<span class="spud_post_form_help_block">A short description of the article. This is what appears on a search engines search result page.</span>
+			<div class="form-group">
+				<%= f.label :meta_description, 'Description', :class => "control-label col-sm-4" %>
+				<div class="col-sm-8">
+					<%= f.text_area :meta_description, :class => "form-control" %>
+					<span class="spud_post_form_help_block">A short description of the article. This is what appears on a search engines search result page.</span>	
+				</div>
 			</div>
 		</div>
-
-		<div class="spud_post_form_col">
-			<h4>Categories</h4>
-			<%= link_to 'Add Category', new_spud_admin_post_category_path, :class => 'btn btn-mini spud_post_add_category' %>
-			<input type="hidden" name="spud_post[category_ids][]" value="" />
-			<ul class="spud_post_categories_form">
-				<%= render :partial => '/spud/admin/posts/category', :collection => @categories[nil] %>
-			</ul>
-		</div>
+	</div>
+	<div class="col-sm-6">
+		<h4>Categories</h4>
+		<%= link_to 'Add Category', new_spud_admin_post_category_path, :class => 'btn btn-sm btn-success spud_post_add_category' %>
+		<input type="hidden" name="spud_post[category_ids][]" value="" />
+		<ul class="spud_post_categories_form">
+			<%= render :partial => '/spud/admin/posts/category', :collection => @categories[nil] %>
+		</ul>
+	</div>
 
 </fieldset>
 <%= f.hidden_field :is_news %>
 
-<div class="form-actions">
-	<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer, :class => "btn"%>
+<div class="col-sm-6 col-sm-offset-2">
+	<%=f.submit "Save Post", :class=>"btn btn-primary form-btn","data-loading-text"=>"Saving..."%> or <%=link_to "cancel",request.referer, :class => "btn btn-default"%>
 </div>
 
 <script type="text/javascript">

@@ -1,6 +1,6 @@
 <%= content_for :data_controls do %>
-	<%= link_to "Manage Categories", spud_admin_post_categories_path, :class => 'btn spud_blog_manage_categories', :title => 'Manage Categories' %>
-	<%= link_to "Manage Comments", spud_admin_post_comments_path, :class => 'btn', :title => 'Manage Comments' %>
+	<%= link_to "Manage Categories", spud_admin_post_categories_path, :class => 'btn btn-info spud_blog_manage_categories', :title => 'Manage Categories' %>
+	<%= link_to "Manage Comments", spud_admin_post_comments_path, :class => 'btn btn-default', :title => 'Manage Comments' %>
 	<%= link_to "New Post", new_spud_admin_post_path, :class => "btn btn-primary", :title => "New Post" %>
 <% end %>
 
@@ -34,7 +34,9 @@
 						Spam: <%=link_to post.spam_comments.count, spud_admin_post_post_comments_path(:post_id => post.id) %>
 					</td>
 					<td align="right">
-						<%= link_to 'Delete', spud_admin_post_path(post), :method => :delete, :data => {:confirm => 'Are you sure you want to delete this post?'}, :class => 'btn btn-danger' %>
+						<%= link_to spud_admin_post_path(post), :method => :delete, :data => {:confirm => 'Are you sure you want to delete this post?'}, :class => 'btn btn-sm btn-danger' do%>
+							<span class="glyphicon glyphicon-trash"></span>
+						<%end%>
 					</td>
 				</tr>
 			<%end%>
