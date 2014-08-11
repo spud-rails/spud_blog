@@ -59,7 +59,11 @@ class Spud::Admin::NewsPostsController < Spud::Admin::ApplicationController
 	end
 
 	def post_params
-		params.require(:spud_post).permit(:is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,{:category_ids => []}, {:spud_site_ids => []}, :content_format)
+		allowed_params = [:is_news,:published_at,:title,:content,:spud_user_id,:url_name,:visible,:comments_enabled,:meta_keywords,:meta_description,{:category_ids => []}, {:spud_site_ids => []}, :content_format]
+		if Spud::Blog.config.custom_fields
+			allowed_params.concat(Spud::Blog.config.custom_fields)
+		end
+		params.require(:spud_post).permit *allowed_params
 	end
 
 end

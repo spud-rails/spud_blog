@@ -13,14 +13,14 @@ __NOTE:__ This project is still in its early infancy.
 
 1. In your Gemfile add the following
 
-		gem 'spud_core'
-		gem 'spud_blog'
+        gem 'spud_core'
+        gem 'spud_blog'
 
 2. Run bundle install
 3. Copy in database migrations to your new rails project
 
-		bundle exec rake railties:install:migrations
-		rake db:migrate
+        bundle exec rake railties:install:migrations
+        rake db:migrate
 
 4. run a rails server instance and point your browser to /spud/admin
 
@@ -28,23 +28,24 @@ __NOTE:__ This project is still in its early infancy.
 
 Spud Blog current accepts the following configuration options.
 
-	Spud::Blog.configure do |config|
-	  config.base_layout = 'blog'
-	  config.blog_enabled = true
-	  config.news_enabled = true
-	  config.blog_path = 'blog'
-	  config.news_path = 'news'
-	  config.posts_per_page = 5
-	  config.has_custom_fields = true
-	  config.caching_enabled = true
-	  config.caching_expires_in = 1.hour
-	end
+    Spud::Blog.configure do |config|
+      config.base_layout = 'blog'
+      config.blog_enabled = true
+      config.news_enabled = true
+      config.blog_path = 'blog'
+      config.news_path = 'news'
+      config.posts_per_page = 5
+      config.has_custom_fields = false
+      config.custom_fields = []
+      config.caching_enabled = true
+      config.caching_expires_in = 1.hour
+    end
 
 ## Customizing Views
 
 A number of built-in views have been provided to help you get started with the frontend display. Customzing these views will require you to copy them into your local application, which can be accomplished by using the views generator.
 
-	rails generate spud:blog:views
+    rails generate spud:blog:views
 
 __NOTE:__ The built-in views are likely to undergo changes as features are added to the blogging engine. If a new version of Spud Blog does not play nicely with your customized views, try backing up your views to an alternate location and running the views generator again to see what has changed.
 
@@ -52,7 +53,7 @@ __NOTE:__ The built-in views are likely to undergo changes as features are added
 
 Spud Blog includes a small, unobtrusive javascript driver that adds functionality to the built-in views. Including the driver is optional, as all client-side views and controllers are designed to work whether you include it or not.
 
-	<%= javascript_include_tag 'spud/blog' %>
+    <%= javascript_include_tag 'spud/blog' %>
 
 ## Custom Fields
 
@@ -61,21 +62,32 @@ You may find that your blog requires a field that isn't included in the default 
 1. Set `has_custom_fields` to true in your Spud Blog configuration
 2. Create a migration adding the necessary column(s) to your database
 
-		class AddCaptionToPosts < ActiveRecord::Migration
-		  def change
-		    add_column :spud_posts, :caption, :string
-		  end
-		end
+```ruby
+class AddCaptionToPosts < ActiveRecord::Migration
+  def change
+    add_column :spud_posts, :caption, :string
+  end
+end
+```
 
-3. Save a view partial at `app/views/spud/admin/posts/_custom_fields.html.erb` with the desired inputs
+3. Add an array of the new custom fields to `Spud::Blog.config.custom_fields` in application.rb for strong parameter filtering.
 
+```ruby
+Spud::Blog.configure do |config|
+  config.custom_fields = [:caption]
+end
+```
 
-		  <div class="control-group">
-		    <%= f.label :caption, 'Caption',:class => "control-label" %>
-		    <div class="controls">
-		    	<%= f.text_field :caption %>
-		    </div>
-		  </div>
+4. Save a view partial at `app/views/spud/admin/posts/_custom_fields.html.erb` with the desired inputs
+
+```erb
+<div class="control-group">
+    <%= f.label :caption, 'Caption',:class => "control-label" %>
+    <div class="controls">
+        <%= f.text_field :caption %>
+    </div>
+</div>
+```
 
 ## Extending the Post Model
 
@@ -84,16 +96,16 @@ Rails engines allow you to extend or even completely override classes by adding 
 1. Create a file at `app/models/spud_post.rb`
 2. Add the following code:
 
-		# Use this helper method to pull in the SpudPost source code from the engine
-		Spud::Blog::Engine.require_model('spud_post')
+        # Use this helper method to pull in the SpudPost source code from the engine
+        Spud::Blog::Engine.require_model('spud_post')
 
-		# Add your own methods to SpudPost
-		class SpudPost
-			attr_accessible :caption
-			def byline
-				return "'#{self.title}' was posted by #{self.author.full_name} on #{self.display_date}"
-			end
-		end
+        # Add your own methods to SpudPost
+        class SpudPost
+            attr_accessible :caption
+            def byline
+                return "'#{self.title}' was posted by #{self.author.full_name} on #{self.display_date}"
+            end
+        end
 
 ## Akismet Support
 
@@ -107,7 +119,7 @@ Spud Blog Engine now supports spam comment filtering using akismet. All you have
 
 Also make sure to add the rakismet gem to your gemfile
 
-		gem 'rakismet'
+        gem 'rakismet'
 
 Testing
 -----------------
