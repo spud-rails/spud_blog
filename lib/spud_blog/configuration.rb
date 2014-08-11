@@ -5,7 +5,7 @@ module Spud
       :base_layout, :news_layout, :blog_enabled,
       :news_enabled, :posts_per_page, :blog_path,
       :news_path, :enable_sitemap, :has_custom_fields,
-      :enable_rakismet, :custom_fields
+      :enable_rakismet, :custom_fields, :custom_comment_fields
     )
 
     self.base_layout = 'application'
@@ -18,6 +18,7 @@ module Spud
     self.enable_sitemap = true
     self.has_custom_fields = false
     self.custom_fields = []
+    self.custom_comment_fields = []
     self.enable_rakismet = false
   end
 end

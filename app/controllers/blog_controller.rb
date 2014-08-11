@@ -132,7 +132,11 @@ private
   end
 
   def comment_params
-    params.require(:spud_post_comment).permit(:author,:content)
+    allowed_params = [:author,:content]
+    if Spud::Blog.config.custom_comment_fields
+      allowed_params.concat(Spud::Blog.config.custom_comment_fields)
+    end
+    params.require(:spud_post_comment).permit *allowed_params
   end
 
 end
