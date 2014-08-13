@@ -26,7 +26,7 @@
 							<%end%>
 						<%end%>
 					</td>
-					<td><%= post.author.full_name %></td>
+					<td><%= post.author.try(:full_name) %></td>
 					<td><%= link_to(post.published_at.strftime('%m/%d/%Y'), blog_post_path(post.url_name)) %></td>
 					<td>
 						Approved: <%=link_to post.visible_comments.count, spud_admin_post_post_comments_path(:post_id => post.id) %>

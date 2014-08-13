@@ -15,7 +15,7 @@
 <%cache ['news/show', @post] do%>
 	<div class="spud_news_post">
 		<h3><%= @post.title %></h3>
-		<h4>Posted by <%= @post.author.full_name %> on <%= @post.display_date %></h4>
+		<h4>Posted by <%= @post.author.try(:full_name) %> on <%= @post.display_date %></h4>
 		<% if @post.categories.any? %>
 		<p id="spud_news_post_categories">
 			Filed under
