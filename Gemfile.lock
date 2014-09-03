@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spud_blog (1.0.1)
+    spud_blog (1.0.2)
       actionpack-action_caching
       actionpack-page_caching
       awesome_nested_set
@@ -48,14 +48,14 @@ GEM
       activerecord (>= 3.2)
       activesupport (>= 3.2)
       request_store (~> 1.0)
-    awesome_nested_set (3.0.0)
+    awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
     bcrypt (3.1.7)
     bootstrap-will_paginate (0.0.10)
       will_paginate
     breadcrumbs_on_rails (2.3.0)
     builder (3.1.4)
-    codemirror-rails (4.4)
+    codemirror-rails (4.5)
       railties (>= 3.0, < 5)
     database_cleaner (1.0.0.RC1)
     diff-lcs (1.2.5)
@@ -104,7 +104,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.1.1)
     redcarpet (3.1.2)
-    request_store (1.0.8)
+    request_store (1.1.0)
     retina_tag (1.3.1)
       jquery-rails
       rails (>= 3.1)
@@ -144,7 +144,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    spud_core (1.0.4)
+    spud_core (1.0.6)
       actionpack-action_caching
       actionpack-page_caching
       authlogic (~> 3.4.0)
