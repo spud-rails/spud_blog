@@ -9,7 +9,7 @@
 	</div>
 </fieldset>
 	
-<div style="formtab clearfix">
+<div class="formtab clearfix">
 	<div class="form-group">
 		<div class="col-sm-12">
 			<%=f.select :content_format,Spud::Core.renderers.collect { |k,v| [v[:description] || k, k]}, {:include_blank => false}, :class => "pull-right", "data-formatter" => "spud_post_content"%>
